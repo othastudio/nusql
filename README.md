@@ -6,7 +6,8 @@
   </picture>
 </div>
 <div align="center">
-  <strong>Building SQL queries in Node.js applications in ease</strong>
+  <strong>Simplified SQL Query Building for Node.js</strong>
+  <p>Nuclea-SQL is a versatile and lightweight SQL query builder package designed to streamline database interactions in Node.js applications. Whether you're building web applications, APIs, or backend services with Nuclea, Nuclea-SQL can help simplify complex SQL query construction while providing a clean and intuitive interface.</p>
 </div>
 
 <br>
@@ -17,33 +18,43 @@
 </div>
 </div>
 
-## Installation
-
-To add the nuclea-sql to your project, you can install it using npm:
-
-```bash
-npm install -g nuclea-sql
-```
-
-## Usage
-
-You can use the nuclea sql builder to create simple sql queries for your applications. Below are an exemple:
+## Example Usage
 
 ```
-import nusql from "nuclea-sql"
+const { nusql } = require('nuclea-sql');
 
-nusql.select("*").from("orders") => "SELECT * FROM orders;"
-```
+const query = nusql()
+  .select('*')
+  .from('users')
+  .where('age', '>', 25)
+  .limit(10)
+  .offset(0)
+  .build();
+
+console.log(query);
+// Output: SELECT * FROM users WHERE age > 25 LIMIT 10 OFFSET 0
 
 ```
-const nusql =  require("nuclea-sql");
-
-nusql.select("*").from("orders") => "SELECT * FROM orders;"
-```
+Nuclea-SQL's concise and readable syntax empowers developers to build complex queries without sacrificing readability.
 
 ## Getting Started
 
-To get started with Nuclea, please refer to the official documentation for the Nuclea framework: Nuclea Documentation soon
+To start using Nuclea-SQL in your Nuclea-powered project, follow these simple steps:
+
+1. Installation: 
+Install Nuclea-SQL as a dependency in your Node.js project using npm or yarn:
+```
+npm install nuclea-sql
+```
+2. Import: 
+Import Nuclea-SQL into your project and start building SQL queries with ease:
+```
+const { nusql } = require('nuclea-sql');
+```
+3. Documentation: 
+Explore the comprehensive Nuclea-SQL Documentation for detailed usage instructions, examples, and advanced features.
+
+
 
 ## Contributing
 
