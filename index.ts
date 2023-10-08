@@ -49,6 +49,16 @@ class Nusql {
         nusql.query += `ORDER BY ${column} ${direction} `;
         return nusql;
     }
+    
+    /**
+     * Adds a GROUP BY clause to the SQL query to group results by a specified field.
+     * @param {string} field - The field to group by.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    groupBy(field: string): Nusql {
+        this.query += `GROUP BY ${field} `;
+        return this;
+    }
 
     /**
      * Builds and returns the SQL query as a string.
