@@ -49,7 +49,7 @@ class Nusql {
         nusql.query += `ORDER BY ${column} ${direction} `;
         return nusql;
     }
-    
+
     /**
      * Adds a GROUP BY clause to the SQL query to group results by a specified field.
      * @param {string} field - The field to group by.
@@ -57,6 +57,16 @@ class Nusql {
      */
     groupBy(field: string): Nusql {
         this.query += `GROUP BY ${field} `;
+        return this;
+    }
+
+    /**
+     * Adds a HAVING clause to the SQL query with a specified condition.
+     * @param {string} condition - The condition for the HAVING clause.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    having(condition: string): Nusql {
+        this.query += `HAVING ${condition} `;
         return this;
     }
 
