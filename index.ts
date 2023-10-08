@@ -114,6 +114,15 @@ class Nusql {
         return this;
     }
 
+    /**
+     * Adds a UNION clause to the SQL query with the specified subquery.
+     * @param {Nusql} query - The subquery to UNION with the main query.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    union(query: Nusql): Nusql {
+        this.query += `UNION (${query.build()}) `;
+        return this;
+    }
 
     /**
      * Builds and returns the SQL query as a string.
