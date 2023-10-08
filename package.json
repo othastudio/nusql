@@ -11,7 +11,7 @@
     "url": "https://github.com/othastudio/nuclea-sql.git"
   },
   "keywords": ["nuclea", "sql", "query-builder", "database"],
-  "author": "Your Name",
+  "author": "Othmane Nejdi",
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {},
