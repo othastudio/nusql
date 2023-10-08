@@ -12,7 +12,7 @@
 <br>
 
 <div align="center">
-  <img src="https://img.shields.io/badge/version-1.0.5-blue.svg" alt="GitHub stars">
+  <img src="https://img.shields.io/badge/version-1.0.0-blue.svg" alt="GitHub stars">
   <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="GitHub">
 </div>
 </div>
@@ -30,7 +30,13 @@ npm install -g nuclea-sql
 You can use the nuclea sql builder to create simple sql queries for your applications. Below are an exemple:
 
 ```
-import nusql
+import nusql from "nuclea-sql"
+
+nusql.select("*").from("orders") => "SELECT * FROM orders;"
+```
+
+```
+const nusql =  require("nuclea-sql");
 
 nusql.select("*").from("orders") => "SELECT * FROM orders;"
 ```
