@@ -1,12 +1,25 @@
 {
   "name": "nuclea-sql",
   "version": "1.0.0",
-  "description": "",
+  "description": "Simplified SQL query builder for Nuclea",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"No tests available\" && exit 0"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/othastudio/nuclea-sql.git"
+  },
+  "keywords": ["nuclea", "sql", "query-builder", "database"],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {},
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "peerDependencies": {},
+  "scripts": {
+    "test": "echo \"No tests available\" && exit 0"
+  }
 }
