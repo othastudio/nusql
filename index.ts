@@ -71,6 +71,51 @@ class Nusql {
     }
 
     /**
+     * Adds an INNER JOIN clause to the SQL query with a specified table and join condition.
+     * @param {string} table - The table to join.
+     * @param {string} condition - The join condition.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    innerJoin(table: string, condition: string): Nusql {
+        this.query += `INNER JOIN ${table} ON ${condition} `;
+        return this;
+    }
+
+    /**
+     * Adds a LEFT JOIN clause to the SQL query with a specified table and join condition.
+     * @param {string} table - The table to join.
+     * @param {string} condition - The join condition.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    leftJoin(table: string, condition: string): Nusql {
+        this.query += `LEFT JOIN ${table} ON ${condition} `;
+        return this;
+    }
+
+    /**
+     * Adds a RIGHT JOIN clause to the SQL query with a specified table and join condition.
+     * @param {string} table - The table to join.
+     * @param {string} condition - The join condition.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    rightJoin(table: string, condition: string): Nusql {
+        this.query += `RIGHT JOIN ${table} ON ${condition} `;
+        return this;
+    }
+
+    /**
+     * Adds a FULL OUTER JOIN clause to the SQL query with a specified table and join condition.
+     * @param {string} table - The table to join.
+     * @param {string} condition - The join condition.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    fullOuterJoin(table: string, condition: string): Nusql {
+        this.query += `FULL OUTER JOIN ${table} ON ${condition} `;
+        return this;
+    }
+
+
+    /**
      * Builds and returns the SQL query as a string.
      * @returns {string} - The generated SQL query.
      */
