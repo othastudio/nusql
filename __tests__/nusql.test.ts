@@ -2,12 +2,12 @@ import Nusql from'../index';
 
 describe('Nusql core testing', () => {
     it('should construct an instance', () => {
-        const nusql = new Nusql();
+        const nusql = Nusql.create();
         expect(nusql).toBeInstanceOf(Nusql);
     });
 });
 
-describe('Nusql Data', () => {
+describe('Nusql Data types', () => {
     let nusql;
 
     beforeEach(() => {
@@ -76,12 +76,13 @@ describe('Nusql Data', () => {
 
     it('should generate an ENUM column type with specified values', () => {
         nusql.enum('Value1','Value2','Value3');
-        expect(nusql.build()).toBe("ENUM('Value1','Value2','Value3') ");
+        expect(nusql.build()).toBe("ENUM('Value1', 'Value2', 'Value3')");
     });
 
     it('should generate a SET column type with specified values', () => {
         nusql.set('Option1','Option2','Option3');
-        expect(nusql.build()).toBe("SET('Option1','Option2','Option3') ");
+        console.log(nusql.create)
+        expect(nusql.build()).toBe("SET('Option1', 'Option2', 'Option3')");
     });
 
     it('should generate a BIT column type with a specified size', () => {
@@ -202,5 +203,196 @@ describe('Nusql Data', () => {
     it('should generate a YEAR column type', () => {
         nusql.year();
         expect(nusql.build()).toBe('YEAR');
+    });
+});
+
+describe('Nusql methods', () => {
+    let nusql;
+
+    beforeEach(() => {
+        nusql = Nusql.create();
+    });
+
+    it('should generate a SELECT query', () => {
+        nusql.select('column1, column2');
+        expect(nusql.build()).toBe('SELECT column1, column2');
+    });
+
+    it('should generate a FROM query', () => {
+        nusql.from('table1');
+        expect(nusql.build()).toBe('FROM table1');
+    });
+
+    it('should generate a WHERE query', () => {
+        nusql.where('condition1');
+        expect(nusql.build()).toBe('WHERE condition1');
+    });
+
+    it('should generate an ORDER BY query', () => {
+        nusql.orderBy('column1','ASC');
+        expect(nusql.build()).toBe('ORDER BY column1 ASC');
+    });
+
+    it('should generate an ORDER BY ASC query', () => {
+        nusql.orderByAsc('column2');
+        expect(nusql.build()).toBe('ORDER BY column2 ASC');
+    });
+
+    it('should generate an ORDER BY DESC query', () => {
+        nusql.orderByDesc('column3');
+        expect(nusql.build()).toBe('ORDER BY column3 DESC');
+    });
+
+    it('should generate a GROUP BY query', () => {
+        nusql.groupBy('field1');
+        expect(nusql.build()).toBe('GROUP BY field1');
+    });
+
+    it('should generate a HAVING query', () => {
+        nusql.having('condition2');
+        expect(nusql.build()).toBe('HAVING condition2');
+    });
+
+    it('should generate an INNER JOIN query', () => {
+        nusql.innerJoin('table2','condition3');
+        expect(nusql.build()).toBe('INNER JOIN table2 ON condition3');
+    });
+
+    it('should generate a LEFT JOIN query', () => {
+        nusql.leftJoin('table3','condition4');
+        expect(nusql.build()).toBe('LEFT JOIN table3 ON condition4');
+    });
+
+    it('should generate a RIGHT JOIN query', () => {
+        nusql.rightJoin('table4','condition5');
+        expect(nusql.build()).toBe('RIGHT JOIN table4 ON condition5');
+    });
+
+    it('should generate a FULL OUTER JOIN query', () => {
+        nusql.fullOuterJoin('table5','condition6');
+        expect(nusql.build()).toBe('FULL OUTER JOIN table5 ON condition6');
+    });
+
+    it('should generate a UNION query', () => {
+        const subquery = new Nusql().select('column').from('table').where('condition');
+        nusql.union(subquery);
+        expect(nusql.build()).toBe('UNION (SELECT column FROM table WHERE condition)');
+    });
+
+    it('should generate an INSERT INTO query', () => {
+        const values = { column1:'value1', column2:'value2' };
+        nusql.insertInto('table', values);
+        expect(nusql.build()).toBe('INSERT INTO table (column1, column2) VALUES (?, ?)');
+    });
+
+    it('should generate an UPDATE query', () => {
+        const values = { column1:'value1', column2:'value2' };
+        nusql.update('table', values);
+        expect(nusql.build()).toBe('UPDATE table SET column1 = ?, column2 = ?');
+    });
+
+    it('should generate a DELETE FROM query', () => {
+        nusql.deleteFrom('table');
+        expect(nusql.build()).toBe('DELETE FROM table');
+    });
+
+    it('should generate a CREATE TABLE statement with column definitions', () => {
+        const tableName = 'my_table';
+        const columns = {
+            column1: 'INT',
+            column2: 'VARCHAR(50)',
+        };
+        nusql.createTable(tableName, columns);
+        expect(nusql.build()).toBe('CREATE TABLE my_table (column1 INT, column2 VARCHAR(50))');
+    });
+
+    it('should generate an ALTER TABLE query', () => {
+        nusql.alterTable('table','ADD COLUMN column3 INT');
+        expect(nusql.build()).toBe('ALTER TABLE table ADD COLUMN column3 INT');
+    });
+
+    it('should generate a DROP TABLE query', () => {
+        nusql.dropTable('table');
+        expect(nusql.build()).toBe('DROP TABLE table');
+    });
+
+    it('should generate a DISTINCT query', () => {
+        nusql.distinct();
+        expect(nusql.build()).toBe('DISTINCT');
+    });
+
+    it('should generate an AS query', () => {
+        nusql.as('alias');
+        expect(nusql.build()).toBe('AS alias');
+    });
+
+    it('should generate a COUNT query', () => {
+        nusql.count('column1');
+        expect(nusql.build()).toBe('COUNT(column1)');
+    });
+
+    it('should generate a SUM query', () => {
+        nusql.sum('column2');
+        expect(nusql.build()).toBe('SUM(column2)');
+    });
+
+    it('should generate an AVG query', () => {
+        nusql.avg('column3');
+        expect(nusql.build()).toBe('AVG(column3)');
+    });
+
+    it('should generate a MAX query', () => {
+        nusql.max('column4');
+        expect(nusql.build()).toBe('MAX(column4)');
+    });
+
+    it('should generate a MIN query', () => {
+        nusql.min('column5');
+        expect(nusql.build()).toBe('MIN(column5)');
+    });
+
+    it('should generate a BETWEEN query', () => {
+        nusql.between('column6', 10, 20);
+        expect(nusql.build()).toBe('WHERE column6 BETWEEN 10 AND 20');
+    });
+
+    it('should generate a LIKE query', () => {
+        nusql.like('column7','%pattern%');
+        expect(nusql.build()).toBe('WHERE column7 LIKE \'%pattern%\'');
+    });
+
+    it('should generate an IN query', () => {
+        nusql.in('column8', ['value1','value2','value3']);
+        expect(nusql.build()).toBe('WHERE column8 IN (\'value1\', \'value2\', \'value3\')');
+    });
+
+    it('should generate an IS NULL query', () => {
+        nusql.isNull('column9');
+        expect(nusql.build()).toBe('WHERE column9 IS NULL');
+    });
+
+    it('should generate an IS NOT NULL query', () => {
+        nusql.isNotNull('column10');
+        expect(nusql.build()).toBe('WHERE column10 IS NOT NULL');
+    });
+
+    it('should generate an AND condition', () => {
+        nusql.and('condition1');
+        expect(nusql.build()).toBe('AND condition1');
+    });
+
+    it('should generate an OR condition', () => {
+        nusql.or('condition2');
+        expect(nusql.build()).toBe('OR condition2');
+    });
+
+    it('should generate a LIMIT query', () => {
+        nusql.limit(10);
+        expect(nusql.build()).toBe('LIMIT 10');
+    });
+
+    it('should generate an OFFSET query', () => {
+        nusql.offset(5);
+        expect(nusql.build()).toBe('OFFSET 5');
     });
 });

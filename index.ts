@@ -535,16 +535,15 @@ class Nusql {
      * @param {Record<string, (type: Nusql) => Nusql>} columns - An object representing column names and their data types as functions.
      * @returns {Nusql} - The Nusql instance for method chaining.
      */
-    createTable(table: string, columns: Record<string, (type: Nusql) => Nusql>): Nusql {
+    createTable(table: string, columns: Record<string, string>): Nusql {
         this.query += `CREATE TABLE ${table} (`;
-        const columnDefinitions = Object.entries(columns).map(([columnName, columnTypeFn]) => {
-            const columnType = columnTypeFn(new Nusql()).build();
+        const columnDefinitions = Object.entries(columns).map(([columnName, columnType]) => {
             return `${columnName} ${columnType}`;
         });
         this.query += columnDefinitions.join(', ');
         this.query += `) `;
         return this;
-    }
+    }    
 
     /**
      * Generates an ALTER TABLE statement for the specified table with the given action.
