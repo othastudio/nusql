@@ -779,6 +779,20 @@ class Nusql {
 
         return this; // Return the updated Nusql instance for method chaining
     }
+
+    /**
+   * Casts a column or value to a specified data type using the CAST function.
+   * @param {string} columnOrValue - The column or value to cast.
+   * @param {string} dataType - The target data type for casting.
+   * @returns {Nusql} - The updated Nusql instance for method chaining.
+   */
+    cast(columnOrValue: string, dataType: string): Nusql {
+        // Use the CAST function to cast the column or value to the specified data type
+        this.query += `CAST(${columnOrValue} AS ${dataType}) `;
+
+        return this; // Return the updated Nusql instance for method chaining
+    }
+    
     /**
      * Builds and returns the SQL query as a string.
      * @returns {string} - The generated SQL query.
