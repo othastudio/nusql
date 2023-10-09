@@ -231,7 +231,7 @@ class Nusql {
         this.query += `BIGINT(${size}) `;
         return this;
     }
-    
+
     /**
      * Generates a FLOAT column type.
      * @param {number} size - The size of the FLOAT column (optional).
@@ -245,7 +245,7 @@ class Nusql {
         } else if (size !== undefined) {
             floatType = `FLOAT(${size})`;
         }
-        
+
         this.query += `${floatType} `;
         return this;
     }
@@ -715,7 +715,7 @@ class Nusql {
         this.query += `OR ${condition} `;
         return this;
     }
-    
+
     /**
      * Adds a LIMIT clause to limit the number of rows returned in the result set.
      * @param {number} limit - The maximum number of rows to return.
@@ -734,6 +734,28 @@ class Nusql {
     offset(offset: number): Nusql {
         this.query += `OFFSET ${offset} `;
         return this;
+    }
+
+    /**
+   * Adds a GROUP_CONCAT function to the SQL query for string aggregation.
+   * @param {string} column - The column to concatenate.
+   * @param {string} separator - The optional separator between concatenated values (default: ', ').
+   * @param {string} orderBy - The optional ORDER BY clause for sorting the concatenated values.
+   * @returns {NucleaSQL} - The updated NucleaSQL instance for method chaining.
+   */
+    groupByConcat(column: string, separator: string = ', ', orderBy?: string): Nusql {
+        // Start building the GROUP_CONCAT function with the provided column
+        this.query += `GROUP_CONCAT(${column}`;
+
+        // Add an optional ORDER BY clause if specified
+        if (orderBy) {
+            this.query += ` ORDER BY ${orderBy}`;
+        }
+
+        // Complete the function with an optional separator and closing parenthesis
+        this.query += ` SEPARATOR '${separator}') `;
+
+        return this; // Return the updated NucleaSQL instance for method chaining
     }
 
     /**
