@@ -542,6 +542,35 @@ class Nusql {
         return this;
     }
 
+    /**
+     * Generates a DROP TABLE statement for the specified table.
+     * @param {string} table - The name of the table to drop.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    dropTable(table: string): Nusql {
+        this.query += `DROP TABLE ${table} `;
+        return this;
+    }
+
+    /**
+     * Adds the DISTINCT keyword to the SELECT statement.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    distinct(): Nusql {
+        this.query += 'DISTINCT ';
+        return this;
+    }
+
+    /**
+     * Alias a column or table with a specified alias name.
+     * @param {string} alias - The alias name.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    as(alias: string): Nusql {
+        this.query += `AS ${alias} `;
+        return this;
+    }
+
 
     /**
      * Builds and returns the SQL query as a string.
