@@ -6,14 +6,14 @@
   </picture>
 </div>
 <div align="center">
-  <strong>Simplified SQL Query Building for Node.js</strong>
-  <p>Nuclea-SQL is a versatile and lightweight SQL query builder package designed to streamline database interactions in Node.js applications. Whether you're building web applications, APIs, or backend services with Nuclea, Nuclea-SQL can help simplify complex SQL query construction while providing a clean and intuitive interface.</p>
+  <strong>Minimal SQL Query Building for Node.js</strong>
+  <p>nusql is a versatile and lightweight SQL query builder package designed to streamline database interactions in Node.js applications. </p>
 </div>
 
 <br>
 
 <div align="center">
-  <img src="https://img.shields.io/badge/version-1.0.2-blue.svg" alt="GitHub stars">
+  <img src="https://img.shields.io/badge/version-1.0.3-blue.svg" alt="GitHub stars">
   <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="GitHub">
 </div>
 </div>
