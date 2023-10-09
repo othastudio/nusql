@@ -439,7 +439,7 @@ describe('SQL Query Generation easy level', () => {
         const nusql = new Nusql();
         
         const columns:any = {
-            StudentID: nusql.int(10).build(),
+            StudentID: nusql.int().primary_key,
             StudentName: nusql.varchar(50).build()
         }
     

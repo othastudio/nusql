@@ -8,7 +8,7 @@ class Nusql {
      * Specifies a PRIMARY KEY constraint on the current column.
      * @returns {Nusql} - The Nusql instance for method chaining.
     */
-    primary_key(): Nusql {
+    primaryKey(): Nusql {
         this.query += 'PRIMARY KEY ';
         return this;
     }
