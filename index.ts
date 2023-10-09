@@ -154,6 +154,17 @@ class Nusql {
     }
 
     /**
+     * Adds a DELETE FROM statement to the SQL query for the specified table.
+     * @param {string} table - The name of the table from which to delete rows.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    deleteFrom(table: string): Nusql {
+        this.query += `DELETE FROM ${table} `;
+        return this;
+    }
+
+
+    /**
      * Builds and returns the SQL query as a string.
      * @returns {string} - The generated SQL query.
      */
