@@ -5,18 +5,19 @@ class Nusql {
         this.query = '';
     }
     /**
- * Specifies a PRIMARY KEY constraint on the current column.
- * @returns {Nusql} - The Nusql instance for method chaining.
- */
+     * Specifies a PRIMARY KEY constraint on the current column.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+    */
     primary_key(): Nusql {
         this.query += 'PRIMARY KEY ';
         return this;
     }
+
     /**
      * Specifies a NOT NULL constraint on the current column.
      * @returns {Nusql} - The Nusql instance for method chaining.
      */
-    not_null(): Nusql {
+    notNull(): Nusql {
         this.query += 'NOT NULL ';
         return this;
     }
@@ -224,8 +225,12 @@ class Nusql {
      * @param {number} size - The size of the INT column.
      * @returns {Nusql} - The Nusql instance for method chaining.
      */
-    int(size: number): Nusql {
-        this.query += `INT(${size}) `;
+    int(size?: number): Nusql {
+        if (size !== undefined) {
+            this.query += `INT(${size}) `;
+        } else {
+            this.query += 'INT ';
+        }
         return this;
     }
 
