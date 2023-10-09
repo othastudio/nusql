@@ -361,21 +361,18 @@ class Nusql {
      * @param {string} columns - The columns to select.
      * @returns {Nusql} - The Nusql instance for method chaining.
      */
-    static select(columns: string): Nusql {
-        const nusql = new Nusql();
-        nusql.query += `SELECT ${columns} `;
-        return nusql;
+    select(columns: string): Nusql {
+        this.query += `SELECT ${columns} `;
+        return this;
     }
-
     /**
      * Specifies the table from which to retrieve data in the SQL query.
      * @param {string} table - The table name.
      * @returns {Nusql} - The Nusql instance for method chaining.
      */
-    static from(table: string): Nusql {
-        const nusql = new Nusql();
-        nusql.query += `FROM ${table} `;
-        return nusql;
+    from(table: string): Nusql {
+        this.query += `FROM ${table} `;
+        return this;
     }
 
     /**
@@ -383,10 +380,9 @@ class Nusql {
      * @param {string} condition - The condition to apply in the WHERE clause.
      * @returns {Nusql} - The Nusql instance for method chaining.
      */
-    static where(condition: string): Nusql {
-        const nusql = new Nusql();
-        nusql.query += `WHERE ${condition} `;
-        return nusql;
+    where(condition: string): Nusql {
+        this.query += `WHERE ${condition} `;
+        return this;
     }
 
     /**
@@ -395,10 +391,9 @@ class Nusql {
      * @param {'ASC' | 'DESC'} direction - The sort direction (optional, defaults to 'ASC').
      * @returns {Nusql} - The Nusql instance for method chaining.
      */
-    static orderBy(column: string, direction: 'ASC' | 'DESC' = 'ASC'): Nusql {
-        const nusql = new Nusql();
-        nusql.query += `ORDER BY ${column} ${direction} `;
-        return nusql;
+    orderBy(column: string, direction: 'ASC' | 'DESC' = 'ASC'): Nusql {
+        this.query += `ORDER BY ${column} ${direction} `;
+        return this;
     }
 
     /**
@@ -792,7 +787,7 @@ class Nusql {
 
         return this; // Return the updated Nusql instance for method chaining
     }
-    
+
     /**
      * Builds and returns the SQL query as a string.
      * @returns {string} - The generated SQL query.
@@ -800,6 +795,11 @@ class Nusql {
     build(): string {
         return this.query.trim(); // Remove trailing whitespace
     }
+
+    static create() {
+        return new Nusql();
+    }
 }
 
 export default Nusql;
+
