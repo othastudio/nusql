@@ -1,14 +1,14 @@
 {
-  "name": "nuclea-sql",
+  "name": "nusql",
   "version": "1.0.3",
   "description": "Simplified SQL query builder for Nuclea",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"No tests available\" && exit 0"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/othastudio/nuclea-sql.git"
+    "url": "https://github.com/othastudio/nusql.git"
   },
   "keywords": [
     "nuclea",
