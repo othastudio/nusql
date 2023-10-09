@@ -621,6 +621,18 @@ class Nusql {
         return this;
     }
 
+    /**
+     * Adds a WHERE clause with the BETWEEN operator.
+     * @param {string} column - The column to check.
+     * @param {any} value1 - The start of the range.
+     * @param {any} value2 - The end of the range.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    between(column: string, value1: any, value2: any): Nusql {
+        this.query += `WHERE ${column} BETWEEN ${value1} AND ${value2} `;
+        return this;
+    }
+
 
     /**
      * Builds and returns the SQL query as a string.
