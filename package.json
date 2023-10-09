@@ -1,6 +1,6 @@
 {
   "name": "nusql",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Simplified SQL query builder for Nuclea",
   "main": "index.js",
   "scripts": {
