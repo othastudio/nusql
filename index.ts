@@ -657,6 +657,26 @@ class Nusql {
     }
 
     /**
+     * Adds a WHERE clause to check if a column is NULL.
+     * @param {string} column - The column to check for NULL.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    isNull(column: string): Nusql {
+        this.query += `WHERE ${column} IS NULL `;
+        return this;
+    }
+
+    /**
+     * Adds a WHERE clause to check if a column is NOT NULL.
+     * @param {string} column - The column to check for NOT NULL.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    isNotNull(column: string): Nusql {
+        this.query += `WHERE ${column} IS NOT NULL `;
+        return this;
+    }
+
+    /**
      * Builds and returns the SQL query as a string.
      * @returns {string} - The generated SQL query.
      */
