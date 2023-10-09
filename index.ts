@@ -520,7 +520,13 @@ class Nusql {
      */
     insertInto(table: string, values: Record<string, any>): Nusql {
         const columns = Object.keys(values).join(', ');
-        const placeholders = Object.keys(values).map(() => '?').join(', ');
+        const placeholders = Object.values(values).map(value => {
+            if (typeof value === 'number') {
+                return value.toString(); // Convert numbers to strings without quotes
+            } else {
+                return `'${value}'`; // Wrap strings in single quotes
+            }
+        }).join(', ');
 
         this.query += `INSERT INTO ${table} (${columns}) VALUES (${placeholders}) `;
         return this;
@@ -533,10 +539,17 @@ class Nusql {
      * @returns {Nusql} - The Nusql instance for method chaining.
      */
     update(table: string, values: Record<string, any>): Nusql {
-        const columnsToUpdate = Object.keys(values)
-            .map(column => `${column} = ?`)
+        const columnsToUpdate = Object.entries(values)
+            .map(([key, value]) => {
+                if (Number.isInteger(value)) {
+                    // If the value is an integer, treat it as an integer in the SQL query
+                    return `${key} = ${value}`;
+                } else {
+                    // If the value is not an integer, treat it as a string in single quotes
+                    return `${key} = '${value}'`;
+                }
+            })
             .join(', ');
-
         this.query += `UPDATE ${table} SET ${columnsToUpdate} `;
         return this;
     }
@@ -558,11 +571,18 @@ class Nusql {
      * @returns {Nusql} - The Nusql instance for method chaining.
      */
     createTable(table: string, columns: Record<string, string>): Nusql {
+        function parseObjectToSql(object) {
+            const sqlColumns = [];
+
+            for (const [columnName, columnDefinition] of Object.entries(object)) {
+                sqlColumns.push(`${columnName} ${columnDefinition}`);
+            }
+
+            return sqlColumns.join(', ');
+        }
+        const sqlString = parseObjectToSql(columns);
         this.query += `CREATE TABLE ${table} (`;
-        const columnDefinitions = Object.entries(columns).map(([columnName, columnType]) => {
-            return `${columnName} ${columnType}`;
-        });
-        this.query += columnDefinitions.join(', ');
+        this.query += sqlString;
         this.query += `) `;
         return this;
     }
@@ -814,7 +834,9 @@ class Nusql {
      * @returns {string} - The generated SQL query.
      */
     build(): string {
-        return this.query.trim(); // Remove trailing whitespace
+        const buildQuery = this.query.trim();
+        this.query = '';
+        return buildQuery;
     }
 
     static create() {

@@ -282,13 +282,13 @@ describe('Nusql methods', () => {
     it('should generate an INSERT INTO query', () => {
         const values = { column1: 'value1', column2: 'value2' };
         nusql.insertInto('table', values);
-        expect(nusql.build()).toBe('INSERT INTO table (column1, column2) VALUES (?, ?)');
+        expect(nusql.build()).toBe("INSERT INTO table (column1, column2) VALUES ('value1', 'value2')");
     });
 
     it('should generate an UPDATE query', () => {
         const values = { column1: 'value1', column2: 'value2' };
         nusql.update('table', values);
-        expect(nusql.build()).toBe('UPDATE table SET column1 = ?, column2 = ?');
+        expect(nusql.build()).toBe("UPDATE table SET column1 = 'value1', column2 = 'value2'");
     });
 
     it('should generate a DELETE FROM query', () => {
@@ -418,12 +418,13 @@ describe('Nusql methods', () => {
     });
 });
 
-describe('SQL Query Generation easy level', () => {
+describe('SQL Query Generation', () => {
     let nusql;
 
     beforeEach(() => {
         nusql = Nusql.create();
     });
+
     it('should generate the correct SQL query to test select, from, where, and', () => {
         nusql
             .select('ProductName, Price')
@@ -434,19 +435,38 @@ describe('SQL Query Generation easy level', () => {
         const expectedSql = 'SELECT ProductName, Price FROM Products WHERE Category = \'Electronics\' AND Price < 500.00';
         expect(nusql.build()).toBe(expectedSql);
     });
+
+    it('should generate a CREATE TABLE statement with column definitions', () => {
+        const tableName = 'students';
+        const columns = {
+            studentID: nusql.int().primaryKey().build(),
+            studentName: nusql.varchar(50).build(),
+        };
+        const nusqlQuery = nusql.createTable(tableName, columns);
+        const sqlQuery = nusqlQuery.build();
+        const expectedSql = 'CREATE TABLE students (studentID INT PRIMARY KEY, studentName VARCHAR(50))';
+        expect(sqlQuery).toBe(expectedSql);
+    });
     
-    it('should generate the correct SQL query to create a table', () => {
-        const nusql = new Nusql();
-        
-        const columns:any = {
-            StudentID: nusql.int().primary_key,
-            StudentName: nusql.varchar(50).build()
-        }
-    
+    it('should generate the correct SQL query for INSERT INTO', () => {
         nusql
-            .createTable('Students', columns);
+            .insertInto('Students', {
+                StudentID: 1,
+                StudentName: 'John Doe'
+            });
     
-        const expectedSql = 'CREATE TABLE Students (StudentID INT PRIMARY KEY, StudentName VARCHAR(50)) ';
+        const expectedSql = "INSERT INTO Students (StudentID, StudentName) VALUES (1, 'John Doe')";
+        expect(nusql.build()).toBe(expectedSql);
+    });
+
+    it('should generate the correct SQL query for updating a student name', () => {
+        nusql
+            .update('Students', {
+                StudentName: 'Jane Smith'
+            })
+            .where('StudentID = 1');
+    
+        const expectedSql = "UPDATE Students SET StudentName = 'Jane Smith' WHERE StudentID = 1";
         expect(nusql.build()).toBe(expectedSql);
     });
 });
