@@ -632,6 +632,17 @@ class Nusql {
         this.query += `WHERE ${column} BETWEEN ${value1} AND ${value2} `;
         return this;
     }
+    
+    /**
+     * Adds a WHERE clause with the LIKE operator.
+     * @param {string} column - The column to check.
+     * @param {string} pattern - The pattern to match.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    like(column: string, pattern: string): Nusql {
+        this.query += `WHERE ${column} LIKE '${pattern}' `;
+        return this;
+    }
 
 
     /**
