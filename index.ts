@@ -741,7 +741,7 @@ class Nusql {
    * @param {string} column - The column to concatenate.
    * @param {string} separator - The optional separator between concatenated values (default: ', ').
    * @param {string} orderBy - The optional ORDER BY clause for sorting the concatenated values.
-   * @returns {NucleaSQL} - The updated NucleaSQL instance for method chaining.
+   * @returns {Nusql} - The updated Nusql instance for method chaining.
    */
     groupByConcat(column: string, separator: string = ', ', orderBy?: string): Nusql {
         // Start building the GROUP_CONCAT function with the provided column
@@ -755,9 +755,30 @@ class Nusql {
         // Complete the function with an optional separator and closing parenthesis
         this.query += ` SEPARATOR '${separator}') `;
 
-        return this; // Return the updated NucleaSQL instance for method chaining
+        return this; // Return the updated Nusql instance for method chaining
     }
 
+    /**
+   * Adds a conditional expression using the CASE WHEN statement.
+   * @param {string} condition - The condition to evaluate.
+   * @param {string} result - The result value when the condition is true.
+   * @param {string} elseResult - The optional result value when the condition is false.
+   * @returns {Nusql} - The updated Nusql instance for method chaining.
+   */
+    caseWhen(condition: string, result: string, elseResult?: string): Nusql {
+        // Start building the CASE WHEN statement with the provided condition
+        this.query += `CASE WHEN ${condition} THEN ${result}`;
+
+        // Add an optional ELSE clause if an elseResult is provided
+        if (elseResult) {
+            this.query += ` ELSE ${elseResult}`;
+        }
+
+        // Complete the statement with an END clause
+        this.query += ' END ';
+
+        return this; // Return the updated Nusql instance for method chaining
+    }
     /**
      * Builds and returns the SQL query as a string.
      * @returns {string} - The generated SQL query.
