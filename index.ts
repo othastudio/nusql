@@ -632,7 +632,7 @@ class Nusql {
         this.query += `WHERE ${column} BETWEEN ${value1} AND ${value2} `;
         return this;
     }
-    
+
     /**
      * Adds a WHERE clause with the LIKE operator.
      * @param {string} column - The column to check.
@@ -644,6 +644,17 @@ class Nusql {
         return this;
     }
 
+    /**
+     * Adds a WHERE clause with the IN operator.
+     * @param {string} column - The column to check.
+     * @param {string[]} values - An array of values to check against.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    in(column: string, values: string[]): Nusql {
+        const formattedValues = values.map(value => `'${value}'`).join(', ');
+        this.query += `WHERE ${column} IN (${formattedValues}) `;
+        return this;
+    }
 
     /**
      * Builds and returns the SQL query as a string.
