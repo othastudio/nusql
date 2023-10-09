@@ -1,0 +1,17 @@
+# Ignore Node.js modules and npm packages
+node_modules/
+npm-debug.log
+package-lock.json
+
+# Output of build tools
+dist/
+coverage/
+
+# Ignore IDE and editor specific files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
