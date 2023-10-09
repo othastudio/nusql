@@ -400,6 +400,25 @@ class Nusql {
         nusql.query += `ORDER BY ${column} ${direction} `;
         return nusql;
     }
+    /**
+     * Adds an ascending (ASC) sorting to the ORDER BY clause.
+     * @param {string} column - The column to sort by.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    orderByAsc(column: string): Nusql {
+        this.query += `ORDER BY ${column} ASC `;
+        return this;
+    }
+
+    /**
+     * Adds a descending (DESC) sorting to the ORDER BY clause.
+     * @param {string} column - The column to sort by.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    orderByDesc(column: string): Nusql {
+        this.query += `ORDER BY ${column} DESC `;
+        return this;
+    }
 
     /**
      * Adds a GROUP BY clause to the SQL query to group results by a specified field.
