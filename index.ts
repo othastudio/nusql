@@ -677,6 +677,26 @@ class Nusql {
     }
 
     /**
+     * Adds an AND condition to the WHERE clause.
+     * @param {string} condition - The condition to add.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    and(condition: string): Nusql {
+        this.query += `AND ${condition} `;
+        return this;
+    }
+
+    /**
+     * Adds an OR condition to the WHERE clause.
+     * @param {string} condition - The condition to add.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    or(condition: string): Nusql {
+        this.query += `OR ${condition} `;
+        return this;
+    }
+
+    /**
      * Builds and returns the SQL query as a string.
      * @returns {string} - The generated SQL query.
      */
