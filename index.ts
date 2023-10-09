@@ -125,6 +125,20 @@ class Nusql {
     }
 
     /**
+     * Adds an INSERT INTO statement to the SQL query with the specified table and values.
+     * @param {string} table - The name of the table to insert into.
+     * @param {Record<string, any>} values - An object containing the column-value pairs to insert.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    insertInto(table: string, values: Record<string, any>): Nusql {
+        const columns = Object.keys(values).join(', ');
+        const placeholders = Object.keys(values).map(() => '?').join(', ');
+
+        this.query += `INSERT INTO ${table} (${columns}) VALUES (${placeholders}) `;
+        return this;
+    }
+
+    /**
      * Builds and returns the SQL query as a string.
      * @returns {string} - The generated SQL query.
      */
