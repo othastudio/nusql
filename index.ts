@@ -5,6 +5,23 @@ class Nusql {
         this.query = '';
     }
     /**
+ * Specifies a PRIMARY KEY constraint on the current column.
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    primary_key(): Nusql {
+        this.query += 'PRIMARY KEY ';
+        return this;
+    }
+    /**
+     * Specifies a NOT NULL constraint on the current column.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    not_null(): Nusql {
+        this.query += 'NOT NULL ';
+        return this;
+    }
+
+    /**
      * Generates a CHAR column type with a specified size.
      * @param {number} size - The size of the CHAR column.
      * @returns {Nusql} - The Nusql instance for method chaining.
@@ -543,7 +560,7 @@ class Nusql {
         this.query += columnDefinitions.join(', ');
         this.query += `) `;
         return this;
-    }    
+    }
 
     /**
      * Generates an ALTER TABLE statement for the specified table with the given action.

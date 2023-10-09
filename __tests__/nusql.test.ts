@@ -1,4 +1,4 @@
-import Nusql from'../index';
+import Nusql from '../index';
 
 describe('Nusql core testing', () => {
     it('should construct an instance', () => {
@@ -75,12 +75,12 @@ describe('Nusql Data types', () => {
     });
 
     it('should generate an ENUM column type with specified values', () => {
-        nusql.enum('Value1','Value2','Value3');
+        nusql.enum('Value1', 'Value2', 'Value3');
         expect(nusql.build()).toBe("ENUM('Value1', 'Value2', 'Value3')");
     });
 
     it('should generate a SET column type with specified values', () => {
-        nusql.set('Option1','Option2','Option3');
+        nusql.set('Option1', 'Option2', 'Option3');
         console.log(nusql.create)
         expect(nusql.build()).toBe("SET('Option1', 'Option2', 'Option3')");
     });
@@ -229,7 +229,7 @@ describe('Nusql methods', () => {
     });
 
     it('should generate an ORDER BY query', () => {
-        nusql.orderBy('column1','ASC');
+        nusql.orderBy('column1', 'ASC');
         expect(nusql.build()).toBe('ORDER BY column1 ASC');
     });
 
@@ -254,22 +254,22 @@ describe('Nusql methods', () => {
     });
 
     it('should generate an INNER JOIN query', () => {
-        nusql.innerJoin('table2','condition3');
+        nusql.innerJoin('table2', 'condition3');
         expect(nusql.build()).toBe('INNER JOIN table2 ON condition3');
     });
 
     it('should generate a LEFT JOIN query', () => {
-        nusql.leftJoin('table3','condition4');
+        nusql.leftJoin('table3', 'condition4');
         expect(nusql.build()).toBe('LEFT JOIN table3 ON condition4');
     });
 
     it('should generate a RIGHT JOIN query', () => {
-        nusql.rightJoin('table4','condition5');
+        nusql.rightJoin('table4', 'condition5');
         expect(nusql.build()).toBe('RIGHT JOIN table4 ON condition5');
     });
 
     it('should generate a FULL OUTER JOIN query', () => {
-        nusql.fullOuterJoin('table5','condition6');
+        nusql.fullOuterJoin('table5', 'condition6');
         expect(nusql.build()).toBe('FULL OUTER JOIN table5 ON condition6');
     });
 
@@ -280,13 +280,13 @@ describe('Nusql methods', () => {
     });
 
     it('should generate an INSERT INTO query', () => {
-        const values = { column1:'value1', column2:'value2' };
+        const values = { column1: 'value1', column2: 'value2' };
         nusql.insertInto('table', values);
         expect(nusql.build()).toBe('INSERT INTO table (column1, column2) VALUES (?, ?)');
     });
 
     it('should generate an UPDATE query', () => {
-        const values = { column1:'value1', column2:'value2' };
+        const values = { column1: 'value1', column2: 'value2' };
         nusql.update('table', values);
         expect(nusql.build()).toBe('UPDATE table SET column1 = ?, column2 = ?');
     });
@@ -307,7 +307,7 @@ describe('Nusql methods', () => {
     });
 
     it('should generate an ALTER TABLE query', () => {
-        nusql.alterTable('table','ADD COLUMN column3 INT');
+        nusql.alterTable('table', 'ADD COLUMN column3 INT');
         expect(nusql.build()).toBe('ALTER TABLE table ADD COLUMN column3 INT');
     });
 
@@ -357,12 +357,12 @@ describe('Nusql methods', () => {
     });
 
     it('should generate a LIKE query', () => {
-        nusql.like('column7','%pattern%');
+        nusql.like('column7', '%pattern%');
         expect(nusql.build()).toBe('WHERE column7 LIKE \'%pattern%\'');
     });
 
     it('should generate an IN query', () => {
-        nusql.in('column8', ['value1','value2','value3']);
+        nusql.in('column8', ['value1', 'value2', 'value3']);
         expect(nusql.build()).toBe('WHERE column8 IN (\'value1\', \'value2\', \'value3\')');
     });
 
@@ -394,5 +394,59 @@ describe('Nusql methods', () => {
     it('should generate an OFFSET query', () => {
         nusql.offset(5);
         expect(nusql.build()).toBe('OFFSET 5');
+    });
+
+    it('should generate a GROUP_CONCAT function with the specified column and separator', () => {
+        const column = 'column_name';
+        const separator = ', ';
+        const orderBy = 'column_name ASC';
+
+        nusql.groupByConcat(column, separator, orderBy);
+
+        const expectedSql = `GROUP_CONCAT(${column} ORDER BY ${orderBy} SEPARATOR '${separator}')`;
+        expect(nusql.build()).toBe(expectedSql);
+    });
+
+    it('should generate a GROUP_CONCAT function without an ORDER BY clause when orderBy is not specified', () => {
+        const column = 'column_name';
+        const separator = ', ';
+
+        nusql.groupByConcat(column, separator);
+
+        const expectedSql = `GROUP_CONCAT(${column} SEPARATOR '${separator}')`;
+        expect(nusql.build()).toBe(expectedSql);
+    });
+});
+
+describe('SQL Query Generation easy level', () => {
+    let nusql;
+
+    beforeEach(() => {
+        nusql = Nusql.create();
+    });
+    it('should generate the correct SQL query to test select, from, where, and', () => {
+        nusql
+            .select('ProductName, Price')
+            .from('Products')
+            .where("Category = 'Electronics'")
+            .and('Price < 500.00');
+
+        const expectedSql = 'SELECT ProductName, Price FROM Products WHERE Category = \'Electronics\' AND Price < 500.00';
+        expect(nusql.build()).toBe(expectedSql);
+    });
+    
+    it('should generate the correct SQL query to create a table', () => {
+        const nusql = new Nusql();
+        
+        const columns:any = {
+            StudentID: nusql.int(10).build(),
+            StudentName: nusql.varchar(50).build()
+        }
+    
+        nusql
+            .createTable('Students', columns);
+    
+        const expectedSql = 'CREATE TABLE Students (StudentID INT PRIMARY KEY, StudentName VARCHAR(50)) ';
+        expect(nusql.build()).toBe(expectedSql);
     });
 });
