@@ -447,14 +447,14 @@ describe('SQL Query Generation', () => {
         const expectedSql = 'CREATE TABLE students (studentID INT PRIMARY KEY, studentName VARCHAR(50))';
         expect(sqlQuery).toBe(expectedSql);
     });
-    
+
     it('should generate the correct SQL query for INSERT INTO', () => {
         nusql
             .insertInto('Students', {
                 StudentID: 1,
                 StudentName: 'John Doe'
             });
-    
+
         const expectedSql = "INSERT INTO Students (StudentID, StudentName) VALUES (1, 'John Doe')";
         expect(nusql.build()).toBe(expectedSql);
     });
@@ -465,8 +465,94 @@ describe('SQL Query Generation', () => {
                 StudentName: 'Jane Smith'
             })
             .where('StudentID = 1');
-    
+
         const expectedSql = "UPDATE Students SET StudentName = 'Jane Smith' WHERE StudentID = 1";
         expect(nusql.build()).toBe(expectedSql);
     });
+    it('should generate the correct SQL query to delete from a table with a WHERE condition', () => {
+        nusql
+            .deleteFrom('Students')
+            .where('StudentID = 1');
+
+        const expectedSql = 'DELETE FROM Students WHERE StudentID = 1';
+        expect(nusql.build()).toBe(expectedSql);
+    });
+    it('should generate the correct SQL query to alter a table by adding a column', () => {
+        nusql
+            .alterTable('Students', 'ADD Age INT');
+
+        const expectedSql = 'ALTER TABLE Students ADD Age INT';
+        expect(nusql.build()).toBe(expectedSql);
+    });
+    it('should generate the correct SQL query to insert multiple rows into a table', () => {
+        nusql
+            .insertInto('Orders', {
+                OrderID: 1,
+                CustomerID: 101,
+                OrderDate: '2023-01-15',
+                TotalAmount: 250.50,
+            })
+            .insertInto('Orders', {
+                OrderID: 2,
+                CustomerID: 102,
+                OrderDate: '2023-01-20',
+                TotalAmount: 150.75,
+            })
+            .insertInto('Orders', {
+                OrderID: 3,
+                CustomerID: 103,
+                OrderDate: '2023-01-25',
+                TotalAmount: 350.25,
+            });
+
+        const expectedSql = `INSERT INTO Orders (OrderID, CustomerID, OrderDate, TotalAmount)
+    VALUES
+        (1, 101, '2023-01-15', 250.5),
+        (2, 102, '2023-01-20', 150.75),
+        (3, 103, '2023-01-25', 350.25)`;
+
+        expect(nusql.build()).toBe(expectedSql);
+    });
+
+    it('should generate the correct SQL query for inserting a single row into a table', () => {
+        nusql
+            .insertInto('Orders', {
+                OrderID: 1,
+                CustomerID: 101,
+                OrderDate: '2023-01-15',
+                TotalAmount: 250.50,
+            });
+
+        const expectedSql = `INSERT INTO Orders (OrderID, CustomerID, OrderDate, TotalAmount) VALUES (1, 101, '2023-01-15', 250.5)`;
+
+        expect(nusql.build()).toBe(expectedSql);
+    });
+
+    it('should generate the correct SQL query to create a table with foreign key constraint', () => {
+        const nusql = new Nusql();
+
+        const columns:any = {
+            OrderID: nusql.int().primaryKey(),
+            CustomerID: nusql.int(),
+            OrderDate: nusql.date(),
+            TotalAmount: nusql.decimal(10, 2),
+        };
+
+        nusql
+            .createTable('Orders', columns)
+            //.foreignKey('CustomerID', 'Customers', 'CustomerID');
+
+        const expectedSql = `CREATE TABLE Orders (
+        OrderID INT PRIMARY KEY,
+        CustomerID INT,
+        OrderDate DATE,
+        TotalAmount DECIMAL(10, 2),
+        FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+    )`;
+
+        expect(nusql.build()).toBe(expectedSql);
+    });
+
+    // Add more test cases for different scenarios as needed
+
 });
