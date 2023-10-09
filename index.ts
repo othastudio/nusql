@@ -163,6 +163,23 @@ class Nusql {
         return this;
     }
 
+    /**
+     * Adds a CREATE TABLE statement to the SQL query for creating a table with specified columns.
+     * @param {string} table - The name of the table to create.
+     * @param {Record<string, (type: Nusql) => Nusql>} columns - An object representing column names and their data types as functions.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    createTable(table: string, columns: Record<string, (type: Nusql) => Nusql>): Nusql {
+        this.query += `CREATE TABLE ${table} (`;
+        const columnDefinitions = Object.entries(columns).map(([columnName, columnTypeFn]) => {
+            const columnType = columnTypeFn(new Nusql()).build(); // Execute the function to get the column type
+            return `${columnName} ${columnType}`;
+        });
+        this.query += columnDefinitions.join(', ');
+        this.query += `) `;
+        return this;
+    }
+
 
     /**
      * Builds and returns the SQL query as a string.
