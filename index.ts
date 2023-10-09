@@ -139,6 +139,21 @@ class Nusql {
     }
 
     /**
+     * Adds an UPDATE statement to the SQL query with the specified table and values.
+     * @param {string} table - The name of the table to update.
+     * @param {Record<string, any>} values - An object containing the column-value pairs to update.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    update(table: string, values: Record<string, any>): Nusql {
+        const columnsToUpdate = Object.keys(values)
+            .map(column => `${column} = ?`)
+            .join(', ');
+
+        this.query += `UPDATE ${table} SET ${columnsToUpdate} `;
+        return this;
+    }
+
+    /**
      * Builds and returns the SQL query as a string.
      * @returns {string} - The generated SQL query.
      */
