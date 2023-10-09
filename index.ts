@@ -571,6 +571,56 @@ class Nusql {
         return this;
     }
 
+    /**
+     * Adds a COUNT aggregate function to the SELECT statement.
+     * @param {string} column - The column to count.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    count(column: string): Nusql {
+        this.query += `COUNT(${column}) `;
+        return this;
+    }
+
+    /**
+     * Adds a SUM aggregate function to the SELECT statement.
+     * @param {string} column - The column to sum.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    sum(column: string): Nusql {
+        this.query += `SUM(${column}) `;
+        return this;
+    }
+
+    /**
+     * Adds an AVG aggregate function to the SELECT statement.
+     * @param {string} column - The column to average.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    avg(column: string): Nusql {
+        this.query += `AVG(${column}) `;
+        return this;
+    }
+
+    /**
+     * Adds a MAX aggregate function to the SELECT statement.
+     * @param {string} column - The column to find the maximum value.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    max(column: string): Nusql {
+        this.query += `MAX(${column}) `;
+        return this;
+    }
+
+    /**
+     * Adds a MIN aggregate function to the SELECT statement.
+     * @param {string} column - The column to find the minimum value.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    min(column: string): Nusql {
+        this.query += `MIN(${column}) `;
+        return this;
+    }
+
 
     /**
      * Builds and returns the SQL query as a string.
