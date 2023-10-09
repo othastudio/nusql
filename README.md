@@ -13,7 +13,7 @@
 <br>
 
 <div align="center">
-  <img src="https://img.shields.io/badge/version-1.0.0-blue.svg" alt="GitHub stars">
+  <img src="https://img.shields.io/badge/version-1.0.2-blue.svg" alt="GitHub stars">
   <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="GitHub">
 </div>
 </div>
@@ -30,6 +30,15 @@ const query = nusql()
   .limit(10)
   .offset(0)
   .build();
+
+const connect = db.query
+try{
+  console.log(connect['rows'])
+}
+catch(e){
+  console.error(e)
+}
+
 
 console.log(query);
 // Output: SELECT * FROM users WHERE age > 25 LIMIT 10 OFFSET 0
