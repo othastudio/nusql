@@ -531,6 +531,17 @@ class Nusql {
         return this;
     }
 
+    /**
+     * Generates an ALTER TABLE statement for the specified table with the given action.
+     * @param {string} table - The name of the table to alter.
+     * @param {string} action - The ALTER TABLE action to perform (e.g., "ADD COLUMN column_name data_type").
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    alterTable(table: string, action: string): Nusql {
+        this.query += `ALTER TABLE ${table} ${action} `;
+        return this;
+    }
+
 
     /**
      * Builds and returns the SQL query as a string.
