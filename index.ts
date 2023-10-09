@@ -400,6 +400,7 @@ class Nusql {
         nusql.query += `ORDER BY ${column} ${direction} `;
         return nusql;
     }
+
     /**
      * Adds an ascending (ASC) sorting to the ORDER BY clause.
      * @param {string} column - The column to sort by.
@@ -712,6 +713,26 @@ class Nusql {
      */
     or(condition: string): Nusql {
         this.query += `OR ${condition} `;
+        return this;
+    }
+    
+    /**
+     * Adds a LIMIT clause to limit the number of rows returned in the result set.
+     * @param {number} limit - The maximum number of rows to return.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    limit(limit: number): Nusql {
+        this.query += `LIMIT ${limit} `;
+        return this;
+    }
+
+    /**
+     * Adds an OFFSET clause to skip a specified number of rows in the result set.
+     * @param {number} offset - The number of rows to skip.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    offset(offset: number): Nusql {
+        this.query += `OFFSET ${offset} `;
         return this;
     }
 
