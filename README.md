@@ -1,82 +1,55 @@
+<p align="center">
+  <img width="200px" src="https://i.postimg.cc/hv15fZR4/nusql-logo.png" alt="nusql logo">
+</p>
+
+<h1 align="center">Simplified SQL Query Builder</h1>
 <div align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://i.postimg.cc/k5p0W4nX/nuclea-sql.png">
-    <source media="(prefers-color-scheme: light)" srcset="https://i.postimg.cc/k5p0W4nX/nuclea-sql.png">
-    <img width="50" alt="nuclea-logo" src="https://i.postimg.cc/k5p0W4nX/nuclea-sql.png">
-  </picture>
+ <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License">
+<img src="https://img.shields.io/npm/v/nusql.svg" alt="npm version">
+<img src="https://img.shields.io/npm/dt/nusql.svg" alt="npm downloads">
+<img src="https://github.com/othastudio/nusql/actions/workflows/test-package.yml/badge.svg" alt="Testing">
 </div>
-<div align="center">
-  <strong>Minimal SQL Query Building for Node.js</strong>
-  <p>nusql is a versatile and lightweight SQL query builder package designed to streamline database interactions in Node.js applications. </p>
-</div>
+<p align="center">Simplify your raw SQL usage in Node.js and TypeScript with Nusql. Nusql is a lightweight SQL query builder that allows you to construct complex SQL queries easily and safely.</p>
 
-<br>
+## Features
 
-<div align="center">
-  <img src="https://img.shields.io/badge/version-1.0.3-blue.svg" alt="GitHub stars">
-  <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="GitHub">
-</div>
-</div>
+- 📝 Build SQL queries programmatically.
+- 🛡️ Prevent SQL injection vulnerabilities.
+- 🌐 Supports multiple SQL dialects.
+- 🤝 Easily integrate with your existing Node.js projects.
+- 📦 Lightweight and easy to use.
 
-## Example Usage
+## Installation
 
+```bash
+npm install nusql
 ```
-const { nusql } = require('nuclea-sql');
+### Usage
+```
+const { Nusql } = require('nusql');
 
-const query = nusql()
-  .select('*')
+const nusql = Nusql.create();
+
+const query = nusql
+  .select()
   .from('users')
-  .where('age', '>', 25)
-  .limit(10)
-  .offset(0)
+  .where('age', '>', 18)
+  .orderBy('name')
   .build();
-
-const connect = db.query
-try{
-  console.log(connect['rows'])
-}
-catch(e){
-  console.error(e)
-}
-
-
-console.log(query);
-// Output: SELECT * FROM users WHERE age > 25 LIMIT 10 OFFSET 0
-
 ```
-Nuclea-SQL's concise and readable syntax empowers developers to build complex queries without sacrificing readability.
-
-## Getting Started
-
-To start using Nuclea-SQL in your Nuclea-powered project, follow these simple steps:
-
-1. Installation: 
-Install Nuclea-SQL as a dependency in your Node.js project using npm or yarn:
-```
-npm install nuclea-sql
-```
-2. Import: 
-Import Nuclea-SQL into your project and start building SQL queries with ease:
-```
-const { nusql } = require('nuclea-sql');
-```
-3. Documentation: 
-Explore the comprehensive Nuclea-SQL Documentation for detailed usage instructions, examples, and advanced features.
 
 
+## Documentation
+Check out the <a href="nusql.otha.studio">Nusql documentation</a> for detailed usage instructions, examples, and API reference.
 
 ## Contributing
-
-We welcome contributions! If you'd like to contribute to this sql builder or report issues, please check our Contribution Guidelines.
+We welcome contributions! If you'd like to contribute to Nusql, please follow our contributing guidelines.
 
 ## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the <a href="https://github.com/othastudio/nusql/blob/main/LICENSE">LICENSE</a> file for details.
 
 ## Acknowledgments
+Special thanks to the open-source community and our contributors for making Nusql better with each release.
 
-Thanks to the github community for their valuable contributions.
-
-If you find the nuclea-sql helpful, please consider giving it a ⭐️ on GitHub!
-
-Happy coding! 🔥
+## Support
+If you encounter any issues, have questions, or need assistance, feel free to open an issue on our GitHub repository.
