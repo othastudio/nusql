@@ -2,9 +2,11 @@
   "name": "nusql",
   "version": "1.0.4",
   "description": "Simplified SQL query builder for Nuclea",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "prebuild": "rimraf lib",
+    "build": "npx tsc"
   },
   "repository": {
     "type": "git",
@@ -21,7 +23,10 @@
   "devDependencies": {
     "@types/jest": "^29.5.5",
     "jest": "^29.7.0",
-    "ts-jest": "^29.1.1"
+    "rimraf": "^5.0.5",
+    "ts-jest": "^29.1.1",
+    "tsc": "^2.0.4",
+    "typescript": "^5.2.2"
   },
   "engines": {
     "node": ">=14.0.0"

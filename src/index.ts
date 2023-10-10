@@ -1,3 +1,22 @@
+/**
+ * The `Nusql` class provides a fluent interface for building SQL Nusql in a structured manner.
+ * It allows you to create, modify, and manipulate SQL Nusql easily using method chaining.
+ * You can use this class to construct SQL statements for SELECT, INSERT, UPDATE, DELETE, and more.
+ *
+ * Example Usage:
+ * ```javascript
+ * const Nusql = new Nusql();
+ *
+ * Nusql
+ *     .select('ProductName, Price')
+ *     .from('Products')
+ *     .where("Category = 'Electronics'")
+ *     .and('Price < 500.00');
+ *
+ * const sqlQuery = Nusql.build(); // Get the generated SQL query
+ * ```
+ */
+
 class Nusql {
     private query: string;
 
@@ -897,4 +916,3 @@ class Nusql {
 }
 
 export default Nusql;
-
