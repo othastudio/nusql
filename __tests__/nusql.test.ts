@@ -485,31 +485,26 @@ describe('SQL Query Generation', () => {
         expect(nusql.build()).toBe(expectedSql);
     });
     it('should generate the correct SQL query to insert multiple rows into a table', () => {
+        const values = [{
+            OrderID: 1,
+            CustomerID: 121,
+            OrderDate: '2023-01-15',
+            TotalAmount: 250.50,
+        }, {
+            OrderID: 2,
+            CustomerID: 101,
+            OrderDate: '2023-03-15',
+            TotalAmount: 350.50,
+        }, {
+            OrderID: 4,
+            CustomerID: 102,
+            OrderDate: '2023-02-15',
+            TotalAmount: 2550.50,
+        }];
         nusql
-            .insertInto('Orders', {
-                OrderID: 1,
-                CustomerID: 101,
-                OrderDate: '2023-01-15',
-                TotalAmount: 250.50,
-            })
-            .insertInto('Orders', {
-                OrderID: 2,
-                CustomerID: 102,
-                OrderDate: '2023-01-20',
-                TotalAmount: 150.75,
-            })
-            .insertInto('Orders', {
-                OrderID: 3,
-                CustomerID: 103,
-                OrderDate: '2023-01-25',
-                TotalAmount: 350.25,
-            });
+            .insertInto('Orders', values)
 
-        const expectedSql = `INSERT INTO Orders (OrderID, CustomerID, OrderDate, TotalAmount)
-    VALUES
-        (1, 101, '2023-01-15', 250.5),
-        (2, 102, '2023-01-20', 150.75),
-        (3, 103, '2023-01-25', 350.25)`;
+        const expectedSql = `INSERT INTO Orders (OrderID, CustomerID, OrderDate, TotalAmount) VALUES (1, 121, '2023-01-15', 250.5), (2, 101, '2023-03-15', 350.5), (4, 102, '2023-02-15', 2550.5)`;
 
         expect(nusql.build()).toBe(expectedSql);
     });
@@ -545,6 +540,22 @@ describe('SQL Query Generation', () => {
         expect(nusql.build()).toBe(expectedSql);
     });
 
-    // Add more test cases for different scenarios as needed
-
+    it('should generate the correct SQL query for selecting count and average', () => {    
+        nusql
+            .select('COUNT(*) AS TotalOrders, AVG(TotalAmount) AS AverageAmount')
+            .from('Orders');
+    
+        const expectedSql = 'SELECT COUNT(*) AS TotalOrders, AVG(TotalAmount) AS AverageAmount FROM Orders';
+        expect(nusql.build()).toBe(expectedSql);
+    });
+    it('should generate the correct SQL query for subquery with IN clause', () => {    
+        nusql
+            .select('CustomerName')
+            .from('Customers')
+            .where('CustomerID IN (SELECT DISTINCT CustomerID FROM Orders WHERE TotalAmount > 500.00)');
+    
+        const expectedSql = 'SELECT CustomerName FROM Customers WHERE CustomerID IN (SELECT DISTINCT CustomerID FROM Orders WHERE TotalAmount > 500.00)';
+        expect(nusql.build()).toBe(expectedSql);
+    });
+        
 });

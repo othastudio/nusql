@@ -518,19 +518,51 @@ class Nusql {
      * @param {Record<string, any>} values - An object containing the column-value pairs to insert.
      * @returns {Nusql} - The Nusql instance for method chaining.
      */
-    insertInto(table: string, values: Record<string, any>): Nusql {
-        const columns = Object.keys(values).join(', ');
-        const placeholders = Object.values(values).map(value => {
-            if (typeof value === 'number') {
-                return value.toString(); // Convert numbers to strings without quotes
-            } else {
-                return `'${value}'`; // Wrap strings in single quotes
-            }
-        }).join(', ');
+    insertInto(table: string, values: Record<string, any> | Record<string, any>[]): Nusql {
+        // Check if the values parameter is an array
+        const isArray = Array.isArray(values);
 
-        this.query += `INSERT INTO ${table} (${columns}) VALUES (${placeholders}) `;
+        if (isArray) {
+            // Handle inserting multiple rows
+            if (values.length === 0) {
+                // If the array is empty, do nothing
+                return this;
+            }
+
+            const columns = Object.keys(values[0]).join(', ');
+            const placeholdersArray = values.map((row) =>
+                Object.values(row)
+                    .map((value) => {
+                        if (typeof value === 'number') {
+                            return value.toString(); // Convert numbers to strings without quotes
+                        } else {
+                            return `'${value}'`; // Wrap strings in single quotes
+                        }
+                    })
+                    .join(', ')
+            );
+            const placeholders = placeholdersArray.join('), (');
+
+            this.query += `INSERT INTO ${table} (${columns}) VALUES (${placeholders}) `;
+        } else {
+            // Handle inserting a single row (values is an object)
+            const columns = Object.keys(values).join(', ');
+            const placeholders = Object.values(values)
+                .map((value) => {
+                    if (typeof value === 'number') {
+                        return value.toString(); // Convert numbers to strings without quotes
+                    } else {
+                        return `'${value}'`; // Wrap strings in single quotes
+                    }
+                })
+                .join(', ');
+
+            this.query += `INSERT INTO ${table} (${columns}) VALUES (${placeholders}) `;
+        }
+
         return this;
     }
+
 
     /**
      * Adds an UPDATE statement to the SQL query with the specified table and values.
