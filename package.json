@@ -5,7 +5,6 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "jest",
-    "prebuild": "rimraf lib",
     "build": "npx tsc"
   },
   "repository": {
