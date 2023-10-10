@@ -586,7 +586,27 @@ class Nusql {
         this.query += `) `;
         return this;
     }
+    /**
+ * Adds a FOREIGN KEY constraint to the table with the specified column(s) and references another table.
+ * @param {string|string[]} columns - The column(s) to add the FOREIGN KEY constraint on.
+ * @param {string} referencedTable - The name of the referenced table.
+ * @param {string|string[]} referencedColumns - The column(s) in the referenced table.
+ * @returns {Nusql} - The updated Nusql instance for method chaining.
+ */
+    foreignKey(columns, referencedTable, referencedColumns) {
+        if (!Array.isArray(columns)) {
+            columns = [columns];
+        }
+        if (!Array.isArray(referencedColumns)) {
+            referencedColumns = [referencedColumns];
+        }
 
+        const columnsStr = columns.join(', ');
+        const referencedColumnsStr = referencedColumns.join(', ');
+
+        this.query += `FOREIGN KEY (${columnsStr}) REFERENCES ${referencedTable}(${referencedColumnsStr}) `;
+        return this;
+    }
     /**
      * Generates an ALTER TABLE statement for the specified table with the given action.
      * @param {string} table - The name of the table to alter.

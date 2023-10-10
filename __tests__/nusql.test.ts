@@ -528,28 +528,20 @@ describe('SQL Query Generation', () => {
         expect(nusql.build()).toBe(expectedSql);
     });
 
-    it('should generate the correct SQL query to create a table with foreign key constraint', () => {
-        const nusql = new Nusql();
-
-        const columns:any = {
-            OrderID: nusql.int().primaryKey(),
-            CustomerID: nusql.int(),
-            OrderDate: nusql.date(),
-            TotalAmount: nusql.decimal(10, 2),
+    it('should generate the correct SQL query for a FOREIGN KEY constraint with multiple columns', () => {
+    
+        const columns = {
+            OrderID: nusql.int().primaryKey().build(),
+            CustomerID: nusql.int().build(),
+            ProductID: nusql.int().build(),
         };
-
+    
         nusql
-            .createTable('Orders', columns)
-            //.foreignKey('CustomerID', 'Customers', 'CustomerID');
-
-        const expectedSql = `CREATE TABLE Orders (
-        OrderID INT PRIMARY KEY,
-        CustomerID INT,
-        OrderDate DATE,
-        TotalAmount DECIMAL(10, 2),
-        FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
-    )`;
-
+            .createTable('OrderDetails', columns)
+            .foreignKey(['CustomerID', 'ProductID'], 'Customers', ['CustomerID', 'ProductID']);
+    
+        const expectedSql = `CREATE TABLE OrderDetails (OrderID INT PRIMARY KEY, CustomerID INT, ProductID INT) FOREIGN KEY (CustomerID, ProductID) REFERENCES Customers(CustomerID, ProductID)`;
+    
         expect(nusql.build()).toBe(expectedSql);
     });
 
