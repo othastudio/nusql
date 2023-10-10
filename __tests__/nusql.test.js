@@ -47,6 +47,173 @@ describe('Nusql Data types', function () {
         nusql.ntext();
         expect(nusql.build()).toBe('NTEXT');
     });
+    it('should generate a BINARY column type with a specified size', function () {
+        nusql.binary(8);
+        expect(nusql.build()).toBe('BINARY(8)');
+    });
+    
+    it('should generate a VARBINARY column type with a specified size', function () {
+        nusql.varbinary(16);
+        expect(nusql.build()).toBe('VARBINARY(16)');
+    });
+    
+    it('should generate a BLOB column type with a specified size', function () {
+        nusql.blob(32);
+        expect(nusql.build()).toBe('BLOB(32)');
+    });
+    it('should generate a DATE column type', function () {
+        nusql.date();
+        expect(nusql.build()).toBe('DATE');
+    });
+    
+    it('should generate a DATETIME column type with fractional seconds precision', function () {
+        nusql.datetime(3);
+        expect(nusql.build()).toBe('DATETIME(3)');
+    });
+    
+    it('should generate a TIMESTAMP column type with fractional seconds precision', function () {
+        nusql.timestamp(6);
+        expect(nusql.build()).toBe('TIMESTAMP(6)');
+    });
+    
+    it('should generate a TIME column type with fractional seconds precision', function () {
+        nusql.time(2);
+        expect(nusql.build()).toBe('TIME(2)');
+    });
+    
+    it('should generate a YEAR column type', function () {
+        nusql.year();
+        expect(nusql.build()).toBe('YEAR');
+    });
+    it('should generate a BIT column type with a specified size', function () {
+        nusql.bit(8);
+        expect(nusql.build()).toBe('BIT(8)');
+    });
+    
+    it('should generate a TINYINT column type with a specified size', function () {
+        nusql.tinyint(4);
+        expect(nusql.build()).toBe('TINYINT(4)');
+    });
+    
+    it('should generate a BOOLEAN (BOOL) column type', function () {
+        nusql.boolean();
+        expect(nusql.build()).toBe('BOOLEAN');
+    });
+    
+    it('should generate a SMALLINT column type with a specified size', function () {
+        nusql.smallint(6);
+        expect(nusql.build()).toBe('SMALLINT(6)');
+    });
+    
+    it('should generate a MEDIUMINT column type with a specified size', function () {
+        nusql.mediumint(9);
+        expect(nusql.build()).toBe('MEDIUMINT(9)');
+    });
+    
+    it('should generate an INT column type with a specified size', function () {
+        nusql.int(11);
+        expect(nusql.build()).toBe('INT(11)');
+    });
+    
+    it('should generate an INTEGER column type with a specified size', function () {
+        nusql.integer(11);
+        expect(nusql.build()).toBe('INTEGER(11)');
+    });
+    
+    it('should generate a BIGINT column type with a specified size', function () {
+        nusql.bigint(20);
+        expect(nusql.build()).toBe('BIGINT(20)');
+    });
+    
+    it('should generate a FLOAT column type with size and decimal places', function () {
+        nusql.float(10, 2);
+        expect(nusql.build()).toBe('FLOAT(10, 2)');
+    });
+    
+    it('should generate a FLOAT column type with precision', function () {
+        nusql.floatPrecision(5);
+        expect(nusql.build()).toBe('FLOAT(5)');
+    });
+    
+    it('should generate a DOUBLE column type with size and decimal places', function () {
+        nusql.double(15, 4);
+        expect(nusql.build()).toBe('DOUBLE(15, 4)');
+    });
+    
+    it('should generate a DOUBLE PRECISION column type with size and decimal places', function () {
+        nusql.doublePrecision(18, 6);
+        expect(nusql.build()).toBe('DOUBLE PRECISION(18, 6)');
+    });
+    
+    it('should generate a DECIMAL column type with size and decimal places', function () {
+        nusql.decimal(12, 3);
+        expect(nusql.build()).toBe('DECIMAL(12, 3)');
+    });
+    
+    it('should generate a DEC column type with size and decimal places', function () {
+        nusql.dec(10, 2);
+        expect(nusql.build()).toBe('DEC(10, 2)');
+    });
+
+    it('should generate an ENUM column type with specified values', function () {
+        nusql.enum('value1', 'value2', 'value3');
+        expect(nusql.build()).toBe("ENUM('value1', 'value2', 'value3')");
+    });
+    
+    it('should generate a SET column type with specified values', function () {
+        nusql.set('option1', 'option2', 'option3');
+        expect(nusql.build()).toBe("SET('option1', 'option2', 'option3')");
+    });
+
+    it('should generate a GEOMETRY column type', function () {
+        nusql.geometry();
+        expect(nusql.build()).toBe('GEOMETRY');
+    });
+    
+    it('should generate a POINT column type', function () {
+        nusql.point();
+        expect(nusql.build()).toBe('POINT');
+    });
+    
+    it('should generate a LINESTRING column type', function () {
+        nusql.linestring();
+        expect(nusql.build()).toBe('LINESTRING');
+    });
+    
+    it('should generate a POLYGON column type', function () {
+        nusql.polygon();
+        expect(nusql.build()).toBe('POLYGON');
+    });
+    
+    it('should generate a MULTIPOINT column type', function () {
+        nusql.multipoint();
+        expect(nusql.build()).toBe('MULTIPOINT');
+    });
+    
+    it('should generate a MULTILINESTRING column type', function () {
+        nusql.multilinestring();
+        expect(nusql.build()).toBe('MULTILINESTRING');
+    });
+    
+    it('should generate a MULTIPOLYGON column type', function () {
+        nusql.multipolygon();
+        expect(nusql.build()).toBe('MULTIPOLYGON');
+    });
+    
+    it('should generate a GEOMETRYCOLLECTION column type', function () {
+        nusql.geometrycollection();
+        expect(nusql.build()).toBe('GEOMETRYCOLLECTION');
+    });
+
+    it('should generate a JSON column type', function () {
+        nusql.json();
+        expect(nusql.build()).toBe('JSON');
+    });
+    
+    it('should generate a JSONB column type', function () {
+        nusql.jsonb();
+        expect(nusql.build()).toBe('JSONB');
+    });
 });
 /*
 describe('Nusql methods', function () {

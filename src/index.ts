@@ -87,12 +87,365 @@ class Nusql {
         return this;
     }
 
+    /**
+ * Specifies the BINARY data type with the given size.
+ * @param {number} size - The size of the BINARY column.
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    binary(size: number): Nusql {
+        this.query += `BINARY(${size}) `;
+        return this;
+    }
+    /**
+ * Specifies the DATE data type.
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    date(): Nusql {
+        this.query += 'DATE ';
+        return this;
+    }
+
+    /**
+     * Specifies the DATETIME data type with fractional seconds precision (fsp).
+     * @param {number} fsp - Fractional seconds precision.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    datetime(fsp: number): Nusql {
+        this.query += `DATETIME(${fsp}) `;
+        return this;
+    }
+
+    /**
+     * Specifies the TIMESTAMP data type with fractional seconds precision (fsp).
+     * @param {number} fsp - Fractional seconds precision.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    timestamp(fsp: number): Nusql {
+        this.query += `TIMESTAMP(${fsp}) `;
+        return this;
+    }
+
+    /**
+     * Specifies the TIME data type with fractional seconds precision (fsp).
+     * @param {number} fsp - Fractional seconds precision.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    time(fsp: number): Nusql {
+        this.query += `TIME(${fsp}) `;
+        return this;
+    }
+
+    /**
+     * Specifies the YEAR data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    year(): Nusql {
+        this.query += 'YEAR ';
+        return this;
+    }
+    /**
+     * Specifies the VARBINARY data type with the given size.
+     * @param {number} size - The size of the VARBINARY column.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    varbinary(size: number): Nusql {
+        this.query += `VARBINARY(${size}) `;
+        return this;
+    }
+
+    /**
+     * Specifies the BLOB data type with the given size.
+     * @param {number} size - The size of the BLOB column.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    blob(size: number): Nusql {
+        this.query += `BLOB(${size}) `;
+        return this;
+    }
+    /**
+ * Specifies the BIT data type with the given size.
+ * @param {number} size - The size of the BIT column.
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    bit(size: number): Nusql {
+        this.query += `BIT(${size}) `;
+        return this;
+    }
+
+    /**
+     * Specifies the TINYINT data type with the given size.
+     * @param {number} size - The size of the TINYINT column.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    tinyint(size: number): Nusql {
+        this.query += `TINYINT(${size}) `;
+        return this;
+    }
+
+    /**
+     * Specifies the BOOLEAN (BOOL) data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    boolean(): Nusql {
+        this.query += 'BOOLEAN ';
+        return this;
+    }
+
+    /**
+     * Specifies the SMALLINT data type with the given size.
+     * @param {number} size - The size of the SMALLINT column.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    smallint(size: number): Nusql {
+        this.query += `SMALLINT(${size}) `;
+        return this;
+    }
+
+    /**
+     * Specifies the MEDIUMINT data type with the given size.
+     * @param {number} size - The size of the MEDIUMINT column.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    mediumint(size: number): Nusql {
+        this.query += `MEDIUMINT(${size}) `;
+        return this;
+    }
+
+    /**
+     * Specifies the INT data type with the given size.
+     * @param {number} size - The size of the INT column.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    int(size: number): Nusql {
+        this.query += `INT(${size}) `;
+        return this;
+    }
+
+    /**
+     * Specifies the INTEGER data type with the given size.
+     * @param {number} size - The size of the INTEGER column.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    integer(size: number): Nusql {
+        this.query += `INTEGER(${size}) `;
+        return this;
+    }
+
+    /**
+     * Specifies the BIGINT data type with the given size.
+     * @param {number} size - The size of the BIGINT column.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    bigint(size: number): Nusql {
+        this.query += `BIGINT(${size}) `;
+        return this;
+    }
+
+    /**
+     * Specifies the FLOAT data type with the given size and decimal places.
+     * @param {number} size - The size of the FLOAT column.
+     * @param {number} d - The number of decimal places.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    float(size: number, d: number): Nusql {
+        this.query += `FLOAT(${size}, ${d}) `;
+        return this;
+    }
+
+    /**
+     * Specifies the FLOAT data type with the given precision.
+     * @param {number} p - The precision of the FLOAT column.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    floatPrecision(p: number): Nusql {
+        this.query += `FLOAT(${p}) `;
+        return this;
+    }
+
+    /**
+     * Specifies the DOUBLE data type with the given size and decimal places.
+     * @param {number} size - The size of the DOUBLE column.
+     * @param {number} d - The number of decimal places.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    double(size: number, d: number): Nusql {
+        this.query += `DOUBLE(${size}, ${d}) `;
+        return this;
+    }
+
+    /**
+     * Specifies the DOUBLE PRECISION data type with the given size and decimal places.
+     * @param {number} size - The size of the DOUBLE PRECISION column.
+     * @param {number} d - The number of decimal places.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    doublePrecision(size: number, d: number): Nusql {
+        this.query += `DOUBLE PRECISION(${size}, ${d}) `;
+        return this;
+    }
+
+    /**
+     * Specifies the DECIMAL data type with the given size and decimal places.
+     * @param {number} size - The size of the DECIMAL column.
+     * @param {number} d - The number of decimal places.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    decimal(size: number, d: number): Nusql {
+        this.query += `DECIMAL(${size}, ${d}) `;
+        return this;
+    }
+
+    /**
+     * Specifies the DEC data type with the given size and decimal places.
+     * @param {number} size - The size of the DEC column.
+     * @param {number} d - The number of decimal places.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    dec(size: number, d: number): Nusql {
+        this.query += `DEC(${size}, ${d}) `;
+        return this;
+    }
+    /**
+ * Specifies the ENUM data type with the given values.
+ * @param {...string} values - The values for the ENUM column.
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    enum(...values: string[]): Nusql {
+        this.query += `ENUM('${values.join("', '")}') `;
+        return this;
+    }
+
+    /**
+     * Specifies the SET data type with the given values.
+     * @param {...string} values - The values for the SET column.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    set(...values: string[]): Nusql {
+        this.query += `SET('${values.join("', '")}') `;
+        return this;
+    }
+
+    /**
+ * Specifies the GEOMETRY data type.
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    geometry(): Nusql {
+        this.query += 'GEOMETRY ';
+        return this;
+    }
+
+    /**
+     * Specifies the POINT data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    point(): Nusql {
+        this.query += 'POINT ';
+        return this;
+    }
+
+    /**
+     * Specifies the LINESTRING data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    linestring(): Nusql {
+        this.query += 'LINESTRING ';
+        return this;
+    }
+
+    /**
+     * Specifies the POLYGON data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    polygon(): Nusql {
+        this.query += 'POLYGON ';
+        return this;
+    }
+
+    /**
+     * Specifies the MULTIPOINT data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    multipoint(): Nusql {
+        this.query += 'MULTIPOINT ';
+        return this;
+    }
+
+    /**
+     * Specifies the MULTILINESTRING data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    multilinestring(): Nusql {
+        this.query += 'MULTILINESTRING ';
+        return this;
+    }
+
+    /**
+     * Specifies the MULTIPOLYGON data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    multipolygon(): Nusql {
+        this.query += 'MULTIPOLYGON ';
+        return this;
+    }
+
+    /**
+     * Specifies the GEOMETRYCOLLECTION data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    geometrycollection(): Nusql {
+        this.query += 'GEOMETRYCOLLECTION ';
+        return this;
+    }
+
+    /**
+ * Specifies the JSON data type.
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    json(): Nusql {
+        this.query += 'JSON ';
+        return this;
+    }
+
+    /**
+     * Specifies the JSONB data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    jsonb(): Nusql {
+        this.query += 'JSONB ';
+        return this;
+    }
+    /**
+ * Specifies the XML data type.
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    xml(): Nusql {
+        this.query += 'XML ';
+        return this;
+    }
+    /**
+   * Specifies the MEDIUMBLOB data type.
+   * @returns {Nusql} - The Nusql instance for method chaining.
+   */
+    mediumblob(): Nusql {
+        this.query += 'MEDIUMBLOB ';
+        return this;
+    }
+
+    /**
+     * Specifies the LONGBLOB data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    longblob(): Nusql {
+        this.query += 'LONGBLOB ';
+        return this;
+    }
+
 
     /*********************************************************************************************
       * This functions section contain functions of queries for different SQL functions and queries, 
       * It allows you to create, modify, and manipulate SQL operations easily using method chaining.
     *********************************************************************************************/
-   
+
     /**
      * Specifies the columns to select in the SQL query.
      * @param {string} columns - The columns to select.

@@ -78,6 +78,312 @@ var Nusql = /** @class */ (function () {
         this.query += 'NTEXT ';
         return this;
     };
+    /**
+ * Specifies the BINARY data type with the given size.
+ * @param {number} size - The size of the BINARY column.
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    Nusql.prototype.binary = function (size) {
+        this.query += "BINARY(".concat(size, ") ");
+        return this;
+    };
+    /**
+ * Specifies the DATE data type.
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    Nusql.prototype.date = function () {
+        this.query += 'DATE ';
+        return this;
+    };
+    /**
+     * Specifies the DATETIME data type with fractional seconds precision (fsp).
+     * @param {number} fsp - Fractional seconds precision.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.datetime = function (fsp) {
+        this.query += "DATETIME(".concat(fsp, ") ");
+        return this;
+    };
+    /**
+     * Specifies the TIMESTAMP data type with fractional seconds precision (fsp).
+     * @param {number} fsp - Fractional seconds precision.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.timestamp = function (fsp) {
+        this.query += "TIMESTAMP(".concat(fsp, ") ");
+        return this;
+    };
+    /**
+     * Specifies the TIME data type with fractional seconds precision (fsp).
+     * @param {number} fsp - Fractional seconds precision.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.time = function (fsp) {
+        this.query += "TIME(".concat(fsp, ") ");
+        return this;
+    };
+    /**
+     * Specifies the YEAR data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.year = function () {
+        this.query += 'YEAR ';
+        return this;
+    };
+    /**
+     * Specifies the VARBINARY data type with the given size.
+     * @param {number} size - The size of the VARBINARY column.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.varbinary = function (size) {
+        this.query += "VARBINARY(".concat(size, ") ");
+        return this;
+    };
+    /**
+     * Specifies the BLOB data type with the given size.
+     * @param {number} size - The size of the BLOB column.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.blob = function (size) {
+        this.query += "BLOB(".concat(size, ") ");
+        return this;
+    };
+    /**
+ * Specifies the BIT data type with the given size.
+ * @param {number} size - The size of the BIT column.
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    Nusql.prototype.bit = function (size) {
+        this.query += "BIT(".concat(size, ") ");
+        return this;
+    };
+    /**
+     * Specifies the TINYINT data type with the given size.
+     * @param {number} size - The size of the TINYINT column.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.tinyint = function (size) {
+        this.query += "TINYINT(".concat(size, ") ");
+        return this;
+    };
+    /**
+     * Specifies the BOOLEAN (BOOL) data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.boolean = function () {
+        this.query += 'BOOLEAN ';
+        return this;
+    };
+    /**
+     * Specifies the SMALLINT data type with the given size.
+     * @param {number} size - The size of the SMALLINT column.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.smallint = function (size) {
+        this.query += "SMALLINT(".concat(size, ") ");
+        return this;
+    };
+    /**
+     * Specifies the MEDIUMINT data type with the given size.
+     * @param {number} size - The size of the MEDIUMINT column.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.mediumint = function (size) {
+        this.query += "MEDIUMINT(".concat(size, ") ");
+        return this;
+    };
+    /**
+     * Specifies the INT data type with the given size.
+     * @param {number} size - The size of the INT column.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.int = function (size) {
+        this.query += "INT(".concat(size, ") ");
+        return this;
+    };
+    /**
+     * Specifies the INTEGER data type with the given size.
+     * @param {number} size - The size of the INTEGER column.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.integer = function (size) {
+        this.query += "INTEGER(".concat(size, ") ");
+        return this;
+    };
+    /**
+     * Specifies the BIGINT data type with the given size.
+     * @param {number} size - The size of the BIGINT column.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.bigint = function (size) {
+        this.query += "BIGINT(".concat(size, ") ");
+        return this;
+    };
+    /**
+     * Specifies the FLOAT data type with the given size and decimal places.
+     * @param {number} size - The size of the FLOAT column.
+     * @param {number} d - The number of decimal places.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.float = function (size, d) {
+        this.query += "FLOAT(".concat(size, ", ").concat(d, ") ");
+        return this;
+    };
+    /**
+     * Specifies the FLOAT data type with the given precision.
+     * @param {number} p - The precision of the FLOAT column.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.floatPrecision = function (p) {
+        this.query += "FLOAT(".concat(p, ") ");
+        return this;
+    };
+    /**
+     * Specifies the DOUBLE data type with the given size and decimal places.
+     * @param {number} size - The size of the DOUBLE column.
+     * @param {number} d - The number of decimal places.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.double = function (size, d) {
+        this.query += "DOUBLE(".concat(size, ", ").concat(d, ") ");
+        return this;
+    };
+    /**
+     * Specifies the DOUBLE PRECISION data type with the given size and decimal places.
+     * @param {number} size - The size of the DOUBLE PRECISION column.
+     * @param {number} d - The number of decimal places.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.doublePrecision = function (size, d) {
+        this.query += "DOUBLE PRECISION(".concat(size, ", ").concat(d, ") ");
+        return this;
+    };
+    /**
+     * Specifies the DECIMAL data type with the given size and decimal places.
+     * @param {number} size - The size of the DECIMAL column.
+     * @param {number} d - The number of decimal places.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.decimal = function (size, d) {
+        this.query += "DECIMAL(".concat(size, ", ").concat(d, ") ");
+        return this;
+    };
+    /**
+     * Specifies the DEC data type with the given size and decimal places.
+     * @param {number} size - The size of the DEC column.
+     * @param {number} d - The number of decimal places.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.dec = function (size, d) {
+        this.query += "DEC(".concat(size, ", ").concat(d, ") ");
+        return this;
+    };
+    /**
+ * Specifies the ENUM data type with the given values.
+ * @param {...string} values - The values for the ENUM column.
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    Nusql.prototype.enum = function () {
+        var values = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            values[_i] = arguments[_i];
+        }
+        this.query += "ENUM('".concat(values.join("', '"), "') ");
+        return this;
+    };
+    /**
+     * Specifies the SET data type with the given values.
+     * @param {...string} values - The values for the SET column.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.set = function () {
+        var values = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            values[_i] = arguments[_i];
+        }
+        this.query += "SET('".concat(values.join("', '"), "') ");
+        return this;
+    };
+    /**
+ * Specifies the GEOMETRY data type.
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    Nusql.prototype.geometry = function () {
+        this.query += 'GEOMETRY ';
+        return this;
+    };
+    /**
+     * Specifies the POINT data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.point = function () {
+        this.query += 'POINT ';
+        return this;
+    };
+    /**
+     * Specifies the LINESTRING data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.linestring = function () {
+        this.query += 'LINESTRING ';
+        return this;
+    };
+    /**
+     * Specifies the POLYGON data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.polygon = function () {
+        this.query += 'POLYGON ';
+        return this;
+    };
+    /**
+     * Specifies the MULTIPOINT data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.multipoint = function () {
+        this.query += 'MULTIPOINT ';
+        return this;
+    };
+    /**
+     * Specifies the MULTILINESTRING data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.multilinestring = function () {
+        this.query += 'MULTILINESTRING ';
+        return this;
+    };
+    /**
+     * Specifies the MULTIPOLYGON data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.multipolygon = function () {
+        this.query += 'MULTIPOLYGON ';
+        return this;
+    };
+    /**
+     * Specifies the GEOMETRYCOLLECTION data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.geometrycollection = function () {
+        this.query += 'GEOMETRYCOLLECTION ';
+        return this;
+    };
+    /**
+ * Specifies the JSON data type.
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    Nusql.prototype.json = function () {
+        this.query += 'JSON ';
+        return this;
+    };
+    /**
+     * Specifies the JSONB data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.jsonb = function () {
+        this.query += 'JSONB ';
+        return this;
+    };
     /*********************************************************************************************
       * This functions section contain functions of queries for different SQL functions and queries,
       * It allows you to create, modify, and manipulate SQL operations easily using method chaining.
