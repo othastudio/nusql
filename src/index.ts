@@ -439,6 +439,116 @@ class Nusql {
         this.query += 'LONGBLOB ';
         return this;
     }
+    /**
+ * Specifies the MEDIUMTEXT data type.
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    mediumtext(): Nusql {
+        this.query += 'MEDIUMTEXT ';
+        return this;
+    }
+
+    /**
+     * Specifies the LONGTEXT data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    longtext(): Nusql {
+        this.query += 'LONGTEXT ';
+        return this;
+    }
+    /**
+   * Specifies the NUMERIC data type with the given size and decimal places.
+   * @param {number} size - The size of the NUMERIC column.
+   * @param {number} decimalPlaces - The number of decimal places.
+   * @returns {Nusql} - The Nusql instance for method chaining.
+   */
+    numeric(size: number, decimalPlaces: number): Nusql {
+        this.query += `NUMERIC(${size}, ${decimalPlaces}) `;
+        return this;
+    }
+
+    /**
+     * Specifies the REAL data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    real(): Nusql {
+        this.query += 'REAL ';
+        return this;
+    }
+
+    /**
+ * Specifies the MONEY data type.
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    money(): Nusql {
+        this.query += 'MONEY ';
+        return this;
+    }
+    /**
+   * Specifies the UUID data type.
+   * @returns {Nusql} - The Nusql instance for method chaining.
+   */
+    uuid(): Nusql {
+        this.query += 'UUID ';
+        return this;
+    }
+    /**
+     * Specifies the MACADDR data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    macaddr(): Nusql {
+        this.query += 'MACADDR ';
+        return this;
+    }
+    /**
+     * Specifies the INET data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    inet(): Nusql {
+        this.query += 'INET ';
+        return this;
+    }
+    /**
+     * Specifies the CIDR data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    cidr(): Nusql {
+        this.query += 'CIDR ';
+        return this;
+    }
+    /**
+     * Specifies the MACADDR8 data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    macaddr8(): Nusql {
+        this.query += 'MACADDR8 ';
+        return this;
+    }
+    /**
+     * Specifies the TSQUERY data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    tsquery(): Nusql {
+        this.query += 'TSQUERY ';
+        return this;
+    }
+    /**
+     * Specifies the TSVECTOR data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    tsvector(): Nusql {
+        this.query += 'TSVECTOR ';
+        return this;
+    }
+    /**
+     * Specifies the GTSVECTOR data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    gtsvector(): Nusql {
+        this.query += 'GTSVECTOR ';
+        return this;
+    }
+
 
 
     /*********************************************************************************************

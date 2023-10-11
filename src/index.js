@@ -384,6 +384,136 @@ var Nusql = /** @class */ (function () {
         this.query += 'JSONB ';
         return this;
     };
+    /**
+ * Specifies the XML data type.
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    Nusql.prototype.xml = function () {
+        this.query += 'XML ';
+        return this;
+    };
+    /**
+   * Specifies the MEDIUMBLOB data type.
+   * @returns {Nusql} - The Nusql instance for method chaining.
+   */
+    Nusql.prototype.mediumblob = function () {
+        this.query += 'MEDIUMBLOB ';
+        return this;
+    };
+    /**
+     * Specifies the LONGBLOB data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.longblob = function () {
+        this.query += 'LONGBLOB ';
+        return this;
+    };
+    /**
+ * Specifies the MEDIUMTEXT data type.
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    Nusql.prototype.mediumtext = function () {
+        this.query += 'MEDIUMTEXT ';
+        return this;
+    };
+    /**
+     * Specifies the LONGTEXT data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.longtext = function () {
+        this.query += 'LONGTEXT ';
+        return this;
+    };
+    /**
+   * Specifies the NUMERIC data type with the given size and decimal places.
+   * @param {number} size - The size of the NUMERIC column.
+   * @param {number} decimalPlaces - The number of decimal places.
+   * @returns {Nusql} - The Nusql instance for method chaining.
+   */
+    Nusql.prototype.numeric = function (size, decimalPlaces) {
+        this.query += "NUMERIC(".concat(size, ", ").concat(decimalPlaces, ") ");
+        return this;
+    };
+    /**
+     * Specifies the REAL data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.real = function () {
+        this.query += 'REAL ';
+        return this;
+    };
+    /**
+ * Specifies the MONEY data type.
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    Nusql.prototype.money = function () {
+        this.query += 'MONEY ';
+        return this;
+    };
+    /**
+   * Specifies the UUID data type.
+   * @returns {Nusql} - The Nusql instance for method chaining.
+   */
+    Nusql.prototype.uuid = function () {
+        this.query += 'UUID ';
+        return this;
+    };
+    /**
+     * Specifies the MACADDR data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.macaddr = function () {
+        this.query += 'MACADDR ';
+        return this;
+    };
+    /**
+     * Specifies the INET data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.inet = function () {
+        this.query += 'INET ';
+        return this;
+    };
+    /**
+     * Specifies the CIDR data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.cidr = function () {
+        this.query += 'CIDR ';
+        return this;
+    };
+    /**
+     * Specifies the MACADDR8 data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.macaddr8 = function () {
+        this.query += 'MACADDR8 ';
+        return this;
+    };
+    /**
+     * Specifies the TSQUERY data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.tsquery = function () {
+        this.query += 'TSQUERY ';
+        return this;
+    };
+    /**
+     * Specifies the TSVECTOR data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.tsvector = function () {
+        this.query += 'TSVECTOR ';
+        return this;
+    };
+    /**
+     * Specifies the GTSVECTOR data type.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.gtsvector = function () {
+        this.query += 'GTSVECTOR ';
+        return this;
+    };
     /*********************************************************************************************
       * This functions section contain functions of queries for different SQL functions and queries,
       * It allows you to create, modify, and manipulate SQL operations easily using method chaining.

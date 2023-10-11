@@ -214,6 +214,84 @@ describe('Nusql Data types', function () {
         nusql.jsonb();
         expect(nusql.build()).toBe('JSONB');
     });
+    it('should generate an XML column type', function () {
+        nusql.xml();
+        expect(nusql.build()).toBe('XML');
+    });
+    
+    it('should generate a MEDIUMBLOB column type', function () {
+        nusql.mediumblob();
+        expect(nusql.build()).toBe('MEDIUMBLOB');
+    });
+    
+    it('should generate a LONGBLOB column type', function () {
+        nusql.longblob();
+        expect(nusql.build()).toBe('LONGBLOB');
+    });
+
+    it('should generate a MEDIUMTEXT column type', function () {
+        nusql.mediumtext();
+        expect(nusql.build()).toBe('MEDIUMTEXT');
+    });
+    
+    it('should generate a LONGTEXT column type', function () {
+        nusql.longtext();
+        expect(nusql.build()).toBe('LONGTEXT');
+    });
+    it('should generate a NUMERIC column type with specified size and decimal places', function () {
+        nusql.numeric(10, 2);
+        expect(nusql.build()).toBe('NUMERIC(10, 2)');
+    });
+    
+    it('should generate a REAL column type', function () {
+        nusql.real();
+        expect(nusql.build()).toBe('REAL');
+    });
+
+    it('should generate a MONEY column type', function () {
+        nusql.money();
+        expect(nusql.build()).toBe('MONEY');
+    });
+
+    it('should generate a UUID column type', function () {
+        nusql.uuid();
+        expect(nusql.build()).toBe('UUID');
+    });
+    
+    it('should generate a MACADDR column type', function () {
+        nusql.macaddr();
+        expect(nusql.build()).toBe('MACADDR');
+    });
+    
+    it('should generate an INET column type', function () {
+        nusql.inet();
+        expect(nusql.build()).toBe('INET');
+    });
+    
+    it('should generate a CIDR column type', function () {
+        nusql.cidr();
+        expect(nusql.build()).toBe('CIDR');
+    });
+    
+    it('should generate a MACADDR8 column type', function () {
+        nusql.macaddr8();
+        expect(nusql.build()).toBe('MACADDR8');
+    });
+    
+    it('should generate a TSQUERY column type', function () {
+        nusql.tsquery();
+        expect(nusql.build()).toBe('TSQUERY');
+    });
+    
+    it('should generate a TSVECTOR column type', function () {
+        nusql.tsvector();
+        expect(nusql.build()).toBe('TSVECTOR');
+    });
+    
+    it('should generate a GTSVECTOR column type', function () {
+        nusql.gtsvector();
+        expect(nusql.build()).toBe('GTSVECTOR');
+    });
 });
 /*
 describe('Nusql methods', function () {
