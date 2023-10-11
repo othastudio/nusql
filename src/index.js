@@ -783,7 +783,8 @@ var Nusql = /** @class */ (function () {
      * @returns {Nusql} - The Nusql instance for method chaining.
      */
     Nusql.prototype.any = function (subquery) {
-        this.query += "ANY(".concat(subquery.build(), ") ");
+        var state = subquery.build();
+        this.query += "ANY(".concat(state, ") ");
         return this;
     };
     /**
@@ -792,7 +793,8 @@ var Nusql = /** @class */ (function () {
      * @returns {Nusql} - The Nusql instance for method chaining.
      */
     Nusql.prototype.all = function (subquery) {
-        this.query += "ALL(".concat(subquery.build(), ") ");
+        var state = subquery.build();
+        this.query += "ALL(".concat(state, ") ");
         return this;
     };
     /**

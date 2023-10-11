@@ -848,7 +848,8 @@ class Nusql {
      * @returns {Nusql} - The Nusql instance for method chaining.
      */
     any(subquery: Nusql): Nusql {
-        this.query += `ANY(${subquery.build()}) `;
+        const state = subquery.build()
+        this.query += `ANY(${state}) `;
         return this;
     }
 
@@ -858,7 +859,8 @@ class Nusql {
      * @returns {Nusql} - The Nusql instance for method chaining.
      */
     all(subquery: Nusql): Nusql {
-        this.query += `ALL(${subquery.build()}) `;
+        const state = subquery.build()
+        this.query += `ALL(${state}) `;
         return this;
     }
 

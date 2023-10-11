@@ -467,17 +467,15 @@ describe('nusql Aggregation and Functions', () => {
         expect(nusql.build()).toBe('AVG(column1)');
     });
 
-    /*
     it('should generate an ANY() function', () => {
-        nusql.any(nusql.select(['column2']).where('condition = value').build());
-        expect(nusql.build()).toBe('ANY((SELECT column2 WHERE condition = value))');
+        nusql.any(nusql.select(['column2']).where('condition = value'));
+        expect(nusql.build()).toBe('ANY(SELECT column2 WHERE condition = value)');
     });
 
     it('should generate an ALL() function', () => {
-        nusql.all(nusql.select(['column2']).where('condition = value').build());
-        expect(nusql.build()).toBe('ALL((SELECT column2 WHERE condition = value))');
+        nusql.all(nusql.select(['column2']).where('condition = value'));
+        expect(nusql.build()).toBe('ALL(SELECT column2 WHERE condition = value)');
     });
-    */
 
     it('should generate a CASE expression', () => {
         nusql.case('WHEN condition1 THEN result1 WHEN condition2 THEN result2 ELSE result3 END');
