@@ -552,11 +552,134 @@ class Nusql {
 
 
     /*********************************************************************************************
-      * This functions section contain functions of queries for different SQL functions and queries, 
+      * This functions section contain functions of SQL Operators,
       * It allows you to create, modify, and manipulate SQL operations easily using method chaining.
     *********************************************************************************************/
+    /**
+  * Specifies an equal (=) operator.
+  * @param {string} column - The column to compare.
+  * @param {string} value - The value to compare against.
+  * @returns {Nusql} - The Nusql instance for method chaining.
+  */
+    equal(column: string, value: string): Nusql {
+        this.query += `${column} = ${value} `;
+        return this;
+    }
 
-    
+    /**
+     * Specifies a not equal (<>) operator.
+     * @param {string} column - The column to compare.
+     * @param {string} value - The value to compare against.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    notEqual(column: string, value: string): Nusql {
+        this.query += `${column} <> ${value} `;
+        return this;
+    }
+
+    /**
+     * Specifies a greater than (>) operator.
+     * @param {string} column - The column to compare.
+     * @param {string} value - The value to compare against.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    greaterThan(column: string, value: string): Nusql {
+        this.query += `${column} > ${value} `;
+        return this;
+    }
+
+    /**
+     * Specifies a less than (<) operator.
+     * @param {string} column - The column to compare.
+     * @param {string} value - The value to compare against.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    lessThan(column: string, value: string): Nusql {
+        this.query += `${column} < ${value} `;
+        return this;
+    }
+
+    /**
+     * Specifies a greater than or equal to (>=) operator.
+     * @param {string} column - The column to compare.
+     * @param {string} value - The value to compare against.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    greaterThanOrEqual(column: string, value: string): Nusql {
+        this.query += `${column} >= ${value} `;
+        return this;
+    }
+
+    /**
+     * Specifies a less than or equal to (<=) operator.
+     * @param {string} column - The column to compare.
+     * @param {string} value - The value to compare against.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    lessThanOrEqual(column: string, value: string): Nusql {
+        this.query += `${column} <= ${value} `;
+        return this;
+    }
+
+    /**
+     * Specifies an IS NULL condition.
+     * @param {string} column - The column to check for null.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    isNull(column: string): Nusql {
+        this.query += `${column} IS NULL `;
+        return this;
+    }
+
+    /**
+     * Specifies an IS NOT NULL condition.
+     * @param {string} column - The column to check for not null.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    isNotNull(column: string): Nusql {
+        this.query += `${column} IS NOT NULL `;
+        return this;
+    }
+
+    /**
+     * Specifies an IN condition to match a column against a set of values.
+     * @param {string} column - The column to match.
+     * @param {string[]} values - The values to match against.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    in(column: string, values: string[]): Nusql {
+        this.query += `${column} IN (${values.join(', ')}) `;
+        return this;
+    }
+
+    /**
+     * Specifies a NOT IN condition to exclude a column from a set of values.
+     * @param {string} column - The column to exclude.
+     * @param {string[]} values - The values to exclude.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    notIn(column: string, values: string[]): Nusql {
+        this.query += `${column} NOT IN (${values.join(', ')}) `;
+        return this;
+    }
+
+    /**
+     * Specifies a BETWEEN condition to match a column within a range.
+     * @param {string} column - The column to match.
+     * @param {string} min - The minimum value in the range.
+     * @param {string} max - The maximum value in the range.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    between(column: string, min: string, max: string): Nusql {
+        this.query += `${column} BETWEEN ${min} AND ${max} `;
+        return this;
+    }
+
+    /*********************************************************************************************
+        * This functions section contain functions of SQL Querying, 
+        * It allows you to create, modify, and manipulate SQL operations easily using method chaining.
+      *********************************************************************************************/
+
     /**
      * Builds and returns the SQL query as a string.
      * @returns {string} - The generated SQL query.
