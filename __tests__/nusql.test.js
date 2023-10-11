@@ -493,3 +493,55 @@ describe('nusql Aggregation and Functions', () => {
     });
 
 })
+
+describe('SQL Joins', () => {
+    var nusql;
+
+    beforeEach(function () {
+        nusql = index_1.default.create();
+    });
+  
+    it('should generate an INNER JOIN clause', () => {
+      nusql.innerJoin('table2', 'table1.id = table2.id');
+      expect(nusql.build()).toBe('INNER JOIN table2 ON table1.id = table2.id');
+    });
+  
+    it('should generate a LEFT JOIN clause', () => {
+      nusql.leftJoin('table2', 'table1.id = table2.id');
+      expect(nusql.build()).toBe('LEFT JOIN table2 ON table1.id = table2.id');
+    });
+  
+    it('should generate a RIGHT JOIN clause', () => {
+      nusql.rightJoin('table2', 'table1.id = table2.id');
+      expect(nusql.build()).toBe('RIGHT JOIN table2 ON table1.id = table2.id');
+    });
+  
+    it('should generate a FULL JOIN clause', () => {
+      nusql.fullJoin('table2', 'table1.id = table2.id');
+      expect(nusql.build()).toBe('FULL JOIN table2 ON table1.id = table2.id');
+    });
+  
+    it('should generate a SELF JOIN clause', () => {
+      nusql.selfJoin('table2', 'table1.id = table2.id');
+      expect(nusql.build()).toBe('SELF JOIN table2 ON table1.id = table2.id');
+    });
+  });
+  
+  describe('SQL Union', () => {
+    var nusql1, nusql2;
+
+    beforeEach(function () {
+        nusql1 = index_1.default.create();
+        nusql2 = index_1.default.create();
+    });
+  
+    it('should generate a UNION clause', () => {
+      nusql1.union(nusql2);
+      expect(nusql1.build()).toBe('UNION' + nusql2.build());
+    });
+  
+    it('should generate a UNION ALL clause', () => {
+      nusql1.union(nusql2, true);
+      expect(nusql1.build()).toBe('UNION ALL' + nusql2.build());
+    });
+  });

@@ -825,6 +825,75 @@ var Nusql = /** @class */ (function () {
         this.query += "COALESCE(".concat(expressions.join(', '), ") ");
         return this;
     };
+    /*********************************************************************************************
+      * This functions section contain SQL Joins,
+      * It allows you to create, modify, and manipulate SQL operations easily using method chaining.
+    *********************************************************************************************/
+    /**
+ * Specifies a JOIN clause with a table using INNER JOIN.
+ * @param {string} table - The name of the table to join.
+ * @param {string} onCondition - The ON condition for the join.
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    Nusql.prototype.innerJoin = function (table, onCondition) {
+        this.query += "INNER JOIN ".concat(table, " ON ").concat(onCondition, " ");
+        return this;
+    };
+    /**
+     * Specifies a JOIN clause with a table using LEFT JOIN.
+     * @param {string} table - The name of the table to join.
+     * @param {string} onCondition - The ON condition for the join.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.leftJoin = function (table, onCondition) {
+        this.query += "LEFT JOIN ".concat(table, " ON ").concat(onCondition, " ");
+        return this;
+    };
+    /**
+     * Specifies a JOIN clause with a table using RIGHT JOIN.
+     * @param {string} table - The name of the table to join.
+     * @param {string} onCondition - The ON condition for the join.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.rightJoin = function (table, onCondition) {
+        this.query += "RIGHT JOIN ".concat(table, " ON ").concat(onCondition, " ");
+        return this;
+    };
+    /**
+     * Specifies a JOIN clause with a table using FULL JOIN.
+     * @param {string} table - The name of the table to join.
+     * @param {string} onCondition - The ON condition for the join.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.fullJoin = function (table, onCondition) {
+        this.query += "FULL JOIN ".concat(table, " ON ").concat(onCondition, " ");
+        return this;
+    };
+    /**
+     * Specifies a JOIN clause with a table using SELF JOIN.
+     * @param {string} table - The name of the table to join.
+     * @param {string} onCondition - The ON condition for the join.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.selfJoin = function (table, onCondition) {
+        this.query += "SELF JOIN ".concat(table, " ON ").concat(onCondition, " ");
+        return this;
+    };
+    /**
+     * Specifies a UNION clause with another query.
+     * @param {Nusql} query - The query to union with.
+     * @param {boolean} all - Optional. Set to true for UNION ALL, false for UNION (default).
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.union = function (query, all) {
+        if (all === void 0) { all = false; }
+        this.query += "UNION".concat(all ? ' ALL' : '', " ").concat(query.build(), " ");
+        return this;
+    };
+    /*********************************************************************************************
+      * This functions section contain Build, create functions,
+      * It allows you to create, modify, and manipulate SQL operations easily using method chaining.
+    *********************************************************************************************/
     /**
      * Builds and returns the SQL query as a string.
      * @returns {string} - The generated SQL query.
