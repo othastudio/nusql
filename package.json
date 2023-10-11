@@ -1,7 +1,7 @@
 {
   "name": "nusql",
   "version": "1.0.4",
-  "description": "Simplified SQL query builder for Nuclea",
+  "description": "Simplified SQL Query Builder for Node.js",
   "main": "lib/index.js",
   "scripts": {
     "test": "jest",
