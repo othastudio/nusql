@@ -4,10 +4,18 @@
 
 <h1 align="center">Simplified SQL Query Builder</h1>
 <div align="center">
+ <a href="https://github.com/othastudio/nusql/blob/main/LICENSE">
  <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License">
-<img src="https://img.shields.io/npm/v/nusql.svg" alt="npm version">
-<img src="https://img.shields.io/npm/dt/nusql.svg" alt="npm downloads">
-<img src="https://github.com/othastudio/nusql/actions/workflows/test-package.yml/badge.svg" alt="Testing">
+ </a>
+ <a href="https://github.com/othastudio/nusql/blob/main/LICENSE">
+ <img src="https://img.shields.io/npm/v/nusql.svg" alt="npm version">
+ </a>
+ <a href="https://www.npmjs.com/package/nusql">
+ <img src="https://img.shields.io/npm/dt/nusql.svg" alt="npm downloads">
+ </a>
+ <a href="https://github.com/othastudio/nusql/commits/main">
+ <img src="https://github.com/othastudio/nusql/actions/workflows/test-package.yml/badge.svg" alt="Testing">
+ </a>
 </div>
 <p align="center">Simplify your raw SQL usage in Node.js and TypeScript with Nusql. Nusql is a lightweight SQL query builder that allows you to construct complex SQL queries easily and safely.</p>
 
