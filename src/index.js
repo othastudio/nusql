@@ -728,6 +728,101 @@ var Nusql = /** @class */ (function () {
         this.query += "AS ".concat(alias, " ");
         return this;
     };
+    /*********************************************************************************************
+      * This functions section contain SQL Aggregation and Functions,
+      * It allows you to create, modify, and manipulate SQL operations easily using method chaining.
+    *********************************************************************************************/
+    /**
+ * Specifies a MIN() function to find the minimum value in a column.
+ * @param {string} column - The column to find the minimum value in.
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    Nusql.prototype.min = function (column) {
+        this.query += "MIN(".concat(column, ") ");
+        return this;
+    };
+    /**
+     * Specifies a MAX() function to find the maximum value in a column.
+     * @param {string} column - The column to find the maximum value in.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.max = function (column) {
+        this.query += "MAX(".concat(column, ") ");
+        return this;
+    };
+    /**
+     * Specifies a COUNT() function to count the number of rows.
+     * @param {string} column - The column to count (optional).
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.count = function (column) {
+        this.query += "COUNT(".concat(column ? column : '*', ") ");
+        return this;
+    };
+    /**
+     * Specifies a SUM() function to calculate the sum of a column's values.
+     * @param {string} column - The column to calculate the sum for.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.sum = function (column) {
+        this.query += "SUM(".concat(column, ") ");
+        return this;
+    };
+    /**
+     * Specifies an AVG() function to calculate the average of a column's values.
+     * @param {string} column - The column to calculate the average for.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.avg = function (column) {
+        this.query += "AVG(".concat(column, ") ");
+        return this;
+    };
+    /**
+     * Specifies ANY() function to check if any of the subquery values match.
+     * @param {Nusql} subquery - The subquery to check.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.any = function (subquery) {
+        this.query += "ANY(".concat(subquery.build(), ") ");
+        return this;
+    };
+    /**
+     * Specifies ALL() function to check if all of the subquery values match.
+     * @param {Nusql} subquery - The subquery to check.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.all = function (subquery) {
+        this.query += "ALL(".concat(subquery.build(), ") ");
+        return this;
+    };
+    /**
+     * Specifies a CASE expression for conditional logic.
+     * @param {string} condition - The condition to evaluate.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.case = function (condition) {
+        this.query += "CASE ".concat(condition, " ");
+        return this;
+    };
+    /**
+     * Specifies a NULLIF() function to compare two expressions and return null if they are equal.
+     * @param {string} expression1 - The first expression to compare.
+     * @param {string} expression2 - The second expression to compare.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.nullIf = function (expression1, expression2) {
+        this.query += "NULLIF(".concat(expression1, ", ").concat(expression2, ") ");
+        return this;
+    };
+    /**
+     * Specifies a COALESCE() function to return the first non-null expression in a list.
+     * @param {string[]} expressions - The list of expressions to evaluate.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.coalesce = function (expressions) {
+        this.query += "COALESCE(".concat(expressions.join(', '), ") ");
+        return this;
+    };
     /**
      * Builds and returns the SQL query as a string.
      * @returns {string} - The generated SQL query.

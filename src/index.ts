@@ -787,6 +787,113 @@ class Nusql {
         return this;
     }
 
+    /*********************************************************************************************
+      * This functions section contain SQL Aggregation and Functions,
+      * It allows you to create, modify, and manipulate SQL operations easily using method chaining.
+    *********************************************************************************************/
+
+    /**
+ * Specifies a MIN() function to find the minimum value in a column.
+ * @param {string} column - The column to find the minimum value in.
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    min(column: string): Nusql {
+        this.query += `MIN(${column}) `;
+        return this;
+    }
+
+    /**
+     * Specifies a MAX() function to find the maximum value in a column.
+     * @param {string} column - The column to find the maximum value in.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    max(column: string): Nusql {
+        this.query += `MAX(${column}) `;
+        return this;
+    }
+
+    /**
+     * Specifies a COUNT() function to count the number of rows.
+     * @param {string} column - The column to count (optional).
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    count(column?: string): Nusql {
+        this.query += `COUNT(${column ? column : '*'}) `;
+        return this;
+    }
+
+    /**
+     * Specifies a SUM() function to calculate the sum of a column's values.
+     * @param {string} column - The column to calculate the sum for.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    sum(column: string): Nusql {
+        this.query += `SUM(${column}) `;
+        return this;
+    }
+
+    /**
+     * Specifies an AVG() function to calculate the average of a column's values.
+     * @param {string} column - The column to calculate the average for.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    avg(column: string): Nusql {
+        this.query += `AVG(${column}) `;
+        return this;
+    }
+
+    /**
+     * Specifies ANY() function to check if any of the subquery values match.
+     * @param {Nusql} subquery - The subquery to check.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    any(subquery: Nusql): Nusql {
+        this.query += `ANY(${subquery.build()}) `;
+        return this;
+    }
+
+    /**
+     * Specifies ALL() function to check if all of the subquery values match.
+     * @param {Nusql} subquery - The subquery to check.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    all(subquery: Nusql): Nusql {
+        this.query += `ALL(${subquery.build()}) `;
+        return this;
+    }
+
+    /**
+     * Specifies a CASE expression for conditional logic.
+     * @param {string} condition - The condition to evaluate.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    case(condition: string): Nusql {
+        this.query += `CASE ${condition} `;
+        return this;
+    }
+
+    /**
+     * Specifies a NULLIF() function to compare two expressions and return null if they are equal.
+     * @param {string} expression1 - The first expression to compare.
+     * @param {string} expression2 - The second expression to compare.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    nullIf(expression1: string, expression2: string): Nusql {
+        this.query += `NULLIF(${expression1}, ${expression2}) `;
+        return this;
+    }
+
+    /**
+     * Specifies a COALESCE() function to return the first non-null expression in a list.
+     * @param {string[]} expressions - The list of expressions to evaluate.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    coalesce(expressions: string[]): Nusql {
+        this.query += `COALESCE(${expressions.join(', ')}) `;
+        return this;
+    }
+
+
     /**
      * Builds and returns the SQL query as a string.
      * @returns {string} - The generated SQL query.

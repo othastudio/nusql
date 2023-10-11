@@ -429,3 +429,67 @@ describe('nusql Querying', () => {
         expect(nusql.build()).toBe('AS alias1');
     });
 })
+
+describe('nusql Aggregation and Functions', () => {
+    var nusql;
+
+    beforeEach(function () {
+        nusql = index_1.default.create();
+    });
+
+    it('should generate a MIN() function', () => {
+        nusql.min('column1');
+        expect(nusql.build()).toBe('MIN(column1)');
+    });
+
+    it('should generate a MAX() function', () => {
+        nusql.max('column1');
+        expect(nusql.build()).toBe('MAX(column1)');
+    });
+
+    it('should generate a COUNT() function without a column', () => {
+        nusql.count();
+        expect(nusql.build()).toBe('COUNT(*)');
+    });
+
+    it('should generate a COUNT() function with a column', () => {
+        nusql.count('column1');
+        expect(nusql.build()).toBe('COUNT(column1)');
+    });
+
+    it('should generate a SUM() function', () => {
+        nusql.sum('column1');
+        expect(nusql.build()).toBe('SUM(column1)');
+    });
+
+    it('should generate an AVG() function', () => {
+        nusql.avg('column1');
+        expect(nusql.build()).toBe('AVG(column1)');
+    });
+
+    it('should generate an ANY() function', () => {
+        nusql.any(nusql.select(['column2']).where('condition = value').build());
+        expect(nusql.build()).toBe('ANY((SELECT column2 WHERE condition = value))');
+    });
+
+    it('should generate an ALL() function', () => {
+        nusql.all(nusql.select(['column2']).where('condition = value').build());
+        expect(nusql.build()).toBe('ALL((SELECT column2 WHERE condition = value))');
+    });
+
+    it('should generate a CASE expression', () => {
+        nusql.case('WHEN condition1 THEN result1 WHEN condition2 THEN result2 ELSE result3 END');
+        expect(nusql.build()).toBe('CASE WHEN condition1 THEN result1 WHEN condition2 THEN result2 ELSE result3 END');
+    });
+
+    it('should generate a NULLIF() function', () => {
+        nusql.nullIf('expression1', 'expression2');
+        expect(nusql.build()).toBe('NULLIF(expression1, expression2)');
+    });
+
+    it('should generate a COALESCE() function', () => {
+        nusql.coalesce(['expression1', 'expression2', 'expression3']);
+        expect(nusql.build()).toBe('COALESCE(expression1, expression2, expression3)');
+    });
+
+})
