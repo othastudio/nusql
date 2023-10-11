@@ -552,419 +552,183 @@ class Nusql {
 
 
     /*********************************************************************************************
-      * This functions section contain functions of queries for different SQL functions and queries, 
+      * This functions section contain functions of SQL Operators,
       * It allows you to create, modify, and manipulate SQL operations easily using method chaining.
     *********************************************************************************************/
+    /**
+  * Specifies an equal (=) operator.
+  * @param {string} column - The column to compare.
+  * @param {string} value - The value to compare against.
+  * @returns {Nusql} - The Nusql instance for method chaining.
+  */
+    equal(column: string, value: string): Nusql {
+        this.query += `${column} = ${value} `;
+        return this;
+    }
 
     /**
-     * Specifies the columns to select in the SQL query.
-     * @param {string} columns - The columns to select.
+     * Specifies a not equal (<>) operator.
+     * @param {string} column - The column to compare.
+     * @param {string} value - The value to compare against.
      * @returns {Nusql} - The Nusql instance for method chaining.
      */
-    select(columns: string): Nusql {
-        this.query += `SELECT ${columns} `;
+    notEqual(column: string, value: string): Nusql {
+        this.query += `${column} <> ${value} `;
         return this;
     }
+
     /**
-     * Specifies the table from which to retrieve data in the SQL query.
-     * @param {string} table - The table name.
+     * Specifies a greater than (>) operator.
+     * @param {string} column - The column to compare.
+     * @param {string} value - The value to compare against.
      * @returns {Nusql} - The Nusql instance for method chaining.
      */
-    from(table: string): Nusql {
-        this.query += `FROM ${table} `;
+    greaterThan(column: string, value: string): Nusql {
+        this.query += `${column} > ${value} `;
         return this;
     }
 
     /**
-     * Adds a WHERE clause to the SQL query to filter results based on a condition.
-     * @param {string} condition - The condition to apply in the WHERE clause.
+     * Specifies a less than (<) operator.
+     * @param {string} column - The column to compare.
+     * @param {string} value - The value to compare against.
      * @returns {Nusql} - The Nusql instance for method chaining.
      */
-    where(condition: string): Nusql {
-        this.query += `WHERE ${condition} `;
+    lessThan(column: string, value: string): Nusql {
+        this.query += `${column} < ${value} `;
         return this;
     }
 
     /**
-     * Specifies the column to use for ordering the result set and the sort direction (ASC or DESC).
-     * @param {string} column - The column to use for ordering.
-     * @param {'ASC' | 'DESC'} direction - The sort direction (optional, defaults to 'ASC').
+     * Specifies a greater than or equal to (>=) operator.
+     * @param {string} column - The column to compare.
+     * @param {string} value - The value to compare against.
      * @returns {Nusql} - The Nusql instance for method chaining.
      */
-    orderBy(column: string, direction: 'ASC' | 'DESC' = 'ASC'): Nusql {
-        this.query += `ORDER BY ${column} ${direction} `;
+    greaterThanOrEqual(column: string, value: string): Nusql {
+        this.query += `${column} >= ${value} `;
         return this;
     }
 
     /**
-     * Adds an ascending (ASC) sorting to the ORDER BY clause.
-     * @param {string} column - The column to sort by.
+     * Specifies a less than or equal to (<=) operator.
+     * @param {string} column - The column to compare.
+     * @param {string} value - The value to compare against.
      * @returns {Nusql} - The Nusql instance for method chaining.
      */
-    orderByAsc(column: string): Nusql {
-        this.query += `ORDER BY ${column} ASC `;
+    lessThanOrEqual(column: string, value: string): Nusql {
+        this.query += `${column} <= ${value} `;
         return this;
     }
 
     /**
-     * Adds a descending (DESC) sorting to the ORDER BY clause.
-     * @param {string} column - The column to sort by.
-     * @returns {Nusql} - The Nusql instance for method chaining.
-     */
-    orderByDesc(column: string): Nusql {
-        this.query += `ORDER BY ${column} DESC `;
-        return this;
-    }
-
-    /**
-     * Adds a GROUP BY clause to the SQL query to group results by a specified field.
-     * @param {string} field - The field to group by.
-     * @returns {Nusql} - The Nusql instance for method chaining.
-     */
-    groupBy(field: string): Nusql {
-        this.query += `GROUP BY ${field} `;
-        return this;
-    }
-
-    /**
-     * Adds a HAVING clause to the SQL query with a specified condition.
-     * @param {string} condition - The condition for the HAVING clause.
-     * @returns {Nusql} - The Nusql instance for method chaining.
-     */
-    having(condition: string): Nusql {
-        this.query += `HAVING ${condition} `;
-        return this;
-    }
-
-    /**
-     * Adds an INNER JOIN clause to the SQL query with a specified table and join condition.
-     * @param {string} table - The table to join.
-     * @param {string} condition - The join condition.
-     * @returns {Nusql} - The Nusql instance for method chaining.
-     */
-    innerJoin(table: string, condition: string): Nusql {
-        this.query += `INNER JOIN ${table} ON ${condition} `;
-        return this;
-    }
-
-    /**
-     * Adds a LEFT JOIN clause to the SQL query with a specified table and join condition.
-     * @param {string} table - The table to join.
-     * @param {string} condition - The join condition.
-     * @returns {Nusql} - The Nusql instance for method chaining.
-     */
-    leftJoin(table: string, condition: string): Nusql {
-        this.query += `LEFT JOIN ${table} ON ${condition} `;
-        return this;
-    }
-
-    /**
-     * Adds a RIGHT JOIN clause to the SQL query with a specified table and join condition.
-     * @param {string} table - The table to join.
-     * @param {string} condition - The join condition.
-     * @returns {Nusql} - The Nusql instance for method chaining.
-     */
-    rightJoin(table: string, condition: string): Nusql {
-        this.query += `RIGHT JOIN ${table} ON ${condition} `;
-        return this;
-    }
-
-    /**
-     * Adds a FULL OUTER JOIN clause to the SQL query with a specified table and join condition.
-     * @param {string} table - The table to join.
-     * @param {string} condition - The join condition.
-     * @returns {Nusql} - The Nusql instance for method chaining.
-     */
-    fullOuterJoin(table: string, condition: string): Nusql {
-        this.query += `FULL OUTER JOIN ${table} ON ${condition} `;
-        return this;
-    }
-
-    /**
-     * Adds a UNION clause to the SQL query with the specified subquery.
-     * @param {Nusql} query - The subquery to UNION with the main query.
-     * @returns {Nusql} - The Nusql instance for method chaining.
-     */
-    union(query: Nusql): Nusql {
-        this.query += `UNION (${query.build()}) `;
-        return this;
-    }
-
-    /**
-     * Adds an INSERT INTO statement to the SQL query with the specified table and values.
-     * @param {string} table - The name of the table to insert into.
-     * @param {Record<string, any>} values - An object containing the column-value pairs to insert.
-     * @returns {Nusql} - The Nusql instance for method chaining.
-     */
-    insertInto(table: string, values: Record<string, any> | Record<string, any>[]): Nusql {
-        // Check if the values parameter is an array
-        const isArray = Array.isArray(values);
-
-        if (isArray) {
-            // Handle inserting multiple rows
-            if (values.length === 0) {
-                // If the array is empty, do nothing
-                return this;
-            }
-
-            const columns = Object.keys(values[0]).join(', ');
-            const placeholdersArray = values.map((row) =>
-                Object.values(row)
-                    .map((value) => {
-                        if (typeof value === 'number') {
-                            return value.toString(); // Convert numbers to strings without quotes
-                        } else {
-                            return `'${value}'`; // Wrap strings in single quotes
-                        }
-                    })
-                    .join(', ')
-            );
-            const placeholders = placeholdersArray.join('), (');
-
-            this.query += `INSERT INTO ${table} (${columns}) VALUES (${placeholders}) `;
-        } else {
-            // Handle inserting a single row (values is an object)
-            const columns = Object.keys(values).join(', ');
-            const placeholders = Object.values(values)
-                .map((value) => {
-                    if (typeof value === 'number') {
-                        return value.toString(); // Convert numbers to strings without quotes
-                    } else {
-                        return `'${value}'`; // Wrap strings in single quotes
-                    }
-                })
-                .join(', ');
-
-            this.query += `INSERT INTO ${table} (${columns}) VALUES (${placeholders}) `;
-        }
-
-        return this;
-    }
-
-
-    /**
-     * Adds an UPDATE statement to the SQL query with the specified table and values.
-     * @param {string} table - The name of the table to update.
-     * @param {Record<string, any>} values - An object containing the column-value pairs to update.
-     * @returns {Nusql} - The Nusql instance for method chaining.
-     */
-    update(table: string, values: Record<string, any>): Nusql {
-        const columnsToUpdate = Object.entries(values)
-            .map(([key, value]) => {
-                if (Number.isInteger(value)) {
-                    // If the value is an integer, treat it as an integer in the SQL query
-                    return `${key} = ${value}`;
-                } else {
-                    // If the value is not an integer, treat it as a string in single quotes
-                    return `${key} = '${value}'`;
-                }
-            })
-            .join(', ');
-        this.query += `UPDATE ${table} SET ${columnsToUpdate} `;
-        return this;
-    }
-
-    /**
-     * Adds a DELETE FROM statement to the SQL query for the specified table.
-     * @param {string} table - The name of the table from which to delete rows.
-     * @returns {Nusql} - The Nusql instance for method chaining.
-     */
-    deleteFrom(table: string): Nusql {
-        this.query += `DELETE FROM ${table} `;
-        return this;
-    }
-
-    /**
-     * Adds a CREATE TABLE statement to the SQL query for creating a table with specified columns.
-     * @param {string} table - The name of the table to create.
-     * @param {Record<string, (type: Nusql) => Nusql>} columns - An object representing column names and their data types as functions.
-     * @returns {Nusql} - The Nusql instance for method chaining.
-     */
-    createTable(table: string, columns: Record<string, string>): Nusql {
-        function parseObjectToSql(object) {
-            const sqlColumns = [];
-
-            for (const [columnName, columnDefinition] of Object.entries(object)) {
-                sqlColumns.push(`${columnName} ${columnDefinition}`);
-            }
-
-            return sqlColumns.join(', ');
-        }
-        const sqlString = parseObjectToSql(columns);
-        this.query += `CREATE TABLE ${table} (`;
-        this.query += sqlString;
-        this.query += `) `;
-        return this;
-    }
-    /**
- * Adds a FOREIGN KEY constraint to the table with the specified column(s) and references another table.
- * @param {string|string[]} columns - The column(s) to add the FOREIGN KEY constraint on.
- * @param {string} referencedTable - The name of the referenced table.
- * @param {string|string[]} referencedColumns - The column(s) in the referenced table.
- * @returns {Nusql} - The updated Nusql instance for method chaining.
- */
-    foreignKey(columns, referencedTable, referencedColumns) {
-        if (!Array.isArray(columns)) {
-            columns = [columns];
-        }
-        if (!Array.isArray(referencedColumns)) {
-            referencedColumns = [referencedColumns];
-        }
-
-        const columnsStr = columns.join(', ');
-        const referencedColumnsStr = referencedColumns.join(', ');
-
-        this.query += `FOREIGN KEY (${columnsStr}) REFERENCES ${referencedTable}(${referencedColumnsStr}) `;
-        return this;
-    }
-    /**
-     * Generates an ALTER TABLE statement for the specified table with the given action.
-     * @param {string} table - The name of the table to alter.
-     * @param {string} action - The ALTER TABLE action to perform (e.g., "ADD COLUMN column_name data_type").
-     * @returns {Nusql} - The Nusql instance for method chaining.
-     */
-    alterTable(table: string, action: string): Nusql {
-        this.query += `ALTER TABLE ${table} ${action} `;
-        return this;
-    }
-
-    /**
-     * Generates a DROP TABLE statement for the specified table.
-     * @param {string} table - The name of the table to drop.
-     * @returns {Nusql} - The Nusql instance for method chaining.
-     */
-    dropTable(table: string): Nusql {
-        this.query += `DROP TABLE ${table} `;
-        return this;
-    }
-
-    /**
-     * Adds the DISTINCT keyword to the SELECT statement.
-     * @returns {Nusql} - The Nusql instance for method chaining.
-     */
-    distinct(): Nusql {
-        this.query += 'DISTINCT ';
-        return this;
-    }
-
-    /**
-     * Alias a column or table with a specified alias name.
-     * @param {string} alias - The alias name.
-     * @returns {Nusql} - The Nusql instance for method chaining.
-     */
-    as(alias: string): Nusql {
-        this.query += `AS ${alias} `;
-        return this;
-    }
-
-    /**
-     * Adds a COUNT aggregate function to the SELECT statement.
-     * @param {string} column - The column to count.
-     * @returns {Nusql} - The Nusql instance for method chaining.
-     */
-    count(column: string): Nusql {
-        this.query += `COUNT(${column}) `;
-        return this;
-    }
-
-    /**
-     * Adds a SUM aggregate function to the SELECT statement.
-     * @param {string} column - The column to sum.
-     * @returns {Nusql} - The Nusql instance for method chaining.
-     */
-    sum(column: string): Nusql {
-        this.query += `SUM(${column}) `;
-        return this;
-    }
-
-    /**
-     * Adds an AVG aggregate function to the SELECT statement.
-     * @param {string} column - The column to average.
-     * @returns {Nusql} - The Nusql instance for method chaining.
-     */
-    avg(column: string): Nusql {
-        this.query += `AVG(${column}) `;
-        return this;
-    }
-
-    /**
-     * Adds a MAX aggregate function to the SELECT statement.
-     * @param {string} column - The column to find the maximum value.
-     * @returns {Nusql} - The Nusql instance for method chaining.
-     */
-    max(column: string): Nusql {
-        this.query += `MAX(${column}) `;
-        return this;
-    }
-
-    /**
-     * Adds a MIN aggregate function to the SELECT statement.
-     * @param {string} column - The column to find the minimum value.
-     * @returns {Nusql} - The Nusql instance for method chaining.
-     */
-    min(column: string): Nusql {
-        this.query += `MIN(${column}) `;
-        return this;
-    }
-
-    /**
-     * Adds a WHERE clause with the BETWEEN operator.
-     * @param {string} column - The column to check.
-     * @param {any} value1 - The start of the range.
-     * @param {any} value2 - The end of the range.
-     * @returns {Nusql} - The Nusql instance for method chaining.
-     */
-    between(column: string, value1: any, value2: any): Nusql {
-        this.query += `WHERE ${column} BETWEEN ${value1} AND ${value2} `;
-        return this;
-    }
-
-    /**
-     * Adds a WHERE clause with the LIKE operator.
-     * @param {string} column - The column to check.
-     * @param {string} pattern - The pattern to match.
-     * @returns {Nusql} - The Nusql instance for method chaining.
-     */
-    like(column: string, pattern: string): Nusql {
-        this.query += `WHERE ${column} LIKE '${pattern}' `;
-        return this;
-    }
-
-    /**
-     * Adds a WHERE clause with the IN operator.
-     * @param {string} column - The column to check.
-     * @param {string[]} values - An array of values to check against.
-     * @returns {Nusql} - The Nusql instance for method chaining.
-     */
-    in(column: string, values: string[]): Nusql {
-        const formattedValues = values.map(value => `'${value}'`).join(', ');
-        this.query += `WHERE ${column} IN (${formattedValues}) `;
-        return this;
-    }
-
-    /**
-     * Adds a WHERE clause to check if a column is NULL.
-     * @param {string} column - The column to check for NULL.
+     * Specifies an IS NULL condition.
+     * @param {string} column - The column to check for null.
      * @returns {Nusql} - The Nusql instance for method chaining.
      */
     isNull(column: string): Nusql {
-        this.query += `WHERE ${column} IS NULL `;
+        this.query += `${column} IS NULL `;
         return this;
     }
 
     /**
-     * Adds a WHERE clause to check if a column is NOT NULL.
-     * @param {string} column - The column to check for NOT NULL.
+     * Specifies an IS NOT NULL condition.
+     * @param {string} column - The column to check for not null.
      * @returns {Nusql} - The Nusql instance for method chaining.
      */
     isNotNull(column: string): Nusql {
-        this.query += `WHERE ${column} IS NOT NULL `;
+        this.query += `${column} IS NOT NULL `;
         return this;
     }
 
     /**
-     * Adds an AND condition to the WHERE clause.
-     * @param {string} condition - The condition to add.
+     * Specifies an IN condition to match a column against a set of values.
+     * @param {string} column - The column to match.
+     * @param {string[]} values - The values to match against.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    in(column: string, values: string[]): Nusql {
+        this.query += `${column} IN (${values.join(', ')}) `;
+        return this;
+    }
+
+    /**
+     * Specifies a NOT IN condition to exclude a column from a set of values.
+     * @param {string} column - The column to exclude.
+     * @param {string[]} values - The values to exclude.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    notIn(column: string, values: string[]): Nusql {
+        this.query += `${column} NOT IN (${values.join(', ')}) `;
+        return this;
+    }
+
+    /**
+     * Specifies a BETWEEN condition to match a column within a range.
+     * @param {string} column - The column to match.
+     * @param {string} min - The minimum value in the range.
+     * @param {string} max - The maximum value in the range.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    between(column: string, min: string, max: string): Nusql {
+        this.query += `${column} BETWEEN ${min} AND ${max} `;
+        return this;
+    }
+
+    /*********************************************************************************************
+        * This functions section contain functions of SQL Querying, 
+        * It allows you to create, modify, and manipulate SQL operations easily using method chaining.
+    *********************************************************************************************/
+
+    /**
+ * Specifies a SELECT statement.
+ * @param {string[]} columns - The columns to select.
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    select(columns: string[]): Nusql {
+        this.query += `SELECT ${columns.join(', ')} `;
+        return this;
+    }
+
+    /**
+     * Specifies a SELECT DISTINCT statement.
+     * @param {string[]} columns - The columns to select distinct values from.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    selectDistinct(columns: string[]): Nusql {
+        this.query += `SELECT DISTINCT ${columns.join(', ')} `;
+        return this;
+    }
+
+    /**
+     * Specifies a WHERE clause with an optional condition.
+     * @param {string} condition - The condition to filter results.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    where(condition?: string): Nusql {
+        if (condition) {
+            this.query += `WHERE ${condition} `;
+        }
+        return this;
+    }
+
+    /**
+     * Specifies an ORDER BY clause with an optional direction.
+     * @param {string} column - The column to order by.
+     * @param {string} direction - The ordering direction (e.g., ASC or DESC).
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    orderBy(column: string, direction?: string): Nusql {
+        this.query += `ORDER BY ${column} `;
+        if (direction) {
+            this.query += `${direction} `;
+        }
+        return this;
+    }
+
+    /**
+     * Specifies an AND condition for combining multiple conditions.
+     * @param {string} condition - The additional condition to join with AND.
      * @returns {Nusql} - The Nusql instance for method chaining.
      */
     and(condition: string): Nusql {
@@ -973,8 +737,8 @@ class Nusql {
     }
 
     /**
-     * Adds an OR condition to the WHERE clause.
-     * @param {string} condition - The condition to add.
+     * Specifies an OR condition for combining multiple conditions.
+     * @param {string} condition - The additional condition to join with OR.
      * @returns {Nusql} - The Nusql instance for method chaining.
      */
     or(condition: string): Nusql {
@@ -983,81 +747,152 @@ class Nusql {
     }
 
     /**
-     * Adds a LIMIT clause to limit the number of rows returned in the result set.
-     * @param {number} limit - The maximum number of rows to return.
+     * Specifies a NOT condition to negate a condition.
+     * @param {string} condition - The condition to negate.
      * @returns {Nusql} - The Nusql instance for method chaining.
      */
-    limit(limit: number): Nusql {
-        this.query += `LIMIT ${limit} `;
+    not(condition: string): Nusql {
+        this.query += `NOT ${condition} `;
         return this;
     }
 
     /**
-     * Adds an OFFSET clause to skip a specified number of rows in the result set.
-     * @param {number} offset - The number of rows to skip.
+     * Specifies a LIKE condition for pattern matching.
+     * @param {string} column - The column to match against.
+     * @param {string} pattern - The pattern to match.
      * @returns {Nusql} - The Nusql instance for method chaining.
      */
-    offset(offset: number): Nusql {
-        this.query += `OFFSET ${offset} `;
+    like(column: string, pattern: string): Nusql {
+        this.query += `${column} LIKE '${pattern}' `;
         return this;
     }
 
     /**
-   * Adds a GROUP_CONCAT function to the SQL query for string aggregation.
-   * @param {string} column - The column to concatenate.
-   * @param {string} separator - The optional separator between concatenated values (default: ', ').
-   * @param {string} orderBy - The optional ORDER BY clause for sorting the concatenated values.
-   * @returns {Nusql} - The updated Nusql instance for method chaining.
-   */
-    groupByConcat(column: string, separator: string = ', ', orderBy?: string): Nusql {
-        // Start building the GROUP_CONCAT function with the provided column
-        this.query += `GROUP_CONCAT(${column}`;
-
-        // Add an optional ORDER BY clause if specified
-        if (orderBy) {
-            this.query += ` ORDER BY ${orderBy}`;
-        }
-
-        // Complete the function with an optional separator and closing parenthesis
-        this.query += ` SEPARATOR '${separator}') `;
-
-        return this; // Return the updated Nusql instance for method chaining
+     * Specifies wildcard characters for use in LIKE conditions.
+     * @param {string} wildcards - The wildcard characters to use.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    wildcards(wildcards: string): Nusql {
+        this.query += `LIKE '${wildcards}' `;
+        return this;
     }
 
     /**
-   * Adds a conditional expression using the CASE WHEN statement.
-   * @param {string} condition - The condition to evaluate.
-   * @param {string} result - The result value when the condition is true.
-   * @param {string} elseResult - The optional result value when the condition is false.
-   * @returns {Nusql} - The updated Nusql instance for method chaining.
-   */
-    caseWhen(condition: string, result: string, elseResult?: string): Nusql {
-        // Start building the CASE WHEN statement with the provided condition
-        this.query += `CASE WHEN ${condition} THEN ${result}`;
+     * Specifies aliases for tables or columns.
+     * @param {string} alias - The alias to use.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    aliases(alias: string): Nusql {
+        this.query += `AS ${alias} `;
+        return this;
+    }
 
-        // Add an optional ELSE clause if an elseResult is provided
-        if (elseResult) {
-            this.query += ` ELSE ${elseResult}`;
-        }
+    /*********************************************************************************************
+      * This functions section contain SQL Aggregation and Functions,
+      * It allows you to create, modify, and manipulate SQL operations easily using method chaining.
+    *********************************************************************************************/
 
-        // Complete the statement with an END clause
-        this.query += ' END ';
-
-        return this; // Return the updated Nusql instance for method chaining
+    /**
+ * Specifies a MIN() function to find the minimum value in a column.
+ * @param {string} column - The column to find the minimum value in.
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    min(column: string): Nusql {
+        this.query += `MIN(${column}) `;
+        return this;
     }
 
     /**
-   * Casts a column or value to a specified data type using the CAST function.
-   * @param {string} columnOrValue - The column or value to cast.
-   * @param {string} dataType - The target data type for casting.
-   * @returns {Nusql} - The updated Nusql instance for method chaining.
-   */
-    cast(columnOrValue: string, dataType: string): Nusql {
-        // Use the CAST function to cast the column or value to the specified data type
-        this.query += `CAST(${columnOrValue} AS ${dataType}) `;
-
-        return this; // Return the updated Nusql instance for method chaining
+     * Specifies a MAX() function to find the maximum value in a column.
+     * @param {string} column - The column to find the maximum value in.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    max(column: string): Nusql {
+        this.query += `MAX(${column}) `;
+        return this;
     }
+
+    /**
+     * Specifies a COUNT() function to count the number of rows.
+     * @param {string} column - The column to count (optional).
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    count(column?: string): Nusql {
+        this.query += `COUNT(${column ? column : '*'}) `;
+        return this;
+    }
+
+    /**
+     * Specifies a SUM() function to calculate the sum of a column's values.
+     * @param {string} column - The column to calculate the sum for.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    sum(column: string): Nusql {
+        this.query += `SUM(${column}) `;
+        return this;
+    }
+
+    /**
+     * Specifies an AVG() function to calculate the average of a column's values.
+     * @param {string} column - The column to calculate the average for.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    avg(column: string): Nusql {
+        this.query += `AVG(${column}) `;
+        return this;
+    }
+
+    /**
+     * Specifies ANY() function to check if any of the subquery values match.
+     * @param {Nusql} subquery - The subquery to check.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    any(subquery: Nusql): Nusql {
+        this.query += `ANY(${subquery.build()}) `;
+        return this;
+    }
+
+    /**
+     * Specifies ALL() function to check if all of the subquery values match.
+     * @param {Nusql} subquery - The subquery to check.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    all(subquery: Nusql): Nusql {
+        this.query += `ALL(${subquery.build()}) `;
+        return this;
+    }
+
+    /**
+     * Specifies a CASE expression for conditional logic.
+     * @param {string} condition - The condition to evaluate.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    case(condition: string): Nusql {
+        this.query += `CASE ${condition} `;
+        return this;
+    }
+
+    /**
+     * Specifies a NULLIF() function to compare two expressions and return null if they are equal.
+     * @param {string} expression1 - The first expression to compare.
+     * @param {string} expression2 - The second expression to compare.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    nullIf(expression1: string, expression2: string): Nusql {
+        this.query += `NULLIF(${expression1}, ${expression2}) `;
+        return this;
+    }
+
+    /**
+     * Specifies a COALESCE() function to return the first non-null expression in a list.
+     * @param {string[]} expressions - The list of expressions to evaluate.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    coalesce(expressions: string[]): Nusql {
+        this.query += `COALESCE(${expressions.join(', ')}) `;
+        return this;
+    }
+
 
     /**
      * Builds and returns the SQL query as a string.
