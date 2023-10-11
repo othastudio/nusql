@@ -678,7 +678,114 @@ class Nusql {
     /*********************************************************************************************
         * This functions section contain functions of SQL Querying, 
         * It allows you to create, modify, and manipulate SQL operations easily using method chaining.
-      *********************************************************************************************/
+    *********************************************************************************************/
+
+    /**
+ * Specifies a SELECT statement.
+ * @param {string[]} columns - The columns to select.
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    select(columns: string[]): Nusql {
+        this.query += `SELECT ${columns.join(', ')} `;
+        return this;
+    }
+
+    /**
+     * Specifies a SELECT DISTINCT statement.
+     * @param {string[]} columns - The columns to select distinct values from.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    selectDistinct(columns: string[]): Nusql {
+        this.query += `SELECT DISTINCT ${columns.join(', ')} `;
+        return this;
+    }
+
+    /**
+     * Specifies a WHERE clause with an optional condition.
+     * @param {string} condition - The condition to filter results.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    where(condition?: string): Nusql {
+        if (condition) {
+            this.query += `WHERE ${condition} `;
+        }
+        return this;
+    }
+
+    /**
+     * Specifies an ORDER BY clause with an optional direction.
+     * @param {string} column - The column to order by.
+     * @param {string} direction - The ordering direction (e.g., ASC or DESC).
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    orderBy(column: string, direction?: string): Nusql {
+        this.query += `ORDER BY ${column} `;
+        if (direction) {
+            this.query += `${direction} `;
+        }
+        return this;
+    }
+
+    /**
+     * Specifies an AND condition for combining multiple conditions.
+     * @param {string} condition - The additional condition to join with AND.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    and(condition: string): Nusql {
+        this.query += `AND ${condition} `;
+        return this;
+    }
+
+    /**
+     * Specifies an OR condition for combining multiple conditions.
+     * @param {string} condition - The additional condition to join with OR.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    or(condition: string): Nusql {
+        this.query += `OR ${condition} `;
+        return this;
+    }
+
+    /**
+     * Specifies a NOT condition to negate a condition.
+     * @param {string} condition - The condition to negate.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    not(condition: string): Nusql {
+        this.query += `NOT ${condition} `;
+        return this;
+    }
+
+    /**
+     * Specifies a LIKE condition for pattern matching.
+     * @param {string} column - The column to match against.
+     * @param {string} pattern - The pattern to match.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    like(column: string, pattern: string): Nusql {
+        this.query += `${column} LIKE '${pattern}' `;
+        return this;
+    }
+
+    /**
+     * Specifies wildcard characters for use in LIKE conditions.
+     * @param {string} wildcards - The wildcard characters to use.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    wildcards(wildcards: string): Nusql {
+        this.query += `LIKE '${wildcards}' `;
+        return this;
+    }
+
+    /**
+     * Specifies aliases for tables or columns.
+     * @param {string} alias - The alias to use.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    aliases(alias: string): Nusql {
+        this.query += `AS ${alias} `;
+        return this;
+    }
 
     /**
      * Builds and returns the SQL query as a string.

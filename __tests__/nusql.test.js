@@ -11,7 +11,7 @@ describe('Nusql core testing', function () {
     });
 });
 
-describe('Nusql Data types', function () {
+describe('nusql Data types', function () {
     var nusql;
 
     beforeEach(function () {
@@ -51,12 +51,12 @@ describe('Nusql Data types', function () {
         nusql.binary(8);
         expect(nusql.build()).toBe('BINARY(8)');
     });
-    
+
     it('should generate a VARBINARY column type with a specified size', function () {
         nusql.varbinary(16);
         expect(nusql.build()).toBe('VARBINARY(16)');
     });
-    
+
     it('should generate a BLOB column type with a specified size', function () {
         nusql.blob(32);
         expect(nusql.build()).toBe('BLOB(32)');
@@ -65,22 +65,22 @@ describe('Nusql Data types', function () {
         nusql.date();
         expect(nusql.build()).toBe('DATE');
     });
-    
+
     it('should generate a DATETIME column type with fractional seconds precision', function () {
         nusql.datetime(3);
         expect(nusql.build()).toBe('DATETIME(3)');
     });
-    
+
     it('should generate a TIMESTAMP column type with fractional seconds precision', function () {
         nusql.timestamp(6);
         expect(nusql.build()).toBe('TIMESTAMP(6)');
     });
-    
+
     it('should generate a TIME column type with fractional seconds precision', function () {
         nusql.time(2);
         expect(nusql.build()).toBe('TIME(2)');
     });
-    
+
     it('should generate a YEAR column type', function () {
         nusql.year();
         expect(nusql.build()).toBe('YEAR');
@@ -89,67 +89,67 @@ describe('Nusql Data types', function () {
         nusql.bit(8);
         expect(nusql.build()).toBe('BIT(8)');
     });
-    
+
     it('should generate a TINYINT column type with a specified size', function () {
         nusql.tinyint(4);
         expect(nusql.build()).toBe('TINYINT(4)');
     });
-    
+
     it('should generate a BOOLEAN (BOOL) column type', function () {
         nusql.boolean();
         expect(nusql.build()).toBe('BOOLEAN');
     });
-    
+
     it('should generate a SMALLINT column type with a specified size', function () {
         nusql.smallint(6);
         expect(nusql.build()).toBe('SMALLINT(6)');
     });
-    
+
     it('should generate a MEDIUMINT column type with a specified size', function () {
         nusql.mediumint(9);
         expect(nusql.build()).toBe('MEDIUMINT(9)');
     });
-    
+
     it('should generate an INT column type with a specified size', function () {
         nusql.int(11);
         expect(nusql.build()).toBe('INT(11)');
     });
-    
+
     it('should generate an INTEGER column type with a specified size', function () {
         nusql.integer(11);
         expect(nusql.build()).toBe('INTEGER(11)');
     });
-    
+
     it('should generate a BIGINT column type with a specified size', function () {
         nusql.bigint(20);
         expect(nusql.build()).toBe('BIGINT(20)');
     });
-    
+
     it('should generate a FLOAT column type with size and decimal places', function () {
         nusql.float(10, 2);
         expect(nusql.build()).toBe('FLOAT(10, 2)');
     });
-    
+
     it('should generate a FLOAT column type with precision', function () {
         nusql.floatPrecision(5);
         expect(nusql.build()).toBe('FLOAT(5)');
     });
-    
+
     it('should generate a DOUBLE column type with size and decimal places', function () {
         nusql.double(15, 4);
         expect(nusql.build()).toBe('DOUBLE(15, 4)');
     });
-    
+
     it('should generate a DOUBLE PRECISION column type with size and decimal places', function () {
         nusql.doublePrecision(18, 6);
         expect(nusql.build()).toBe('DOUBLE PRECISION(18, 6)');
     });
-    
+
     it('should generate a DECIMAL column type with size and decimal places', function () {
         nusql.decimal(12, 3);
         expect(nusql.build()).toBe('DECIMAL(12, 3)');
     });
-    
+
     it('should generate a DEC column type with size and decimal places', function () {
         nusql.dec(10, 2);
         expect(nusql.build()).toBe('DEC(10, 2)');
@@ -159,7 +159,7 @@ describe('Nusql Data types', function () {
         nusql.enum('value1', 'value2', 'value3');
         expect(nusql.build()).toBe("ENUM('value1', 'value2', 'value3')");
     });
-    
+
     it('should generate a SET column type with specified values', function () {
         nusql.set('option1', 'option2', 'option3');
         expect(nusql.build()).toBe("SET('option1', 'option2', 'option3')");
@@ -169,37 +169,37 @@ describe('Nusql Data types', function () {
         nusql.geometry();
         expect(nusql.build()).toBe('GEOMETRY');
     });
-    
+
     it('should generate a POINT column type', function () {
         nusql.point();
         expect(nusql.build()).toBe('POINT');
     });
-    
+
     it('should generate a LINESTRING column type', function () {
         nusql.linestring();
         expect(nusql.build()).toBe('LINESTRING');
     });
-    
+
     it('should generate a POLYGON column type', function () {
         nusql.polygon();
         expect(nusql.build()).toBe('POLYGON');
     });
-    
+
     it('should generate a MULTIPOINT column type', function () {
         nusql.multipoint();
         expect(nusql.build()).toBe('MULTIPOINT');
     });
-    
+
     it('should generate a MULTILINESTRING column type', function () {
         nusql.multilinestring();
         expect(nusql.build()).toBe('MULTILINESTRING');
     });
-    
+
     it('should generate a MULTIPOLYGON column type', function () {
         nusql.multipolygon();
         expect(nusql.build()).toBe('MULTIPOLYGON');
     });
-    
+
     it('should generate a GEOMETRYCOLLECTION column type', function () {
         nusql.geometrycollection();
         expect(nusql.build()).toBe('GEOMETRYCOLLECTION');
@@ -209,7 +209,7 @@ describe('Nusql Data types', function () {
         nusql.json();
         expect(nusql.build()).toBe('JSON');
     });
-    
+
     it('should generate a JSONB column type', function () {
         nusql.jsonb();
         expect(nusql.build()).toBe('JSONB');
@@ -218,12 +218,12 @@ describe('Nusql Data types', function () {
         nusql.xml();
         expect(nusql.build()).toBe('XML');
     });
-    
+
     it('should generate a MEDIUMBLOB column type', function () {
         nusql.mediumblob();
         expect(nusql.build()).toBe('MEDIUMBLOB');
     });
-    
+
     it('should generate a LONGBLOB column type', function () {
         nusql.longblob();
         expect(nusql.build()).toBe('LONGBLOB');
@@ -233,7 +233,7 @@ describe('Nusql Data types', function () {
         nusql.mediumtext();
         expect(nusql.build()).toBe('MEDIUMTEXT');
     });
-    
+
     it('should generate a LONGTEXT column type', function () {
         nusql.longtext();
         expect(nusql.build()).toBe('LONGTEXT');
@@ -242,7 +242,7 @@ describe('Nusql Data types', function () {
         nusql.numeric(10, 2);
         expect(nusql.build()).toBe('NUMERIC(10, 2)');
     });
-    
+
     it('should generate a REAL column type', function () {
         nusql.real();
         expect(nusql.build()).toBe('REAL');
@@ -257,39 +257,175 @@ describe('Nusql Data types', function () {
         nusql.uuid();
         expect(nusql.build()).toBe('UUID');
     });
-    
+
     it('should generate a MACADDR column type', function () {
         nusql.macaddr();
         expect(nusql.build()).toBe('MACADDR');
     });
-    
+
     it('should generate an INET column type', function () {
         nusql.inet();
         expect(nusql.build()).toBe('INET');
     });
-    
+
     it('should generate a CIDR column type', function () {
         nusql.cidr();
         expect(nusql.build()).toBe('CIDR');
     });
-    
+
     it('should generate a MACADDR8 column type', function () {
         nusql.macaddr8();
         expect(nusql.build()).toBe('MACADDR8');
     });
-    
+
     it('should generate a TSQUERY column type', function () {
         nusql.tsquery();
         expect(nusql.build()).toBe('TSQUERY');
     });
-    
+
     it('should generate a TSVECTOR column type', function () {
         nusql.tsvector();
         expect(nusql.build()).toBe('TSVECTOR');
     });
-    
+
     it('should generate a GTSVECTOR column type', function () {
         nusql.gtsvector();
         expect(nusql.build()).toBe('GTSVECTOR');
     });
 });
+
+describe('nusql Operators', () => {
+    var nusql;
+
+    beforeEach(function () {
+        nusql = index_1.default.create();
+    });
+
+    it('should generate an equal (=) operator condition', () => {
+        nusql.equal('column1', 'value1');
+        expect(nusql.build()).toBe('column1 = value1');
+    });
+
+    it('should generate a not equal (<>) operator condition', () => {
+        nusql.notEqual('column1', 'value1');
+        expect(nusql.build()).toBe('column1 <> value1');
+    });
+
+    it('should generate a greater than (>) operator condition', () => {
+        nusql.greaterThan('column1', 'value1');
+        expect(nusql.build()).toBe('column1 > value1');
+    });
+
+    it('should generate a less than (<) operator condition', () => {
+        nusql.lessThan('column1', 'value1');
+        expect(nusql.build()).toBe('column1 < value1');
+    });
+
+    it('should generate a greater than or equal to (>=) operator condition', () => {
+        nusql.greaterThanOrEqual('column1', 'value1');
+        expect(nusql.build()).toBe('column1 >= value1');
+    });
+
+    it('should generate a less than or equal to (<=) operator condition', () => {
+        nusql.lessThanOrEqual('column1', 'value1');
+        expect(nusql.build()).toBe('column1 <= value1');
+    });
+
+    it('should generate an IS NULL condition', () => {
+        nusql.isNull('column1');
+        expect(nusql.build()).toBe('column1 IS NULL');
+    });
+
+    it('should generate an IS NOT NULL condition', () => {
+        nusql.isNotNull('column1');
+        expect(nusql.build()).toBe('column1 IS NOT NULL');
+    });
+
+    it('should generate an IN condition', () => {
+        nusql.in('column1', ['value1', 'value2', 'value3']);
+        expect(nusql.build()).toBe('column1 IN (value1, value2, value3)');
+    });
+
+    it('should generate a NOT IN condition', () => {
+        nusql.notIn('column1', ['value1', 'value2', 'value3']);
+        expect(nusql.build()).toBe('column1 NOT IN (value1, value2, value3)');
+    });
+
+    it('should generate a BETWEEN condition', () => {
+        nusql.between('column1', 'minValue', 'maxValue');
+        expect(nusql.build()).toBe('column1 BETWEEN minValue AND maxValue');
+    });
+});
+
+describe('nusql Querying', () => {
+    var nusql;
+
+    beforeEach(function () {
+        nusql = index_1.default.create();
+    });
+
+    it('should generate a SELECT statement', () => {
+        nusql.select(['column1', 'column2']);
+        expect(nusql.build()).toBe('SELECT column1, column2');
+    });
+
+    it('should generate a SELECT DISTINCT statement', () => {
+        nusql.selectDistinct(['column1', 'column2']);
+        expect(nusql.build()).toBe('SELECT DISTINCT column1, column2');
+    });
+
+    it('should generate a WHERE clause with a condition', () => {
+        nusql.where('condition = value');
+        expect(nusql.build()).toBe('WHERE condition = value');
+    });
+
+    it('should generate an ORDER BY clause', () => {
+        nusql.orderBy('column1');
+        expect(nusql.build()).toBe('ORDER BY column1');
+    });
+
+    it('should generate an ORDER BY clause with direction', () => {
+        nusql.orderBy('column1', 'DESC');
+        expect(nusql.build()).toBe('ORDER BY column1 DESC');
+    });
+
+    it('should generate an AND condition', () => {
+        nusql.and('condition1 = value1');
+        expect(nusql.build()).toBe('AND condition1 = value1');
+    });
+
+    it('should generate an OR condition', () => {
+        nusql.or('condition2 = value2');
+        expect(nusql.build()).toBe('OR condition2 = value2');
+    });
+
+    it('should generate a NOT condition', () => {
+        nusql.not('condition3 = value3');
+        expect(nusql.build()).toBe('NOT condition3 = value3');
+    });
+
+    it('should generate a LIKE condition', () => {
+        nusql.like('column1', 'pattern');
+        expect(nusql.build()).toBe('column1 LIKE \'pattern\'');
+    });
+
+    it('should generate wildcard characters for a LIKE condition', () => {
+        nusql.wildcards('%pattern%');
+        expect(nusql.build()).toBe('LIKE \'%pattern%\'');
+    });
+
+    it('should generate an IN condition', () => {
+        nusql.in('column1', ['value1', 'value2', 'value3']);
+        expect(nusql.build()).toBe('column1 IN (value1, value2, value3)');
+    });
+
+    it('should generate a BETWEEN condition', () => {
+        nusql.between('column1', 'minValue', 'maxValue');
+        expect(nusql.build()).toBe('column1 BETWEEN minValue AND maxValue');
+    });
+
+    it('should generate aliases for tables or columns', () => {
+        nusql.aliases('alias1');
+        expect(nusql.build()).toBe('AS alias1');
+    });
+})
