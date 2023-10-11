@@ -17,7 +17,7 @@ jobs:
       run: npm install
 
     - name: 🏗️ Build package
-      run: npm run build
+      run: npm build
 
     - name: 🧪 Run tests
-      run: npm run test
+      run: npm test
