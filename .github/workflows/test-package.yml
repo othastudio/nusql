@@ -2,8 +2,6 @@ name: 🧪 Test Package
 
 on:
   push:
-    branches:
-      - main
 
 jobs:
   test:
