@@ -15,7 +15,17 @@
     "nuclea",
     "sql",
     "query-builder",
-    "database"
+    "database",
+    "typescript",
+    "javascript",
+    "npm-package",
+    "sql-query",
+    "raw-sql",
+    "database-connector",
+    "sql-helper",
+    "data-access",
+    "database-interaction",
+    "typescript-library"
   ],
   "author": "Othmane Nejdi",
   "license": "MIT",

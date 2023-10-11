@@ -2,7 +2,7 @@
   <img width="200px" src="https://i.postimg.cc/hv15fZR4/nusql-logo.png" alt="nusql logo">
 </p>
 
-<h1 align="center">Simplified SQL Query Builder</h1>
+<h1 align="center">Simplified SQL Query Builder for Node.js</h1>
 <div align="center">
  <a href="https://github.com/othastudio/nusql/blob/main/LICENSE">
  <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License">
