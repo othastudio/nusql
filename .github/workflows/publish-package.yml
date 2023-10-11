@@ -20,6 +20,8 @@ jobs:
 
       - name: 🚀 Update npm version
         run: |
+          git config --global user.email "otmannj56@gmail.com"
+          git config --global user.name "iietmoon"
           npm version patch
         env:
           NPM_TOKEN: ${{secrets.NPM_TOKEN}}
