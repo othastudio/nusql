@@ -500,48 +500,76 @@ describe('SQL Joins', () => {
     beforeEach(function () {
         nusql = index_1.default.create();
     });
-  
+
     it('should generate an INNER JOIN clause', () => {
-      nusql.innerJoin('table2', 'table1.id = table2.id');
-      expect(nusql.build()).toBe('INNER JOIN table2 ON table1.id = table2.id');
+        nusql.innerJoin('table2', 'table1.id = table2.id');
+        expect(nusql.build()).toBe('INNER JOIN table2 ON table1.id = table2.id');
     });
-  
+
     it('should generate a LEFT JOIN clause', () => {
-      nusql.leftJoin('table2', 'table1.id = table2.id');
-      expect(nusql.build()).toBe('LEFT JOIN table2 ON table1.id = table2.id');
+        nusql.leftJoin('table2', 'table1.id = table2.id');
+        expect(nusql.build()).toBe('LEFT JOIN table2 ON table1.id = table2.id');
     });
-  
+
     it('should generate a RIGHT JOIN clause', () => {
-      nusql.rightJoin('table2', 'table1.id = table2.id');
-      expect(nusql.build()).toBe('RIGHT JOIN table2 ON table1.id = table2.id');
+        nusql.rightJoin('table2', 'table1.id = table2.id');
+        expect(nusql.build()).toBe('RIGHT JOIN table2 ON table1.id = table2.id');
     });
-  
+
     it('should generate a FULL JOIN clause', () => {
-      nusql.fullJoin('table2', 'table1.id = table2.id');
-      expect(nusql.build()).toBe('FULL JOIN table2 ON table1.id = table2.id');
+        nusql.fullJoin('table2', 'table1.id = table2.id');
+        expect(nusql.build()).toBe('FULL JOIN table2 ON table1.id = table2.id');
     });
-  
+
     it('should generate a SELF JOIN clause', () => {
-      nusql.selfJoin('table2', 'table1.id = table2.id');
-      expect(nusql.build()).toBe('SELF JOIN table2 ON table1.id = table2.id');
+        nusql.selfJoin('table2', 'table1.id = table2.id');
+        expect(nusql.build()).toBe('SELF JOIN table2 ON table1.id = table2.id');
     });
-  });
-  
-  describe('SQL Union', () => {
+});
+
+describe('SQL Union', () => {
     var nusql1, nusql2;
 
     beforeEach(function () {
         nusql1 = index_1.default.create();
         nusql2 = index_1.default.create();
     });
-  
+
     it('should generate a UNION clause', () => {
-      nusql1.union(nusql2);
-      expect(nusql1.build()).toBe('UNION' + nusql2.build());
+        nusql1.union(nusql2);
+        expect(nusql1.build()).toBe('UNION' + nusql2.build());
     });
-  
+
     it('should generate a UNION ALL clause', () => {
-      nusql1.union(nusql2, true);
-      expect(nusql1.build()).toBe('UNION ALL' + nusql2.build());
+        nusql1.union(nusql2, true);
+        expect(nusql1.build()).toBe('UNION ALL' + nusql2.build());
     });
-  });
+});
+
+describe('SQL Grouping and Filtering', () => {
+    var nusql, subquery;
+
+    beforeEach(function () {
+        nusql = index_1.default.create();
+        subquery = index_1.default.create();
+    });
+
+    it('should generate a GROUP BY clause with a single column', () => {
+        nusql.groupBy('column1');
+        expect(nusql.build()).toBe('GROUP BY column1');
+    });
+
+    it('should generate a GROUP BY clause with multiple columns', () => {
+        nusql.groupBy(['column1', 'column2']);
+        expect(nusql.build()).toBe('GROUP BY column1, column2');
+    });
+    it('should generate a HAVING clause with a condition', () => {
+        nusql.having('SUM(column1) > 100');
+        expect(nusql.build()).toBe('HAVING SUM(column1) > 100');
+    });
+    it('should generate an EXISTS clause with a subquery', () => {
+        const state = subquery.select(['column1']).from('table2').where('column1 = value');
+        nusql.exists(state);
+        expect(nusql.build()).toBe('EXISTS (SELECT column1 FROM table2 WHERE column1 = value)');
+    });
+});

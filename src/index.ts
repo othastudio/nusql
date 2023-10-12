@@ -965,6 +965,46 @@ class Nusql {
         return this;
     }
 
+    /*********************************************************************************************
+      * This functions section contain SQL Grouping and Filtering
+      * It allows you to create, modify, and manipulate SQL operations easily using method chaining.
+    *********************************************************************************************/
+
+    /**
+ * Specifies a GROUP BY clause for grouping the results by one or more columns.
+ * @param {string | string[]} columns - The column(s) to group by.
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    groupBy(columns: string | string[]): Nusql {
+        if (Array.isArray(columns)) {
+            this.query += `GROUP BY ${columns.join(', ')} `;
+        } else {
+            this.query += `GROUP BY ${columns} `;
+        }
+        return this;
+    }
+
+    /**
+     * Specifies a HAVING clause for filtering the grouped results based on a condition.
+     * @param {string} condition - The condition for the HAVING clause.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    having(condition: string): Nusql {
+        this.query += `HAVING ${condition} `;
+        return this;
+    }
+
+    /**
+     * Specifies an EXISTS clause for checking the existence of a subquery.
+     * @param {Nusql} subquery - The subquery to check for existence.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    exists(subquery: Nusql): Nusql {
+        this.query += `EXISTS (${subquery.build()}) `;
+        return this;
+    }
+
+
 
 
     /*********************************************************************************************
