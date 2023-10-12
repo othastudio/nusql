@@ -927,6 +927,74 @@ var Nusql = /** @class */ (function () {
         return this;
     };
     /*********************************************************************************************
+      * This functions section contain SQL Data Modification
+      * It allows you to create, modify, and manipulate SQL operations easily using method chaining.
+    *********************************************************************************************/
+    /**
+  * Specifies an INSERT INTO statement to insert rows into a table.
+  * @param {string} table - The name of the table to insert into.
+  * @param {string[]} columns - The columns to insert data into.
+  * @returns {Nusql} - The Nusql instance for method chaining.
+  */
+    Nusql.prototype.insertInto = function (table, columns) {
+        this.query += "INSERT INTO ".concat(table, " (").concat(columns.join(', '), ") ");
+        return this;
+    };
+    /**
+     * Specifies a NULL VALUES statement to insert rows with NULL values.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.nullValues = function () {
+        this.query += 'NULL VALUES ';
+        return this;
+    };
+    /**
+     * Specifies an UPDATE statement to modify existing rows in a table.
+     * @param {string} table - The name of the table to update.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.update = function (table) {
+        this.query += "UPDATE ".concat(table, " ");
+        return this;
+    };
+    /**
+     * Specifies a DELETE statement to remove rows from a table.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.delete = function () {
+        this.query += 'DELETE ';
+        return this;
+    };
+    /**
+     * Specifies a SELECT TOP clause to limit the number of rows returned.
+     * @param {number} count - The number of rows to select.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.selectTop = function (count) {
+        this.query += "SELECT TOP ".concat(count, " ");
+        return this;
+    };
+    /**
+     * Specifies a SELECT INTO statement to create a new table from the results of a query.
+     * @param {string} newTable - The name of the new table to create.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.selectInto = function (newTable) {
+        this.query += "SELECT INTO ".concat(newTable, " ");
+        return this;
+    };
+    /**
+     * Specifies an INSERT INTO SELECT statement to insert rows into a table from the results of a query.
+     * @param {string} table - The name of the table to insert into.
+     * @param {string[]} columns - The columns to insert data into.
+     * @param {Nusql} subquery - The subquery to select data from.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.insertIntoSelect = function (table, columns, subquery) {
+        this.query += "INSERT INTO ".concat(table, " (").concat(columns.join(', '), ") SELECT ").concat(subquery.build(), " ");
+        return this;
+    };
+    /*********************************************************************************************
       * This functions section contain Build, create functions,
       * It allows you to create, modify, and manipulate SQL operations easily using method chaining.
     *********************************************************************************************/

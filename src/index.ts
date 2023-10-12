@@ -1004,8 +1004,80 @@ class Nusql {
         return this;
     }
 
+    /*********************************************************************************************
+      * This functions section contain SQL Data Modification
+      * It allows you to create, modify, and manipulate SQL operations easily using method chaining.
+    *********************************************************************************************/
+    /**
+  * Specifies an INSERT INTO statement to insert rows into a table.
+  * @param {string} table - The name of the table to insert into.
+  * @param {string[]} columns - The columns to insert data into.
+  * @returns {Nusql} - The Nusql instance for method chaining.
+  */
+    insertInto(table: string, columns: string[]): Nusql {
+        this.query += `INSERT INTO ${table} (${columns.join(', ')}) `;
+        return this;
+    }
 
+    /**
+     * Specifies a NULL VALUES statement to insert rows with NULL values.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    nullValues(): Nusql {
+        this.query += 'NULL VALUES ';
+        return this;
+    }
 
+    /**
+     * Specifies an UPDATE statement to modify existing rows in a table.
+     * @param {string} table - The name of the table to update.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    update(table: string): Nusql {
+        this.query += `UPDATE ${table} `;
+        return this;
+    }
+
+    /**
+     * Specifies a DELETE statement to remove rows from a table.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    delete(): Nusql {
+        this.query += 'DELETE ';
+        return this;
+    }
+
+    /**
+     * Specifies a SELECT TOP clause to limit the number of rows returned.
+     * @param {number} count - The number of rows to select.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    selectTop(count: number): Nusql {
+        this.query += `SELECT TOP ${count} `;
+        return this;
+    }
+
+    /**
+     * Specifies a SELECT INTO statement to create a new table from the results of a query.
+     * @param {string} newTable - The name of the new table to create.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    selectInto(newTable: string): Nusql {
+        this.query += `SELECT INTO ${newTable} `;
+        return this;
+    }
+
+    /**
+     * Specifies an INSERT INTO SELECT statement to insert rows into a table from the results of a query.
+     * @param {string} table - The name of the table to insert into.
+     * @param {string[]} columns - The columns to insert data into.
+     * @param {Nusql} subquery - The subquery to select data from.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    insertIntoSelect(table: string, columns: string[], subquery: Nusql): Nusql {
+        this.query += `INSERT INTO ${table} (${columns.join(', ')}) SELECT ${subquery.build()} `;
+        return this;
+    }
 
     /*********************************************************************************************
       * This functions section contain Build, create functions,

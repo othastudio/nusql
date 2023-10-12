@@ -573,3 +573,98 @@ describe('SQL Grouping and Filtering', () => {
         expect(nusql.build()).toBe('EXISTS (SELECT column1 FROM table2 WHERE column1 = value)');
     });
 });
+
+describe('SQL Insert Into', () => {
+    var nusql;
+
+    beforeEach(function () {
+        nusql = index_1.default.create();
+    });
+
+    it('should generate an INSERT INTO statement', () => {
+        nusql.insertInto('table1', ['column1', 'column2']);
+        expect(nusql.build()).toBe('INSERT INTO table1 (column1, column2)');
+    });
+});
+
+describe('SQL Null Values', () => {
+    var nusql;
+
+    beforeEach(function () {
+        nusql = index_1.default.create();
+    });
+
+    it('should generate a NULL VALUES statement', () => {
+        nusql.nullValues();
+        expect(nusql.build()).toBe('NULL VALUES');
+    });
+});
+
+describe('SQL Update', () => {
+    var nusql;
+
+    beforeEach(function () {
+        nusql = index_1.default.create();
+    });
+
+    it('should generate an UPDATE statement', () => {
+        nusql.update('table1');
+        expect(nusql.build()).toBe('UPDATE table1');
+    });
+});
+
+describe('SQL Delete', () => {
+    var nusql;
+
+    beforeEach(function () {
+        nusql = index_1.default.create();
+    });
+
+    it('should generate a DELETE statement', () => {
+        nusql.delete();
+        expect(nusql.build()).toBe('DELETE');
+    });
+});
+
+describe('SQL Select Top', () => {
+    var nusql;
+
+    beforeEach(function () {
+        nusql = index_1.default.create();
+    });
+
+    it('should generate a SELECT TOP statement', () => {
+        nusql.selectTop(10);
+        expect(nusql.build()).toBe('SELECT TOP 10');
+    });
+});
+
+describe('SQL Select Into', () => {
+    var nusql;
+
+    beforeEach(function () {
+        nusql = index_1.default.create();
+    });
+
+    it('should generate a SELECT INTO statement', () => {
+        nusql.selectInto('newTable');
+        expect(nusql.build()).toBe('SELECT INTO newTable');
+    });
+});
+
+describe('SQL Insert Into Select', () => {
+    var nusql, subquery;
+
+    beforeEach(function () {
+        nusql = index_1.default.create();
+        subquery = index_1.default.create();
+    });
+
+    it('should generate an INSERT INTO SELECT statement', () => {
+        const state = subquery.select(['column1']).from('table2').where('column1 = value');
+        nusql.insertIntoSelect('table1', ['column1', 'column2'], state);
+        expect(nusql.build()).toBe(
+            'INSERT INTO table1 (column1, column2) SELECT column1 FROM table2 WHERE column1 = value'
+        );
+    });
+});
