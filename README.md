@@ -7,7 +7,7 @@
  <a href="https://github.com/othastudio/nusql/blob/main/LICENSE">
  <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License">
  </a>
- <a href="https://github.com/othastudio/nusql/blob/main/LICENSE">
+ <a href="[https://github.com/othastudio/nusql/blob/main/LICENSE](https://www.npmjs.com/package/nusql)">
  <img src="https://img.shields.io/npm/v/nusql.svg" alt="npm version">
  </a>
  <a href="https://www.npmjs.com/package/nusql">
