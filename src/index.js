@@ -650,6 +650,15 @@ var Nusql = /** @class */ (function () {
         return this;
     };
     /**
+ * Specifies a FROM clause to specify the source table for the query.
+ * @param {string} table - The name of the source table.
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    Nusql.prototype.from = function (table) {
+        this.query += "FROM ".concat(table, " ");
+        return this;
+    };
+    /**
      * Specifies a WHERE clause with an optional condition.
      * @param {string} condition - The condition to filter results.
      * @returns {Nusql} - The Nusql instance for method chaining.
@@ -991,7 +1000,7 @@ var Nusql = /** @class */ (function () {
      * @returns {Nusql} - The Nusql instance for method chaining.
      */
     Nusql.prototype.insertIntoSelect = function (table, columns, subquery) {
-        this.query += "INSERT INTO ".concat(table, " (").concat(columns.join(', '), ") SELECT ").concat(subquery.build(), " ");
+        this.query += "INSERT INTO ".concat(table, " (").concat(columns.join(', '), ") ").concat(subquery.build(), " ");
         return this;
     };
     /*********************************************************************************************

@@ -699,7 +699,15 @@ class Nusql {
         this.query += `SELECT DISTINCT ${columns.join(', ')} `;
         return this;
     }
-
+    /**
+ * Specifies a FROM clause to specify the source table for the query.
+ * @param {string} table - The name of the source table.
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    from(table: string): Nusql {
+        this.query += `FROM ${table} `;
+        return this;
+    }
     /**
      * Specifies a WHERE clause with an optional condition.
      * @param {string} condition - The condition to filter results.
@@ -1075,7 +1083,7 @@ class Nusql {
      * @returns {Nusql} - The Nusql instance for method chaining.
      */
     insertIntoSelect(table: string, columns: string[], subquery: Nusql): Nusql {
-        this.query += `INSERT INTO ${table} (${columns.join(', ')}) SELECT ${subquery.build()} `;
+        this.query += `INSERT INTO ${table} (${columns.join(', ')}) ${subquery.build()} `;
         return this;
     }
 
