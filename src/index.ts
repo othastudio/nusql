@@ -19,9 +19,11 @@
 
 class Nusql {
     private query: string;
+    private column: string;
 
     constructor() {
         this.query = '';
+        this.column = '';
     }
 
     /*********************************************************************************************
@@ -1086,6 +1088,78 @@ class Nusql {
         this.query += `INSERT INTO ${table} (${columns.join(', ')}) ${subquery.build()} `;
         return this;
     }
+
+    /*********************************************************************************************
+      * This functions section contain SQL Constraints
+      * It allows you to create, modify, and manipulate SQL operations easily using method chaining.
+    *********************************************************************************************/
+
+    /**
+ * Specifies a CONSTRAINT clause to define a custom constraint in the query.
+ * @param {string} constraint - The custom constraint definition.
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    constraint(constraint: string): Nusql {
+        this.query += `CONSTRAINT ${constraint} `;
+        return this;
+    }
+
+    /**
+     * Specifies a NOT NULL constraint on the current column.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    notNull(): Nusql {
+        this.query += 'NOT NULL ';
+        return this;
+    }
+
+    /**
+     * Specifies a UNIQUE constraint on the current column.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    unique(): Nusql {
+        this.query += 'UNIQUE ';
+        return this;
+    }
+
+    /**
+     * Specifies a PRIMARY KEY constraint on the current column.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    primaryKey(): Nusql {
+        this.query += 'PRIMARY KEY ';
+        return this;
+    }
+    /**
+     * Specifies a FOREIGN KEY constraint on the current column.
+     * @param {string} references - The referenced table and column(s).
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    foreignKey(column: string, references: string,): Nusql {
+        this.query += `FOREIGN KEY (${column}) REFERENCES ${references} `;
+        return this;
+    }
+
+    /**
+     * Specifies a CHECK constraint on the current column.
+     * @param {string} condition - The condition for the CHECK constraint.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    check(condition: string): Nusql {
+        this.query += `CHECK (${condition}) `;
+        return this;
+    }
+
+    /**
+     * Specifies a DEFAULT constraint on the current column.
+     * @param {string} value - The default value for the column.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    default(value: string): Nusql {
+        this.query += `DEFAULT ${value} `;
+        return this;
+    }
+
 
     /*********************************************************************************************
       * This functions section contain Build, create functions,

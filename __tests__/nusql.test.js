@@ -4,7 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var index_1 = __importDefault(require("../src/index"));
-describe('Nusql core testing', function () {
+
+describe('Nusql core iting', function () {
     it('should construct an instance', function () {
         var nusql = index_1.default.create();
         expect(nusql).toBeInstanceOf(index_1.default);
@@ -663,12 +664,52 @@ describe('SQL Insert Into Select', () => {
     it('should generate an INSERT INTO SELECT statement', () => {
         subquery.select(['column1']).from('table2').where('column1 = value');
         nusql.insertIntoSelect('table1', ['column1', 'column2'], subquery);
-        console.warn(nusql.build())
-        /*
         expect(nusql.build()).toBe(
             'INSERT INTO table1 (column1, column2) SELECT column1 FROM table2 WHERE column1 = value'
-            INSERT INTO table1 (column1, column2) SELECT FROM table2 WHERE column1 = value
         );
-        */
     });
 });
+
+describe('SQL Constraints', ()=>{
+    var nusql, subquery;
+
+    beforeEach(function () {
+        nusql = index_1.default.create();
+        subquery = index_1.default.create();
+    });
+
+    it('Adds a custom constraint to the query', () => {
+        nusql.constraint('custom_constraint');
+        expect(nusql.build()).toBe('CONSTRAINT custom_constraint');
+      });
+      
+      it('Adds a NOT NULL constraint to the query', () => {
+        nusql.notNull();
+        expect(nusql.build()).toBe('NOT NULL');
+      });
+      
+      it('Adds a UNIQUE constraint to the query', () => {
+        nusql.unique();
+        expect(nusql.build()).toBe('UNIQUE');
+      });
+      
+      it('Adds a PRIMARY KEY constraint to the query', () => {
+        nusql.primaryKey();
+        expect(nusql.build()).toBe('PRIMARY KEY');
+      });
+      
+      it('Adds a FOREIGN KEY constraint to the query', () => {
+        nusql.foreignKey('current_column', 'referenced_table(referenced_column)');
+        expect(nusql.build()).toBe('FOREIGN KEY (current_column) REFERENCES referenced_table(referenced_column)');
+      });
+      
+      it('Adds a CHECK constraint to the query', () => {
+        nusql.check('column > 0');
+        expect(nusql.build()).toBe('CHECK (column > 0)');
+      });
+      
+      it('Adds a DEFAULT constraint to the query', () => {
+        nusql.default('42');
+        expect(nusql.build()).toBe('DEFAULT 42');
+      });
+})

@@ -21,6 +21,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Nusql = /** @class */ (function () {
     function Nusql() {
         this.query = '';
+        this.column = '';
     }
     /*********************************************************************************************
       * This functions section contain Data types for different SQL data types,
@@ -1001,6 +1002,70 @@ var Nusql = /** @class */ (function () {
      */
     Nusql.prototype.insertIntoSelect = function (table, columns, subquery) {
         this.query += "INSERT INTO ".concat(table, " (").concat(columns.join(', '), ") ").concat(subquery.build(), " ");
+        return this;
+    };
+    /*********************************************************************************************
+      * This functions section contain SQL Constraints
+      * It allows you to create, modify, and manipulate SQL operations easily using method chaining.
+    *********************************************************************************************/
+    /**
+ * Specifies a CONSTRAINT clause to define a custom constraint in the query.
+ * @param {string} constraint - The custom constraint definition.
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    Nusql.prototype.constraint = function (constraint) {
+        this.query += "CONSTRAINT ".concat(constraint, " ");
+        return this;
+    };
+    /**
+     * Specifies a NOT NULL constraint on the current column.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.notNull = function () {
+        this.query += 'NOT NULL ';
+        return this;
+    };
+    /**
+     * Specifies a UNIQUE constraint on the current column.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.unique = function () {
+        this.query += 'UNIQUE ';
+        return this;
+    };
+    /**
+     * Specifies a PRIMARY KEY constraint on the current column.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.primaryKey = function () {
+        this.query += 'PRIMARY KEY ';
+        return this;
+    };
+    /**
+     * Specifies a FOREIGN KEY constraint on the current column.
+     * @param {string} references - The referenced table and column(s).
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.foreignKey = function (column, references) {
+        this.query += "FOREIGN KEY (".concat(column, ") REFERENCES ").concat(references, " ");
+        return this;
+    };
+    /**
+     * Specifies a CHECK constraint on the current column.
+     * @param {string} condition - The condition for the CHECK constraint.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.check = function (condition) {
+        this.query += "CHECK (".concat(condition, ") ");
+        return this;
+    };
+    /**
+     * Specifies a DEFAULT constraint on the current column.
+     * @param {string} value - The default value for the column.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.default = function (value) {
+        this.query += "DEFAULT ".concat(value, " ");
         return this;
     };
     /*********************************************************************************************
