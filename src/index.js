@@ -1069,6 +1069,59 @@ var Nusql = /** @class */ (function () {
         return this;
     };
     /*********************************************************************************************
+      * This functions section contain SQL Indexing
+      * It allows you to create, modify, and manipulate SQL operations easily using method chaining.
+    *********************************************************************************************/
+    /**
+     * Specifies an INDEX clause to create an index on the current column(s).
+     * @param {string} indexName - The name of the index.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+    */
+    Nusql.prototype.index = function (indexName) {
+        this.query += "INDEX ".concat(indexName, " ");
+        return this;
+    };
+    /**
+     * Specifies an AUTO_INCREMENT property for the current column.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.autoIncrement = function () {
+        this.query += 'AUTO_INCREMENT ';
+        return this;
+    };
+    /*********************************************************************************************
+      * This functions section contain SQL Database Management,
+      * It allows you to create, modify, and manipulate SQL operations easily using method chaining.
+    *********************************************************************************************/
+    /**
+     * Specifies a CREATE DATABASE statement to create a new database.
+     * @param {string} dbName - The name of the database to create.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.createDatabase = function (dbName) {
+        this.query = "CREATE DATABASE IF NOT EXISTS ".concat(dbName, ";");
+        return this;
+    };
+    /**
+     * Specifies a DROP DATABASE statement to drop an existing database.
+     * @param {string} dbName - The name of the database to drop.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.dropDatabase = function (dbName) {
+        this.query = "DROP DATABASE IF EXISTS ".concat(dbName, ";");
+        return this;
+    };
+    /**
+     * Specifies a backup database command to create a backup of an existing database.
+     * @param {string} dbName - The name of the database to backup.
+     * @param {string} backupPath - The path where the backup will be stored.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.backupDatabase = function (dbName, backupPath) {
+        this.query = "BACKUP DATABASE ".concat(dbName, " TO DISK = '").concat(backupPath, "'");
+        return this;
+    };
+    /*********************************************************************************************
       * This functions section contain Build, create functions,
       * It allows you to create, modify, and manipulate SQL operations easily using method chaining.
     *********************************************************************************************/

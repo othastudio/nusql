@@ -670,7 +670,7 @@ describe('SQL Insert Into Select', () => {
     });
 });
 
-describe('SQL Constraints', ()=>{
+describe('SQL Constraints', () => {
     var nusql, subquery;
 
     beforeEach(function () {
@@ -681,35 +681,79 @@ describe('SQL Constraints', ()=>{
     it('Adds a custom constraint to the query', () => {
         nusql.constraint('custom_constraint');
         expect(nusql.build()).toBe('CONSTRAINT custom_constraint');
-      });
-      
-      it('Adds a NOT NULL constraint to the query', () => {
+    });
+
+    it('Adds a NOT NULL constraint to the query', () => {
         nusql.notNull();
         expect(nusql.build()).toBe('NOT NULL');
-      });
-      
-      it('Adds a UNIQUE constraint to the query', () => {
+    });
+
+    it('Adds a UNIQUE constraint to the query', () => {
         nusql.unique();
         expect(nusql.build()).toBe('UNIQUE');
-      });
-      
-      it('Adds a PRIMARY KEY constraint to the query', () => {
+    });
+
+    it('Adds a PRIMARY KEY constraint to the query', () => {
         nusql.primaryKey();
         expect(nusql.build()).toBe('PRIMARY KEY');
-      });
-      
-      it('Adds a FOREIGN KEY constraint to the query', () => {
+    });
+
+    it('Adds a FOREIGN KEY constraint to the query', () => {
         nusql.foreignKey('current_column', 'referenced_table(referenced_column)');
         expect(nusql.build()).toBe('FOREIGN KEY (current_column) REFERENCES referenced_table(referenced_column)');
-      });
-      
-      it('Adds a CHECK constraint to the query', () => {
+    });
+
+    it('Adds a CHECK constraint to the query', () => {
         nusql.check('column > 0');
         expect(nusql.build()).toBe('CHECK (column > 0)');
-      });
-      
-      it('Adds a DEFAULT constraint to the query', () => {
+    });
+
+    it('Adds a DEFAULT constraint to the query', () => {
         nusql.default('42');
         expect(nusql.build()).toBe('DEFAULT 42');
-      });
+    });
 })
+
+describe('SQL Indexing', () => {
+    var nusql;
+
+    beforeEach(function () {
+        nusql = index_1.default.create();
+    });
+
+    test('Adds an INDEX clause to create an index on the column', () => {
+        nusql.index('index_name');
+        expect(nusql.build()).toBe('INDEX index_name');
+    });
+
+    test('Adds an AUTO_INCREMENT property to the column', () => {
+        nusql.autoIncrement();
+        expect(nusql.build()).toBe('AUTO_INCREMENT');
+    });
+});
+
+describe('SQL Database Management', () => {
+    var nusql;
+
+    beforeEach(function () {
+        nusql = index_1.default.create();
+    });
+
+    // Test the createDatabase function
+    test('Specifies a CREATE DATABASE statement to create a new database', () => {
+        nusql.createDatabase('new_db');
+        expect(nusql.build()).toBe('CREATE DATABASE IF NOT EXISTS new_db;');
+    });
+
+    // Test the dropDatabase function
+    test('Specifies a DROP DATABASE statement to drop an existing database', () => {
+        nusql.dropDatabase('existing_db');
+        expect(nusql.build()).toBe('DROP DATABASE IF EXISTS existing_db;');
+    });
+
+    // Test the backupDatabase function
+    test('Specifies a backup database command to create a backup of an existing database', () => {
+        nusql.backupDatabase('source_db', 'backup_path.bak');
+        expect(nusql.build()).toBe("BACKUP DATABASE source_db TO DISK = 'backup_path.bak'");
+    });
+});
