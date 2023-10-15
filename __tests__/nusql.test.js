@@ -757,3 +757,26 @@ describe('SQL Database Management', () => {
         expect(nusql.build()).toBe("BACKUP DATABASE source_db TO DISK = 'backup_path.bak'");
     });
 });
+
+describe('SQL Table Management', () => {
+    var nusql;
+
+    beforeEach(function () {
+        nusql = index_1.default.create();
+    });
+  
+    test('createTable should generate a CREATE TABLE statement', () => {
+      nusql.createTable('users');
+      expect(nusql.build()).toBe('CREATE TABLE users');
+    });
+  
+    test('dropTable should generate a DROP TABLE statement', () => {
+      nusql.dropTable('products');
+      expect(nusql.build()).toBe('DROP TABLE products');
+    });
+  
+    test('alterTable should generate an ALTER TABLE statement', () => {
+      nusql.alterTable('orders');
+      expect(nusql.build()).toBe('ALTER TABLE orders');
+    });
+  });

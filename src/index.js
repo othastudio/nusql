@@ -1121,6 +1121,33 @@ var Nusql = /** @class */ (function () {
         this.query = "BACKUP DATABASE ".concat(dbName, " TO DISK = '").concat(backupPath, "'");
         return this;
     };
+    /**
+ * Specifies a CREATE TABLE statement to create a new table.
+ * @param {string} tableName - The name of the table to create.
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    Nusql.prototype.createTable = function (tableName) {
+        this.query = "CREATE TABLE ".concat(tableName, " ");
+        return this;
+    };
+    /**
+     * Specifies a DROP TABLE statement to drop an existing table.
+     * @param {string} tableName - The name of the table to drop.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.dropTable = function (tableName) {
+        this.query = "DROP TABLE ".concat(tableName, " ");
+        return this;
+    };
+    /**
+     * Specifies an ALTER TABLE statement to modify an existing table.
+     * @param {string} tableName - The name of the table to alter.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.alterTable = function (tableName) {
+        this.query = "ALTER TABLE ".concat(tableName, " ");
+        return this;
+    };
     /*********************************************************************************************
       * This functions section contain Build, create functions,
       * It allows you to create, modify, and manipulate SQL operations easily using method chaining.

@@ -1188,7 +1188,7 @@ class Nusql {
       * This functions section contain SQL Database Management,
       * It allows you to create, modify, and manipulate SQL operations easily using method chaining.
     *********************************************************************************************/
-   
+
     /**
      * Specifies a CREATE DATABASE statement to create a new database.
      * @param {string} dbName - The name of the database to create.
@@ -1217,6 +1217,36 @@ class Nusql {
      */
     backupDatabase(dbName: string, backupPath: string): Nusql {
         this.query = `BACKUP DATABASE ${dbName} TO DISK = '${backupPath}'`;
+        return this;
+    }
+
+    /**
+ * Specifies a CREATE TABLE statement to create a new table.
+ * @param {string} tableName - The name of the table to create.
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    createTable(tableName: string): Nusql {
+        this.query = `CREATE TABLE ${tableName} `;
+        return this;
+    }
+
+    /**
+     * Specifies a DROP TABLE statement to drop an existing table.
+     * @param {string} tableName - The name of the table to drop.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    dropTable(tableName: string): Nusql {
+        this.query = `DROP TABLE ${tableName} `;
+        return this;
+    }
+
+    /**
+     * Specifies an ALTER TABLE statement to modify an existing table.
+     * @param {string} tableName - The name of the table to alter.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    alterTable(tableName: string): Nusql {
+        this.query = `ALTER TABLE ${tableName} `;
         return this;
     }
 
