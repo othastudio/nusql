@@ -4,7 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var index_1 = __importDefault(require("../src/index"));
-describe('Nusql core testing', function () {
+
+describe('Nusql core inting', function () {
     it('should construct an instance', function () {
         var nusql = index_1.default.create();
         expect(nusql).toBeInstanceOf(index_1.default);
@@ -467,17 +468,15 @@ describe('nusql Aggregation and Functions', () => {
         expect(nusql.build()).toBe('AVG(column1)');
     });
 
-    /*
     it('should generate an ANY() function', () => {
-        nusql.any(nusql.select(['column2']).where('condition = value').build());
-        expect(nusql.build()).toBe('ANY((SELECT column2 WHERE condition = value))');
+        nusql.any(nusql.select(['column2']).where('condition = value'));
+        expect(nusql.build()).toBe('ANY(SELECT column2 WHERE condition = value)');
     });
 
     it('should generate an ALL() function', () => {
-        nusql.all(nusql.select(['column2']).where('condition = value').build());
-        expect(nusql.build()).toBe('ALL((SELECT column2 WHERE condition = value))');
+        nusql.all(nusql.select(['column2']).where('condition = value'));
+        expect(nusql.build()).toBe('ALL(SELECT column2 WHERE condition = value)');
     });
-    */
 
     it('should generate a CASE expression', () => {
         nusql.case('WHEN condition1 THEN result1 WHEN condition2 THEN result2 ELSE result3 END');
@@ -495,3 +494,328 @@ describe('nusql Aggregation and Functions', () => {
     });
 
 })
+
+describe('SQL Joins', () => {
+    var nusql;
+
+    beforeEach(function () {
+        nusql = index_1.default.create();
+    });
+
+
+
+    it('should generate an Flat JOIN clause', () => {
+        const tableName = 'orders';
+        const condition = 'customers.customer_id = orders.customer_id';
+
+        nusql.select('*').from('customers').flatJoin(tableName, condition);
+        expect(nusql.build()).toBe('SELECT * FROM customers JOIN orders ON customers.customer_id = orders.customer_id');
+    });
+
+    it('should generate an INNER JOIN clause', () => {
+        nusql.innerJoin('table2', 'table1.id = table2.id');
+        expect(nusql.build()).toBe('INNER JOIN table2 ON table1.id = table2.id');
+    });
+
+    it('should generate a LEFT JOIN clause', () => {
+        nusql.leftJoin('table2', 'table1.id = table2.id');
+        expect(nusql.build()).toBe('LEFT JOIN table2 ON table1.id = table2.id');
+    });
+
+    it('should generate a RIGHT JOIN clause', () => {
+        nusql.rightJoin('table2', 'table1.id = table2.id');
+        expect(nusql.build()).toBe('RIGHT JOIN table2 ON table1.id = table2.id');
+    });
+
+    it('should generate a FULL JOIN clause', () => {
+        nusql.fullJoin('table2', 'table1.id = table2.id');
+        expect(nusql.build()).toBe('FULL JOIN table2 ON table1.id = table2.id');
+    });
+
+    it('should generate a SELF JOIN clause', () => {
+        nusql.selfJoin('table2', 'table1.id = table2.id');
+        expect(nusql.build()).toBe('SELF JOIN table2 ON table1.id = table2.id');
+    });
+});
+
+describe('SQL Union', () => {
+    var nusql1, nusql2;
+
+    beforeEach(function () {
+        nusql1 = index_1.default.create();
+        nusql2 = index_1.default.create();
+    });
+
+    it('should generate a UNION clause', () => {
+        nusql1.union(nusql2);
+        expect(nusql1.build()).toBe('UNION' + nusql2.build());
+    });
+
+    it('should generate a UNION ALL clause', () => {
+        nusql1.union(nusql2, true);
+        expect(nusql1.build()).toBe('UNION ALL' + nusql2.build());
+    });
+});
+
+describe('SQL Grouping and Filtering', () => {
+    var nusql, subquery;
+
+    beforeEach(function () {
+        nusql = index_1.default.create();
+        subquery = index_1.default.create();
+    });
+
+    it('should generate a GROUP BY clause with a single column', () => {
+        nusql.groupBy('column1');
+        expect(nusql.build()).toBe('GROUP BY column1');
+    });
+
+    it('should generate a GROUP BY clause with multiple columns', () => {
+        nusql.groupBy(['column1', 'column2']);
+        expect(nusql.build()).toBe('GROUP BY column1, column2');
+    });
+    it('should generate a HAVING clause with a condition', () => {
+        nusql.having('SUM(column1) > 100');
+        expect(nusql.build()).toBe('HAVING SUM(column1) > 100');
+    });
+    it('should generate an EXISTS clause with a subquery', () => {
+        const state = subquery.select(['column1']).from('table2').where('column1 = value');
+        nusql.exists(state);
+        expect(nusql.build()).toBe('EXISTS (SELECT column1 FROM table2 WHERE column1 = value)');
+    });
+});
+
+describe('SQL Insert Into', () => {
+    var nusql;
+
+    beforeEach(function () {
+        nusql = index_1.default.create();
+    });
+
+    it('should generate an INSERT INTO statement', () => {
+        nusql.insertInto('table1', ['column1', 'column2']);
+        expect(nusql.build()).toBe('INSERT INTO table1 (column1, column2)');
+    });
+});
+
+describe('SQL Null Values', () => {
+    var nusql;
+
+    beforeEach(function () {
+        nusql = index_1.default.create();
+    });
+
+    it('should generate a NULL VALUES statement', () => {
+        nusql.nullValues();
+        expect(nusql.build()).toBe('NULL VALUES');
+    });
+});
+
+describe('SQL Update', () => {
+    var nusql;
+
+    beforeEach(function () {
+        nusql = index_1.default.create();
+    });
+
+    it('should generate an UPDATE statement', () => {
+        nusql.update('table1');
+        expect(nusql.build()).toBe('UPDATE table1');
+    });
+});
+
+describe('SQL Delete', () => {
+    var nusql;
+
+    beforeEach(function () {
+        nusql = index_1.default.create();
+    });
+
+    it('should generate a DELETE statement', () => {
+        nusql.delete();
+        expect(nusql.build()).toBe('DELETE');
+    });
+});
+
+describe('SQL Select Top', () => {
+    var nusql;
+
+    beforeEach(function () {
+        nusql = index_1.default.create();
+    });
+
+    it('should generate a SELECT TOP statement', () => {
+        nusql.selectTop(10);
+        expect(nusql.build()).toBe('SELECT TOP 10');
+    });
+});
+
+describe('SQL Select Into', () => {
+    var nusql;
+
+    beforeEach(function () {
+        nusql = index_1.default.create();
+    });
+
+    it('should generate a SELECT INTO statement', () => {
+        nusql.selectInto('newTable');
+        expect(nusql.build()).toBe('SELECT INTO newTable');
+    });
+});
+
+describe('SQL Insert Into Select', () => {
+    var nusql, subquery;
+
+    beforeEach(function () {
+        nusql = index_1.default.create();
+        subquery = index_1.default.create();
+    });
+
+    it('should generate an INSERT INTO SELECT statement', () => {
+        subquery.select(['column1']).from('table2').where('column1 = value');
+        nusql.insertIntoSelect('table1', ['column1', 'column2'], subquery);
+        expect(nusql.build()).toBe(
+            'INSERT INTO table1 (column1, column2) SELECT column1 FROM table2 WHERE column1 = value'
+        );
+    });
+});
+
+describe('SQL Constraints', () => {
+    var nusql, subquery;
+
+    beforeEach(function () {
+        nusql = index_1.default.create();
+        subquery = index_1.default.create();
+    });
+
+    it('Adds a custom constraint to the query', () => {
+        nusql.constraint('custom_constraint');
+        expect(nusql.build()).toBe('CONSTRAINT custom_constraint');
+    });
+
+    it('Adds a NOT NULL constraint to the query', () => {
+        nusql.notNull();
+        expect(nusql.build()).toBe('NOT NULL');
+    });
+
+    it('Adds a UNIQUE constraint to the query', () => {
+        nusql.unique();
+        expect(nusql.build()).toBe('UNIQUE');
+    });
+
+    it('Adds a PRIMARY KEY constraint to the query', () => {
+        nusql.primaryKey();
+        expect(nusql.build()).toBe('PRIMARY KEY');
+    });
+
+    it('Adds a FOREIGN KEY constraint to the query', () => {
+        nusql.foreignKey('current_column', 'referenced_table(referenced_column)');
+        expect(nusql.build()).toBe('FOREIGN KEY (current_column) REFERENCES referenced_table(referenced_column)');
+    });
+
+    it('Adds a CHECK constraint to the query', () => {
+        nusql.check('column > 0');
+        expect(nusql.build()).toBe('CHECK (column > 0)');
+    });
+
+    it('Adds a DEFAULT constraint to the query', () => {
+        nusql.default('42');
+        expect(nusql.build()).toBe('DEFAULT 42');
+    });
+})
+
+describe('SQL Indexing', () => {
+    var nusql;
+
+    beforeEach(function () {
+        nusql = index_1.default.create();
+    });
+
+    test('Adds an INDEX clause to create an index on the column', () => {
+        nusql.index('index_name');
+        expect(nusql.build()).toBe('INDEX index_name');
+    });
+
+    test('Adds an AUTO_INCREMENT property to the column', () => {
+        nusql.autoIncrement();
+        expect(nusql.build()).toBe('AUTO_INCREMENT');
+    });
+});
+
+describe('SQL Database Management', () => {
+    var nusql;
+
+    beforeEach(function () {
+        nusql = index_1.default.create();
+    });
+
+    // Test the createDatabase function
+    test('Specifies a CREATE DATABASE statement to create a new database', () => {
+        nusql.createDatabase('new_db');
+        expect(nusql.build()).toBe('CREATE DATABASE IF NOT EXISTS new_db;');
+    });
+
+    // Test the dropDatabase function
+    test('Specifies a DROP DATABASE statement to drop an existing database', () => {
+        nusql.dropDatabase('existing_db');
+        expect(nusql.build()).toBe('DROP DATABASE IF EXISTS existing_db;');
+    });
+
+    // Test the backupDatabase function
+    test('Specifies a backup database command to create a backup of an existing database', () => {
+        nusql.backupDatabase('source_db', 'backup_path.bak');
+        expect(nusql.build()).toBe("BACKUP DATABASE source_db TO DISK = 'backup_path.bak'");
+    });
+});
+
+describe('SQL Table Management', () => {
+    var nusql;
+
+    beforeEach(function () {
+        nusql = index_1.default.create();
+    });
+
+    test('createTable should generate a CREATE TABLE statement', () => {
+        nusql.createTable('users');
+        expect(nusql.build()).toBe('CREATE TABLE users');
+    });
+
+    test('dropTable should generate a DROP TABLE statement', () => {
+        nusql.dropTable('products');
+        expect(nusql.build()).toBe('DROP TABLE products');
+    });
+
+    test('alterTable should generate an ALTER TABLE statement', () => {
+        nusql.alterTable('orders');
+        expect(nusql.build()).toBe('ALTER TABLE orders');
+    });
+});
+
+
+describe('SQL Views', () => {
+    var nusql, query;
+
+    beforeEach(function () {
+        nusql = index_1.default.create();
+        query = index_1.default.create();
+    });
+
+    test('createView should generate a CREATE VIEW statement', () => {
+        const viewName = 'customer_orders';
+        const state = query.select(['customers.customer_name', 'orders.order_date']).from('customers').flatJoin('orders', 'customers.customer_id = orders.customer_id').build();
+        nusql.createView(viewName, state);
+        expect(nusql.build()).toBe(`CREATE VIEW ${viewName} AS ${state}`);
+    });
+
+    test('createView should generate a CREATE VIEW statement with updatable option', () => {
+        const viewName = 'customer_orders';
+        const selectStatement = `
+        SELECT customers.customer_name, orders.order_date
+        FROM customers
+        JOIN orders ON customers.customer_id = orders.customer_id
+      `;
+
+        nusql.createView(viewName, selectStatement, true);
+        expect(nusql.build()).toBe(`CREATE VIEW ${viewName} AS ${selectStatement} WITH CHECK OPTION`);
+    });
+});

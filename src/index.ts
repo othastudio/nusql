@@ -19,9 +19,11 @@
 
 class Nusql {
     private query: string;
+    private column: string;
 
     constructor() {
         this.query = '';
+        this.column = '';
     }
 
     /*********************************************************************************************
@@ -550,7 +552,6 @@ class Nusql {
     }
 
 
-
     /*********************************************************************************************
       * This functions section contain functions of SQL Operators,
       * It allows you to create, modify, and manipulate SQL operations easily using method chaining.
@@ -685,8 +686,15 @@ class Nusql {
  * @param {string[]} columns - The columns to select.
  * @returns {Nusql} - The Nusql instance for method chaining.
  */
-    select(columns: string[]): Nusql {
-        this.query += `SELECT ${columns.join(', ')} `;
+    select(columns: string | string[]): Nusql {
+        if (Array.isArray(columns)) {
+            this.query += `SELECT ${columns.join(', ')} `;
+        } else if (typeof columns === 'string') {
+            this.query += `SELECT ${columns} `;
+        } else {
+            // Handle invalid input or throw an error
+            throw new Error('Invalid input for columns');
+        }
         return this;
     }
 
@@ -699,7 +707,15 @@ class Nusql {
         this.query += `SELECT DISTINCT ${columns.join(', ')} `;
         return this;
     }
-
+    /**
+ * Specifies a FROM clause to specify the source table for the query.
+ * @param {string} table - The name of the source table.
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    from(table: string): Nusql {
+        this.query += `FROM ${table} `;
+        return this;
+    }
     /**
      * Specifies a WHERE clause with an optional condition.
      * @param {string} condition - The condition to filter results.
@@ -848,7 +864,8 @@ class Nusql {
      * @returns {Nusql} - The Nusql instance for method chaining.
      */
     any(subquery: Nusql): Nusql {
-        this.query += `ANY(${subquery.build()}) `;
+        const state = subquery.build()
+        this.query += `ANY(${state}) `;
         return this;
     }
 
@@ -858,7 +875,8 @@ class Nusql {
      * @returns {Nusql} - The Nusql instance for method chaining.
      */
     all(subquery: Nusql): Nusql {
-        this.query += `ALL(${subquery.build()}) `;
+        const state = subquery.build()
+        this.query += `ALL(${state}) `;
         return this;
     }
 
@@ -892,7 +910,383 @@ class Nusql {
         this.query += `COALESCE(${expressions.join(', ')}) `;
         return this;
     }
+    /*********************************************************************************************
+      * This functions section contain SQL Joins,
+      * It allows you to create, modify, and manipulate SQL operations easily using method chaining.
+    *********************************************************************************************/
+    /**
+     * Specifies a JOIN operation to combine the current table with another table.
+     * @param {string} tableName - The name of the table to join.
+     * @param {string} condition - The join condition (e.g., 'table1.column = table2.column').
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    flatJoin(tableName: string, condition: string): Nusql {
+        this.query += `JOIN ${tableName} ON ${condition} `;
+        return this;
+    }
 
+    /**
+ * Specifies a JOIN clause with a table using INNER JOIN.
+ * @param {string} table - The name of the table to join.
+ * @param {string} onCondition - The ON condition for the join.
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    innerJoin(table: string, onCondition: string): Nusql {
+        this.query += `INNER JOIN ${table} ON ${onCondition} `;
+        return this;
+    }
+
+    /**
+     * Specifies a JOIN clause with a table using LEFT JOIN.
+     * @param {string} table - The name of the table to join.
+     * @param {string} onCondition - The ON condition for the join.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    leftJoin(table: string, onCondition: string): Nusql {
+        this.query += `LEFT JOIN ${table} ON ${onCondition} `;
+        return this;
+    }
+
+    /**
+     * Specifies a JOIN clause with a table using RIGHT JOIN.
+     * @param {string} table - The name of the table to join.
+     * @param {string} onCondition - The ON condition for the join.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    rightJoin(table: string, onCondition: string): Nusql {
+        this.query += `RIGHT JOIN ${table} ON ${onCondition} `;
+        return this;
+    }
+
+    /**
+     * Specifies a JOIN clause with a table using FULL JOIN.
+     * @param {string} table - The name of the table to join.
+     * @param {string} onCondition - The ON condition for the join.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    fullJoin(table: string, onCondition: string): Nusql {
+        this.query += `FULL JOIN ${table} ON ${onCondition} `;
+        return this;
+    }
+
+    /**
+     * Specifies a JOIN clause with a table using SELF JOIN.
+     * @param {string} table - The name of the table to join.
+     * @param {string} onCondition - The ON condition for the join.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    selfJoin(table: string, onCondition: string): Nusql {
+        this.query += `SELF JOIN ${table} ON ${onCondition} `;
+        return this;
+    }
+
+    /**
+     * Specifies a UNION clause with another query.
+     * @param {Nusql} query - The query to union with.
+     * @param {boolean} all - Optional. Set to true for UNION ALL, false for UNION (default).
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    union(query: Nusql, all: boolean = false): Nusql {
+        this.query += `UNION${all ? ' ALL' : ''} ${query.build()} `;
+        return this;
+    }
+
+    /*********************************************************************************************
+      * This functions section contain SQL Grouping and Filtering
+      * It allows you to create, modify, and manipulate SQL operations easily using method chaining.
+    *********************************************************************************************/
+
+    /**
+ * Specifies a GROUP BY clause for grouping the results by one or more columns.
+ * @param {string | string[]} columns - The column(s) to group by.
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    groupBy(columns: string | string[]): Nusql {
+        if (Array.isArray(columns)) {
+            this.query += `GROUP BY ${columns.join(', ')} `;
+        } else {
+            this.query += `GROUP BY ${columns} `;
+        }
+        return this;
+    }
+
+    /**
+     * Specifies a HAVING clause for filtering the grouped results based on a condition.
+     * @param {string} condition - The condition for the HAVING clause.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    having(condition: string): Nusql {
+        this.query += `HAVING ${condition} `;
+        return this;
+    }
+
+    /**
+     * Specifies an EXISTS clause for checking the existence of a subquery.
+     * @param {Nusql} subquery - The subquery to check for existence.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    exists(subquery: Nusql): Nusql {
+        this.query += `EXISTS (${subquery.build()}) `;
+        return this;
+    }
+
+    /*********************************************************************************************
+      * This functions section contain SQL Data Modification
+      * It allows you to create, modify, and manipulate SQL operations easily using method chaining.
+    *********************************************************************************************/
+    /**
+  * Specifies an INSERT INTO statement to insert rows into a table.
+  * @param {string} table - The name of the table to insert into.
+  * @param {string[]} columns - The columns to insert data into.
+  * @returns {Nusql} - The Nusql instance for method chaining.
+  */
+    insertInto(table: string, columns: string[]): Nusql {
+        this.query += `INSERT INTO ${table} (${columns.join(', ')}) `;
+        return this;
+    }
+
+    /**
+     * Specifies a NULL VALUES statement to insert rows with NULL values.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    nullValues(): Nusql {
+        this.query += 'NULL VALUES ';
+        return this;
+    }
+
+    /**
+     * Specifies an UPDATE statement to modify existing rows in a table.
+     * @param {string} table - The name of the table to update.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    update(table: string): Nusql {
+        this.query += `UPDATE ${table} `;
+        return this;
+    }
+
+    /**
+     * Specifies a DELETE statement to remove rows from a table.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    delete(): Nusql {
+        this.query += 'DELETE ';
+        return this;
+    }
+
+    /**
+     * Specifies a SELECT TOP clause to limit the number of rows returned.
+     * @param {number} count - The number of rows to select.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    selectTop(count: number): Nusql {
+        this.query += `SELECT TOP ${count} `;
+        return this;
+    }
+
+    /**
+     * Specifies a SELECT INTO statement to create a new table from the results of a query.
+     * @param {string} newTable - The name of the new table to create.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    selectInto(newTable: string): Nusql {
+        this.query += `SELECT INTO ${newTable} `;
+        return this;
+    }
+
+    /**
+     * Specifies an INSERT INTO SELECT statement to insert rows into a table from the results of a query.
+     * @param {string} table - The name of the table to insert into.
+     * @param {string[]} columns - The columns to insert data into.
+     * @param {Nusql} subquery - The subquery to select data from.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    insertIntoSelect(table: string, columns: string[], subquery: Nusql): Nusql {
+        this.query += `INSERT INTO ${table} (${columns.join(', ')}) ${subquery.build()} `;
+        return this;
+    }
+
+    /*********************************************************************************************
+      * This functions section contain SQL Constraints
+      * It allows you to create, modify, and manipulate SQL operations easily using method chaining.
+    *********************************************************************************************/
+
+    /**
+ * Specifies a CONSTRAINT clause to define a custom constraint in the query.
+ * @param {string} constraint - The custom constraint definition.
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    constraint(constraint: string): Nusql {
+        this.query += `CONSTRAINT ${constraint} `;
+        return this;
+    }
+
+    /**
+     * Specifies a NOT NULL constraint on the current column.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    notNull(): Nusql {
+        this.query += 'NOT NULL ';
+        return this;
+    }
+
+    /**
+     * Specifies a UNIQUE constraint on the current column.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    unique(): Nusql {
+        this.query += 'UNIQUE ';
+        return this;
+    }
+
+    /**
+     * Specifies a PRIMARY KEY constraint on the current column.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    primaryKey(): Nusql {
+        this.query += 'PRIMARY KEY ';
+        return this;
+    }
+    /**
+     * Specifies a FOREIGN KEY constraint on the current column.
+     * @param {string} references - The referenced table and column(s).
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    foreignKey(column: string, references: string,): Nusql {
+        this.query += `FOREIGN KEY (${column}) REFERENCES ${references} `;
+        return this;
+    }
+
+    /**
+     * Specifies a CHECK constraint on the current column.
+     * @param {string} condition - The condition for the CHECK constraint.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    check(condition: string): Nusql {
+        this.query += `CHECK (${condition}) `;
+        return this;
+    }
+
+    /**
+     * Specifies a DEFAULT constraint on the current column.
+     * @param {string} value - The default value for the column.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    default(value: string): Nusql {
+        this.query += `DEFAULT ${value} `;
+        return this;
+    }
+
+    /*********************************************************************************************
+      * This functions section contain SQL Indexing
+      * It allows you to create, modify, and manipulate SQL operations easily using method chaining.
+    *********************************************************************************************/
+
+    /**
+     * Specifies an INDEX clause to create an index on the current column(s).
+     * @param {string} indexName - The name of the index.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+    */
+    index(indexName: string): Nusql {
+        this.query += `INDEX ${indexName} `;
+        return this;
+    }
+
+    /**
+     * Specifies an AUTO_INCREMENT property for the current column.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    autoIncrement(): Nusql {
+        this.query += 'AUTO_INCREMENT ';
+        return this;
+    }
+
+    /*********************************************************************************************
+      * This functions section contain SQL Database Management,
+      * It allows you to create, modify, and manipulate SQL operations easily using method chaining.
+    *********************************************************************************************/
+
+    /**
+     * Specifies a CREATE DATABASE statement to create a new database.
+     * @param {string} dbName - The name of the database to create.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    createDatabase(dbName: string): Nusql {
+        this.query = `CREATE DATABASE IF NOT EXISTS ${dbName};`;
+        return this;
+    }
+
+    /**
+     * Specifies a DROP DATABASE statement to drop an existing database.
+     * @param {string} dbName - The name of the database to drop.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    dropDatabase(dbName: string): Nusql {
+        this.query = `DROP DATABASE IF EXISTS ${dbName};`;
+        return this;
+    }
+
+    /**
+     * Specifies a backup database command to create a backup of an existing database.
+     * @param {string} dbName - The name of the database to backup.
+     * @param {string} backupPath - The path where the backup will be stored.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    backupDatabase(dbName: string, backupPath: string): Nusql {
+        this.query = `BACKUP DATABASE ${dbName} TO DISK = '${backupPath}'`;
+        return this;
+    }
+
+    /**
+ * Specifies a CREATE TABLE statement to create a new table.
+ * @param {string} tableName - The name of the table to create.
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    createTable(tableName: string): Nusql {
+        this.query = `CREATE TABLE ${tableName} `;
+        return this;
+    }
+
+    /**
+     * Specifies a DROP TABLE statement to drop an existing table.
+     * @param {string} tableName - The name of the table to drop.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    dropTable(tableName: string): Nusql {
+        this.query = `DROP TABLE ${tableName} `;
+        return this;
+    }
+
+    /**
+     * Specifies an ALTER TABLE statement to modify an existing table.
+     * @param {string} tableName - The name of the table to alter.
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    alterTable(tableName: string): Nusql {
+        this.query = `ALTER TABLE ${tableName} `;
+        return this;
+    }
+    /*********************************************************************************************
+          * This functions section contain SQL Advanced Concepts
+          * It allows you to create, modify, and manipulate SQL operations easily using method chaining.
+        *********************************************************************************************/
+    /**
+ * Specifies a CREATE VIEW statement to create a new SQL View.
+ * @param {string} viewName - The name of the SQL View.
+ * @param {string} selectStatement - The SELECT statement defining the view's structure.
+ * @param {boolean} updatable - Indicates whether the view is updatable (default is false).
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    createView(viewName: string, selectStatement: string, updatable = false): Nusql {
+        this.query = `CREATE VIEW ${viewName} AS ${selectStatement}`;
+        if (updatable) {
+            this.query += ' WITH CHECK OPTION';
+        }
+        return this;
+    }
+    /*********************************************************************************************
+      * This functions section contain Build, create functions,
+      * It allows you to create, modify, and manipulate SQL operations easily using method chaining.
+    *********************************************************************************************/
 
     /**
      * Builds and returns the SQL query as a string.

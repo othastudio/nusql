@@ -1,0 +1,14 @@
+# Exclude build files
+build/
+dist/
+
+# Exclude test files and directories
+test/
+tests/
+__tests__/
+
+# Exclude .github actions
+.github/
+
+# Exclude documentation
+docs/
