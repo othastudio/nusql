@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var index_1 = __importDefault(require("../src/index"));
 
-describe('Nusql core iting', function () {
+describe('Nusql core inting', function () {
     it('should construct an instance', function () {
         var nusql = index_1.default.create();
         expect(nusql).toBeInstanceOf(index_1.default);
