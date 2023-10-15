@@ -638,7 +638,16 @@ var Nusql = /** @class */ (function () {
  * @returns {Nusql} - The Nusql instance for method chaining.
  */
     Nusql.prototype.select = function (columns) {
-        this.query += "SELECT ".concat(columns.join(', '), " ");
+        if (Array.isArray(columns)) {
+            this.query += "SELECT ".concat(columns.join(', '), " ");
+        }
+        else if (typeof columns === 'string') {
+            this.query += "SELECT ".concat(columns, " ");
+        }
+        else {
+            // Handle invalid input or throw an error
+            throw new Error('Invalid input for columns');
+        }
         return this;
     };
     /**
@@ -839,6 +848,16 @@ var Nusql = /** @class */ (function () {
       * This functions section contain SQL Joins,
       * It allows you to create, modify, and manipulate SQL operations easily using method chaining.
     *********************************************************************************************/
+    /**
+     * Specifies a JOIN operation to combine the current table with another table.
+     * @param {string} tableName - The name of the table to join.
+     * @param {string} condition - The join condition (e.g., 'table1.column = table2.column').
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    Nusql.prototype.flatJoin = function (tableName, condition) {
+        this.query += "JOIN ".concat(tableName, " ON ").concat(condition, " ");
+        return this;
+    };
     /**
  * Specifies a JOIN clause with a table using INNER JOIN.
  * @param {string} table - The name of the table to join.
@@ -1146,6 +1165,25 @@ var Nusql = /** @class */ (function () {
      */
     Nusql.prototype.alterTable = function (tableName) {
         this.query = "ALTER TABLE ".concat(tableName, " ");
+        return this;
+    };
+    /*********************************************************************************************
+          * This functions section contain SQL Advanced Concepts
+          * It allows you to create, modify, and manipulate SQL operations easily using method chaining.
+        *********************************************************************************************/
+    /**
+ * Specifies a CREATE VIEW statement to create a new SQL View.
+ * @param {string} viewName - The name of the SQL View.
+ * @param {string} selectStatement - The SELECT statement defining the view's structure.
+ * @param {boolean} updatable - Indicates whether the view is updatable (default is false).
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    Nusql.prototype.createView = function (viewName, selectStatement, updatable) {
+        if (updatable === void 0) { updatable = false; }
+        this.query = "CREATE VIEW ".concat(viewName, " AS ").concat(selectStatement);
+        if (updatable) {
+            this.query += ' WITH CHECK OPTION';
+        }
         return this;
     };
     /*********************************************************************************************

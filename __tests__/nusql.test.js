@@ -502,6 +502,19 @@ describe('SQL Joins', () => {
         nusql = index_1.default.create();
     });
 
+
+
+    it('should generate an Flat JOIN clause', () => {
+        const tableName = 'orders';
+        const condition = 'customers.customer_id = orders.customer_id';
+
+        nusql.select('*')
+            .from('customers')
+            .flatJoin(tableName, condition);
+
+        console.log(nusql.build());
+    });
+
     it('should generate an INNER JOIN clause', () => {
         nusql.innerJoin('table2', 'table1.id = table2.id');
         expect(nusql.build()).toBe('INNER JOIN table2 ON table1.id = table2.id');
@@ -764,19 +777,50 @@ describe('SQL Table Management', () => {
     beforeEach(function () {
         nusql = index_1.default.create();
     });
-  
+
     test('createTable should generate a CREATE TABLE statement', () => {
-      nusql.createTable('users');
-      expect(nusql.build()).toBe('CREATE TABLE users');
+        nusql.createTable('users');
+        expect(nusql.build()).toBe('CREATE TABLE users');
     });
-  
+
     test('dropTable should generate a DROP TABLE statement', () => {
-      nusql.dropTable('products');
-      expect(nusql.build()).toBe('DROP TABLE products');
+        nusql.dropTable('products');
+        expect(nusql.build()).toBe('DROP TABLE products');
     });
-  
+
     test('alterTable should generate an ALTER TABLE statement', () => {
-      nusql.alterTable('orders');
-      expect(nusql.build()).toBe('ALTER TABLE orders');
+        nusql.alterTable('orders');
+        expect(nusql.build()).toBe('ALTER TABLE orders');
     });
-  });
+});
+
+
+describe('SQL Views', () => {
+    var nusql, query;
+
+    beforeEach(function () {
+        nusql = index_1.default.create();
+        query = index_1.default.create();
+    });
+
+    test('createView should generate a CREATE VIEW statement', () => {
+        const viewName = 'customer_orders';
+        const selectStatement = ` SELECT customers.customer_name, orders.order_date FROM customers JOIN orders ON customers.customer_id = orders.customer_id`;
+        const state = query.select(['customers.customer_name', 'orders.order_date']).from('customers').flatJoin('orders', 'customers.customer_id = orders.customer_id');
+        console.log(state);
+        nusql.createView(viewName, selectStatement);
+        //expect(nusql.build()).toBe(`CREATE VIEW ${viewName} AS ${selectStatement}`);
+    });
+
+    test('createView should generate a CREATE VIEW statement with updatable option', () => {
+        const viewName = 'customer_orders';
+        const selectStatement = `
+        SELECT customers.customer_name, orders.order_date
+        FROM customers
+        JOIN orders ON customers.customer_id = orders.customer_id
+      `;
+
+        nusql.createView(viewName, selectStatement, true);
+        expect(nusql.build()).toBe(`CREATE VIEW ${viewName} AS ${selectStatement} WITH CHECK OPTION`);
+    });
+});

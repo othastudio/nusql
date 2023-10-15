@@ -552,7 +552,6 @@ class Nusql {
     }
 
 
-
     /*********************************************************************************************
       * This functions section contain functions of SQL Operators,
       * It allows you to create, modify, and manipulate SQL operations easily using method chaining.
@@ -687,8 +686,15 @@ class Nusql {
  * @param {string[]} columns - The columns to select.
  * @returns {Nusql} - The Nusql instance for method chaining.
  */
-    select(columns: string[]): Nusql {
-        this.query += `SELECT ${columns.join(', ')} `;
+    select(columns: string | string[]): Nusql {
+        if (Array.isArray(columns)) {
+            this.query += `SELECT ${columns.join(', ')} `;
+        } else if (typeof columns === 'string') {
+            this.query += `SELECT ${columns} `;
+        } else {
+            // Handle invalid input or throw an error
+            throw new Error('Invalid input for columns');
+        }
         return this;
     }
 
@@ -908,6 +914,16 @@ class Nusql {
       * This functions section contain SQL Joins,
       * It allows you to create, modify, and manipulate SQL operations easily using method chaining.
     *********************************************************************************************/
+    /**
+     * Specifies a JOIN operation to combine the current table with another table.
+     * @param {string} tableName - The name of the table to join.
+     * @param {string} condition - The join condition (e.g., 'table1.column = table2.column').
+     * @returns {Nusql} - The Nusql instance for method chaining.
+     */
+    flatJoin(tableName: string, condition: string): Nusql {
+        this.query += `JOIN ${tableName} ON ${condition} `;
+        return this;
+    }
 
     /**
  * Specifies a JOIN clause with a table using INNER JOIN.
@@ -1249,7 +1265,24 @@ class Nusql {
         this.query = `ALTER TABLE ${tableName} `;
         return this;
     }
-
+    /*********************************************************************************************
+          * This functions section contain SQL Advanced Concepts
+          * It allows you to create, modify, and manipulate SQL operations easily using method chaining.
+        *********************************************************************************************/
+    /**
+ * Specifies a CREATE VIEW statement to create a new SQL View.
+ * @param {string} viewName - The name of the SQL View.
+ * @param {string} selectStatement - The SELECT statement defining the view's structure.
+ * @param {boolean} updatable - Indicates whether the view is updatable (default is false).
+ * @returns {Nusql} - The Nusql instance for method chaining.
+ */
+    createView(viewName: string, selectStatement: string, updatable = false): Nusql {
+        this.query = `CREATE VIEW ${viewName} AS ${selectStatement}`;
+        if (updatable) {
+            this.query += ' WITH CHECK OPTION';
+        }
+        return this;
+    }
     /*********************************************************************************************
       * This functions section contain Build, create functions,
       * It allows you to create, modify, and manipulate SQL operations easily using method chaining.
