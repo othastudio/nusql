@@ -508,11 +508,8 @@ describe('SQL Joins', () => {
         const tableName = 'orders';
         const condition = 'customers.customer_id = orders.customer_id';
 
-        nusql.select('*')
-            .from('customers')
-            .flatJoin(tableName, condition);
-
-        console.log(nusql.build());
+        nusql.select('*').from('customers').flatJoin(tableName, condition);
+        expect(nusql.build()).toBe('SELECT * FROM customers JOIN orders ON customers.customer_id = orders.customer_id');
     });
 
     it('should generate an INNER JOIN clause', () => {
@@ -805,11 +802,9 @@ describe('SQL Views', () => {
 
     test('createView should generate a CREATE VIEW statement', () => {
         const viewName = 'customer_orders';
-        const selectStatement = ` SELECT customers.customer_name, orders.order_date FROM customers JOIN orders ON customers.customer_id = orders.customer_id`;
-        const state = query.select(['customers.customer_name', 'orders.order_date']).from('customers').flatJoin('orders', 'customers.customer_id = orders.customer_id');
-        console.log(state);
-        nusql.createView(viewName, selectStatement);
-        //expect(nusql.build()).toBe(`CREATE VIEW ${viewName} AS ${selectStatement}`);
+        const state = query.select(['customers.customer_name', 'orders.order_date']).from('customers').flatJoin('orders', 'customers.customer_id = orders.customer_id').build();
+        nusql.createView(viewName, state);
+        expect(nusql.build()).toBe(`CREATE VIEW ${viewName} AS ${state}`);
     });
 
     test('createView should generate a CREATE VIEW statement with updatable option', () => {
