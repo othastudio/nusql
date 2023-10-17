@@ -145,6 +145,8 @@ class Nusql {
         this.query += 'YEAR ';
         return this;
     }
+
+
     /**
      * Specifies the VARBINARY data type with the given size.
      * @param {number} size - The size of the VARBINARY column.

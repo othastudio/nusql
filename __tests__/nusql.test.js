@@ -294,6 +294,48 @@ describe('nusql Data types', function () {
         expect(nusql.build()).toBe('GTSVECTOR');
     });
 });
+describe('SQL Date Handling Functions', () => {
+    var nusql;
+
+    beforeEach(function () {
+        nusql = index_1.default.create();
+    });
+
+    it('should generate a DATE data type', () => {
+        nusql.date();
+        expect(nusql.build()).toBe('DATE');
+    });
+
+    it('should generate a DATETIME data type with fractional seconds precision', () => {
+        nusql.datetime(3);
+        expect(nusql.build()).toBe('DATETIME(3)');
+    });
+
+    it('should generate a TIMESTAMP data type with fractional seconds precision', () => {
+        nusql.timestamp(6);
+        expect(nusql.build()).toBe('TIMESTAMP(6)');
+    });
+
+    it('should generate a TIME data type with fractional seconds precision', () => {
+        nusql.time(2);
+        expect(nusql.build()).toBe('TIME(2)');
+    });
+
+    it('should generate a YEAR data type', () => {
+        nusql.year();
+        expect(nusql.build()).toBe('YEAR');
+    });
+
+    it('should generate a TIMESTAMP data type without fractional seconds precision', () => {
+        nusql.timestamp();
+        expect(nusql.build()).toBe('TIMESTAMP');
+    });
+
+    it('should generate a TIME data type without fractional seconds precision', () => {
+        nusql.time();
+        expect(nusql.build()).toBe('TIME');
+    });
+});
 
 describe('nusql Operators', () => {
     var nusql;
