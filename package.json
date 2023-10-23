@@ -2,7 +2,7 @@
   "name": "nusql",
   "version": "1.0.5",
   "description": "Simplified SQL Query Builder for Node.js",
-  "main": "lib/index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "jest",
     "build": "npx tsc",
